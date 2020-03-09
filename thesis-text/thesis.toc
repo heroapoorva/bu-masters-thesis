@@ -1,10 +1,13 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}
 \contentsline {section}{\numberline {1.1}A few remarks before you start}{1}
 \contentsline {chapter}{\numberline {2}Body of my thesis}{3}
-\contentsline {section}{\numberline {2.1}System R}{3}
-\contentsline {section}{\numberline {2.2}Deep Reinforcement learning}{3}
-\contentsline {section}{\numberline {2.3}Relations}{4}
-\contentsline {chapter}{\numberline {3}Conclusions}{7}
-\contentsline {section}{\numberline {3.1}Summary of the thesis}{7}
-\contentsline {chapter}{\numberline {A}Proof of xyz}{8}
-\contentsline {chapter}{Curriculum Vitae}{9}
+\contentsline {section}{\numberline {2.1}SQL Query compiler}{3}
+\contentsline {subsection}{\numberline {2.1.1}Parsing}{3}
+\contentsline {subsection}{\numberline {2.1.2}Preprocessing}{3}
+\contentsline {section}{\numberline {2.2}System R}{3}
+\contentsline {section}{\numberline {2.3}Deep Reinforcement learning}{3}
+\contentsline {section}{\numberline {2.4}Relations}{4}
+\contentsline {chapter}{\numberline {3}Conclusions}{6}
+\contentsline {section}{\numberline {3.1}Summary of the thesis}{6}
+\contentsline {chapter}{\numberline {A}Proof of xyz}{7}
+\contentsline {chapter}{Curriculum Vitae}{8}
