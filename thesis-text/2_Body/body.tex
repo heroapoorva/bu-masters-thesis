@@ -7,12 +7,14 @@
 % it has a trailing directory separator (i.e., '/')!
 \graphicspath{{2_Body/Figures/}}
 \section{SQL Query compiler}
+\label{sec:sql}
 The steps involved are
 \subsection{Parsing}
 In a very general sense, given an SQL query, SQL converts it into a parse tree based on SQL grammar.
 \subsection{Preprocessing}
-\label{sec:sql}
-A bit of focus on 
+This step has several functions.
+\par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
+\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking.
 \section{System R}
 \label{sec:systemR}
 \section{Deep Reinforcement learning}
