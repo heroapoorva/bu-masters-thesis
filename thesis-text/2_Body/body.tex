@@ -15,6 +15,14 @@ In a very general sense, given an SQL query, SQL converts it into a parse tree b
 This step has several functions.
 \par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
 \par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking.
+If a parse tree passes the preprocessing then it is said to be \textbf{valid}
+\subsection{Logical Query Plan}
+The first step is to modify the parse tree into using operators and operators of relational algebra.
+\par The next step is to convert expression obtained from the above substitution and modify it into an expression which can be converted to most efficient physical query plan.
+\par To improve the algebraic expression obtained, few common steps taken are pushing down selections and projections carefully, carefully placing duplicate eliminations, combining selections, showing associativity and commutivity in the expression to help with enumeration.
+\par At the end when we have the expression ready, we enumerate the physical plans and calculate their cost of execution and select the method with the lowest cost.
+\subsection{Cost Estimation}
+We need to consider what algorithm each operator in the expression is going to use, such as join, sort, scanning and more. Also need to consider the order for the associative and commutative operators, because at the end the operators are binary and how the output of one operator is provided as an input to the next/ outter operator in the expression. 
 \section{System R}
 \label{sec:systemR}
 \section{Deep Reinforcement learning}

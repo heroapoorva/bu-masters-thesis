@@ -4,10 +4,12 @@
 \contentsline {section}{\numberline {2.1}SQL Query compiler}{3}
 \contentsline {subsection}{\numberline {2.1.1}Parsing}{3}
 \contentsline {subsection}{\numberline {2.1.2}Preprocessing}{3}
-\contentsline {section}{\numberline {2.2}System R}{3}
-\contentsline {section}{\numberline {2.3}Deep Reinforcement learning}{3}
-\contentsline {section}{\numberline {2.4}Relations}{4}
-\contentsline {chapter}{\numberline {3}Conclusions}{6}
-\contentsline {section}{\numberline {3.1}Summary of the thesis}{6}
-\contentsline {chapter}{\numberline {A}Proof of xyz}{7}
-\contentsline {chapter}{Curriculum Vitae}{8}
+\contentsline {subsection}{\numberline {2.1.3}Logical Query Plan}{3}
+\contentsline {subsection}{\numberline {2.1.4}Cost Estimation}{4}
+\contentsline {section}{\numberline {2.2}System R}{4}
+\contentsline {section}{\numberline {2.3}Deep Reinforcement learning}{4}
+\contentsline {section}{\numberline {2.4}Relations}{5}
+\contentsline {chapter}{\numberline {3}Conclusions}{7}
+\contentsline {section}{\numberline {3.1}Summary of the thesis}{7}
+\contentsline {chapter}{\numberline {A}Proof of xyz}{8}
+\contentsline {chapter}{Curriculum Vitae}{9}
