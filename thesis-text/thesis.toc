@@ -5,24 +5,24 @@
 \contentsline {section}{\numberline {1.4}Conclusion}{1}% 
 \contentsline {chapter}{\numberline {2}Related Work}{2}% 
 \contentsline {section}{\numberline {2.1}Introduction, Query optimization}{2}% 
-\contentsline {section}{\numberline {2.2}Relational algebra,}{2}% 
-\contentsline {section}{\numberline {2.3}Converting SQL queries to parse trees}{2}% 
-\contentsline {section}{\numberline {2.4}Converting Parse trees into logical expression}{2}% 
-\contentsline {section}{\numberline {2.5}Explain difficulties/ Time complexity}{2}% 
-\contentsline {section}{\numberline {2.6}Optimzation using relation algebra}{2}% 
-\contentsline {section}{\numberline {2.7}Introduction to Data Streams}{2}% 
-\contentsline {section}{\numberline {2.8}Data stream windowing}{2}% 
-\contentsline {section}{\numberline {2.9}Query Processing of data streams(Combine the DBMS and DSMS)}{2}% 
-\contentsline {section}{\numberline {2.10}Challenges of query optimization on data streams}{2}% 
-\contentsline {section}{\numberline {2.11}Conclusion and discussion}{2}% 
-\contentsline {section}{\numberline {2.12}SQL Query compiler}{2}% 
+\contentsline {section}{\numberline {2.2}Relational algebra,}{3}% 
+\contentsline {section}{\numberline {2.3}Converting SQL queries to parse trees}{3}% 
+\contentsline {section}{\numberline {2.4}Converting Parse trees into logical expression}{3}% 
+\contentsline {section}{\numberline {2.5}Explain difficulties/ Time complexity}{3}% 
+\contentsline {section}{\numberline {2.6}Optimzation using relation algebra}{3}% 
+\contentsline {section}{\numberline {2.7}Introduction to Data Streams}{3}% 
+\contentsline {section}{\numberline {2.8}Data stream windowing}{3}% 
+\contentsline {section}{\numberline {2.9}Query Processing of data streams(Combine the DBMS and DSMS)}{3}% 
+\contentsline {section}{\numberline {2.10}Challenges of query optimization on data streams}{3}% 
+\contentsline {section}{\numberline {2.11}Conclusion and discussion}{3}% 
+\contentsline {section}{\numberline {2.12}SQL Query compiler}{3}% 
 \contentsline {subsection}{\numberline {2.12.1}Parsing}{3}% 
 \contentsline {subsection}{\numberline {2.12.2}Preprocessing}{3}% 
-\contentsline {subsection}{\numberline {2.12.3}Logical Query Plan}{3}% 
+\contentsline {subsection}{\numberline {2.12.3}Logical Query Plan}{4}% 
 \contentsline {subsection}{\numberline {2.12.4}Cost Estimation}{4}% 
-\contentsline {section}{\numberline {2.13}System R}{4}% 
-\contentsline {section}{\numberline {2.14}Deep Reinforcement learning}{4}% 
-\contentsline {section}{\numberline {2.15}Relations}{5}% 
+\contentsline {section}{\numberline {2.13}System R}{5}% 
+\contentsline {section}{\numberline {2.14}Deep Reinforcement learning}{5}% 
+\contentsline {section}{\numberline {2.15}Relations}{6}% 
 \contentsline {chapter}{\numberline {3}Stream Optimization}{7}% 
 \contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{7}% 
 \contentsline {chapter}{\numberline {4}Implementation}{8}% 
