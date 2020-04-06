@@ -8,12 +8,24 @@
 \graphicspath{{2_Body/Figures/}}
 
 \section{Introduction, Query optimization}
-A simple SQL query looks like this
+A database can be thought of as a list of tables, where in each table itself can be considered as a list of data points ordered initially in the sequence they are entered.
+\par There are various tools which can be used to connect to a database, here we focus on structured query languages(SQL). A simple SQL query looks like this
 \begin{lstlisting}[language=SQL]
-    SELECT * 
-    FROM my_table
+    SELECT column_name_1, column_name_2
+    FROM table_name
     WHERE condition
 \end{lstlisting}
+This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer. For example, say we have the following table
+
+\begin{center}
+\begin{tabular}{ ||c|c|c|| }
+\hline
+ Name & Date of Birth & Gender \\ \hline \hline 
+ Alex & 15/09/2008 & Male \\ \hline
+ Bob & 01/01/2003 & Male \\ \hline
+\hline    
+\end{tabular}
+\end{center}
 
 \section{Relational algebra,}
 \section{Converting SQL queries to parse trees}

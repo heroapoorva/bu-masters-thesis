@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.3)  1 APR 2020 20:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.3)  6 APR 2020 04:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -305,16 +305,66 @@ Package: subfig 2005/06/28 ver: 1.3 subfig package
 \sf@top=\skip59
 \sf@bottom=\skip60
 )
+(/usr/share/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2019/03/01 v1.8w multicolumn formatting (FMi)
+\c@tracingmulticols=\count121
+\mult@box=\box38
+\multicol@leftmargin=\dimen125
+\c@unbalance=\count122
+\c@collectmore=\count123
+\doublecol@number=\count124
+\multicoltolerance=\count125
+\multicolpretolerance=\count126
+\full@width=\dimen126
+\page@free=\dimen127
+\premulticols=\dimen128
+\postmulticols=\dimen129
+\multicolsep=\skip61
+\multicolbaselineskip=\skip62
+\partial@page=\box39
+\last@line=\box40
+\maxbalancingoverflow=\dimen130
+\mult@rightbox=\box41
+\mult@grightbox=\box42
+\mult@gfirstbox=\box43
+\mult@firstbox=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\@tempa=\box51
+\@tempa=\box52
+\@tempa=\box53
+\@tempa=\box54
+\@tempa=\box55
+\@tempa=\box56
+\@tempa=\box57
+\@tempa=\box58
+\@tempa=\box59
+\@tempa=\box60
+\@tempa=\box61
+\c@minrows=\count127
+\c@columnbadness=\count128
+\c@finalcolumnbadness=\count129
+\last@try=\dimen131
+\multicolovershoot=\dimen132
+\multicolundershoot=\dimen133
+\mult@nat@firstbox=\box62
+\colbreak@box=\box63
+\mc@col@check@num=\count130
+)
 (/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-\Gin@req@height=\dimen125
-\Gin@req@width=\dimen126
+\Gin@req@height=\dimen134
+\Gin@req@width=\dimen135
 )
 (/usr/share/texmf-dist/tex/latex/appendix/appendix.sty
 Package: appendix 2009/09/02 v1.2b extra appendix facilities
-\c@@pps=\count121
-\c@@ppsavesec=\count122
-\c@@ppsaveapp=\count123
+\c@@pps=\count131
+\c@@ppsavesec=\count132
+\c@@ppsaveapp=\count133
 ) (./thesis.aux
 (./0_Prelim/prelim.aux) (./1_Intro/intro.aux)
 (./2_Related_Work/related_work.aux)
@@ -330,32 +380,32 @@ LaTeX Warning: Label `chapter:stream_optimization' multiply defined.
 ) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-\c@lstlisting=\count124
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+\c@lstlisting=\count134
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count125
-\scratchdimen=\dimen127
-\scratchbox=\box38
-\nofMPsegments=\count126
-\nofMParguments=\count127
+\scratchcounter=\count135
+\scratchdimen=\dimen136
+\scratchbox=\box64
+\nofMPsegments=\count136
+\nofMParguments=\count137
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count128
-\MPscratchDim=\dimen128
-\MPnumerator=\count129
-\makeMPintoPDFobject=\count130
+\MPscratchCnt=\count138
+\MPscratchDim=\dimen137
+\MPnumerator=\count139
+\makeMPintoPDFobject=\count140
 \everyMPtoPDFconversion=\toks29
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -529,10 +579,10 @@ LaTeX Warning: There were multiply-defined labels.
 ### simple group (level 1) entered at line 1 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7086 strings out of 492167
- 97443 string characters out of 6131559
- 355358 words of memory out of 5000000
- 11253 multiletter control sequences out of 15000+600000
+ 7206 strings out of 492167
+ 99256 string characters out of 6131559
+ 363301 words of memory out of 5000000
+ 11370 multiletter control sequences out of 15000+600000
  12749 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,8n,46p,640b,1452s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -548,7 +598,7 @@ usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf
 s/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 ></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (24 pages, 164954 bytes).
+Output written on thesis.pdf (24 pages, 166204 bytes).
 PDF statistics:
  137 PDF objects out of 1000 (max. 8388607)
  96 compressed objects within 1 object stream
