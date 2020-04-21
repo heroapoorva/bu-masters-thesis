@@ -15,20 +15,34 @@ A database can be thought of as a list of tables, where in each table itself can
     FROM table_name
     WHERE condition
 \end{lstlisting}
-This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer. For example, say we have the following table
+This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer.
 
-\begin{center}
-\begin{tabular}{ ||c|c|c|| }
-\hline
- Name & Date of Birth & Gender \\ \hline \hline 
- Alex & 15/09/2008 & Male \\ \hline
- Bob & 01/01/2003 & Male \\ \hline
-\hline    
-\end{tabular}
-\end{center}
-
-\section{Relational algebra,}
 \section{Converting SQL queries to parse trees}
+We don't describe the exact grammar for the convertion to the parse tree. In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
+\section{Relational algebra}
+As we saw above, order of operations matters, if the order of operations is not thoughtout and done blindly alot of redundant steps are executed and memory is moved around unnecessarily. There are few ways to atleast look and analyse the operations and how they can be simplied.
+\par Let \textsc{R,S} be relations. Some simple laws, associativity and commutativity can easily be verified:-
+\begin{itemize}
+    \item $R\times S = S \times R$
+    \item $(R\times S) \times T = R\times (S \times T)$
+    \item $R \bowtie S = S \bowtie R$
+    \item $(R \bowtie S) \bowtie T = R \bowtie (S \bowtie T)$
+    \item $R \cup S = S \cup R$
+    \item $(R \cup S) \cup T = R \cup (S \cup T)$
+    \item $R \cap S = S \cap R$
+    \item $(R \cap S) \cap T = R \cap (S \cap T)$
+\end{itemize}
+When applying associative law on relations, need to be careful whether the conditions actually makes sense after the order is changed.
+\par While the above identities work on both sets and bags(bags allow for repeatition). To show that laws for sets and bags do differ an easy way is to consider the distributive property.\\
+$A\cap _S(B\cup_S C) = (A\cap_S B)\cup_S(A\cap_S C) $\\
+$A\cap _B(B\cup_B C) \neq (A\cap_B B)\cup_B(A\cap_B C)$\\
+We can simply show it with an example. Let $A=\{t\},B=\{t\},C=\{t\}$. The LHS comes to be $\{t\}$, whereas RHS is $\{t,t\}$
+\subsection{Select operator $\sigma$}
+First we start with simple properties of the $\sigma$ operator.
+\begin{itemize}
+    \item $\sigma_{C_1} \land \sigma_{C_2}(R) = \sigma_{C_1}(\sigma_{C_2}(R)) $
+    \item $\sigma_{C_1} \lor \sigma_{C_2}(R) = (\sigma_{C_1}(R))\cup_S(\sigma_{C_2}(R))$
+\end{itemize}
 \section{Converting Parse trees into logical expression}
 \section{Explain difficulties/ Time complexity}
 \section{Optimzation using relation algebra}

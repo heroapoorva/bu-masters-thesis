@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.3)  6 APR 2020 04:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  21 APR 2020 14:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -505,13 +505,16 @@ File: lstlang1.sty 2019/09/10 1.8c listings language file
 
 
 
-] [3] [4] [5])
-[6]
+]
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
+ [3] [4] [5]
+[6]) [7]
 \openout2 = `3_Stream_Optimization/stream_optimization.aux'.
 
  (./3_Stream_Optimization/stream_optimization.tex
 Chapter 3.
-) [7
+) [8
 
 
 
@@ -521,7 +524,7 @@ Chapter 3.
 
  (./4_Implementation/implementation.tex
 Chapter 4.
-) [8
+) [9
 
 
 
@@ -531,7 +534,7 @@ Chapter 4.
 
  (./5_Evaluation/evaluation.tex
 Chapter 5.
-) [9
+) [10
 
 
 
@@ -541,7 +544,7 @@ Chapter 5.
 
  (./6_Conclusion/conclusion.tex
 Chapter 6.
-) [10
+) [11
 
 
 
@@ -551,7 +554,7 @@ Chapter 6.
 
  (./Appendix/Appendix.tex
 Appendix A.
-) [11
+) [12
 
 
 
@@ -560,7 +563,7 @@ Appendix A.
 No file thesis.bbl.
 \openout2 = `0_Prelim/cv.aux'.
 
-(./0_Prelim/cv.tex) [12
+(./0_Prelim/cv.tex) [13
 
 
 
@@ -579,29 +582,30 @@ LaTeX Warning: There were multiply-defined labels.
 ### simple group (level 1) entered at line 1 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7206 strings out of 492167
- 99256 string characters out of 6131559
- 363301 words of memory out of 5000000
- 11370 multiletter control sequences out of 15000+600000
- 12749 words of font info for 47 fonts, out of 8000000 for 9000
+ 7210 strings out of 492167
+ 99307 string characters out of 6131558
+ 362302 words of memory out of 5000000
+ 11373 multiletter control sequences out of 15000+600000
+ 13050 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,8n,46p,640b,1452s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pf
 b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
-usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (24 pages, 166204 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (25 pages, 178868 bytes).
 PDF statistics:
- 137 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
+ 146 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
