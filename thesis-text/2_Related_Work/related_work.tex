@@ -40,8 +40,8 @@ We can simply show it with an example. Let $A=\{t\},B=\{t\},C=\{t\}$. The LHS co
 \subsection{Select operator $\sigma$}
 First we start with simple properties of the $\sigma$ operator.
 \begin{itemize}
-    \item $\sigma_{C_1} \land \sigma_{C_2}(R) = \sigma_{C_1}(\sigma_{C_2}(R)) $
-    \item $\sigma_{C_1} \lor \sigma_{C_2}(R) = (\sigma_{C_1}(R))\cup_S(\sigma_{C_2}(R))$
+    \item $\sigma_{C_1 \land C_2}(R) = \sigma_{C_1}(\sigma_{C_2}(R)) $
+    \item $\sigma_{C_1 \lor C_2}(R) = (\sigma_{C_1}(R))\cup_S(\sigma_{C_2}(R))$
 \end{itemize}
 \section{Converting Parse trees into logical expression}
 \section{Explain difficulties/ Time complexity}
