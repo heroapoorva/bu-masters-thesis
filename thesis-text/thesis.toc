@@ -10,7 +10,7 @@
 \contentsline {subsection}{\numberline {2.3.1}Select operator $\sigma $}{4}% 
 \contentsline {subsection}{\numberline {2.3.2}Projection operator $\pi $}{4}% 
 \contentsline {subsection}{\numberline {2.3.3}Duplicate Elimination operator $\delta $}{5}% 
-\contentsline {subsection}{\numberline {2.3.4}Aggregation operator $\gamma $}{6}% 
+\contentsline {subsection}{\numberline {2.3.4}Aggregation operator $\gamma $}{5}% 
 \contentsline {section}{\numberline {2.4}Converting Parse trees into logical expression}{6}% 
 \contentsline {section}{\numberline {2.5}Explain difficulties/ Time complexity}{6}% 
 \contentsline {section}{\numberline {2.6}Optimzation using relation algebra}{6}% 

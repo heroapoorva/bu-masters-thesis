@@ -19,6 +19,8 @@ This query is essentially asking to display the 2 columns from the table where t
 
 \section{Converting SQL queries to parse trees}
 We don't describe the exact grammar for the convertion to the parse tree. In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
+
+
 \section{Relational algebra}
 As we saw above, order of operations matters, if the order of operations is not thoughtout and done blindly alot of redundant steps are executed and memory is moved around unnecessarily. There are few ways to atleast look and analyse the operations and how they can be simplied.
 \par Let \textsc{R,S} be relations. Some simple laws, associativity and commutativity can easily be verified:-
@@ -39,6 +41,7 @@ $A\cap _S(B\cup_S C) = (A\cap_S B)\cup_S(A\cap_S C)$\\
 $A\cap _B(B\cup_B C) \neq (A\cap_B B)\cup_B(A\cap_B C)$
 \end{center}
 We can simply show it with an example. Let $A=\{t\},B=\{t\},C=\{t\}$. The LHS comes to be $\{t\}$, whereas RHS is $\{t,t\}$
+
 \subsection{Select operator $\sigma$}
 First we start with simple properties of the $\sigma$ operator. Need to be careful about the attributes used in the select operator condition when pushing it down.
 \begin{itemize}
@@ -51,6 +54,7 @@ First we start with simple properties of the $\sigma$ operator. Need to be caref
     \item $\sigma_{C}(R \underset{D}{\bowtie} S) = \sigma_{C}(R) \underset{D}{\bowtie} S$
     \item $\sigma_{C}(R \cap S) = \sigma_{C}(R) \cap S$
 \end{itemize}
+
 \subsection{Projection operator $\pi$}
 While for the Select operator($\sigma$) the identities were quite straight forward with not many things to consider, the identities for Projection operator ($\pi$) are bit more involved.
 \begin{itemize}
@@ -60,6 +64,7 @@ While for the Select operator($\sigma$) the identities were quite straight forwa
     \item $\pi_{L}(R \cup_{B} S) = \pi_{L}(R) \cup_{B} \pi_{L}(S)$
     \item $\pi_{L}(\sigma_{C}(R))=\pi_{L}(\sigma_{C}(\pi_{M}(R))$
 \end{itemize}
+
 \subsection{Duplicate Elimination operator $\delta$}
 The $\delta$ operator eliminates duplicates from bags. 
 \begin{itemize}
@@ -70,7 +75,14 @@ The $\delta$ operator eliminates duplicates from bags.
     \item $\delta(\sigma_{C}(R)) = \sigma_{C}(\delta(R))$
     \item $\delta(R \cap_{B} S) = \delta(R) \cap_{B} S$
 \end{itemize}
+
 \subsection{Aggregation operator $\gamma$}
+It is difficult to give identities for the aggregation operator, like done for the above operators. This is mostly due to how the details of how the aggregation operator is used.
+\begin{itemize}
+    \item $\sigma(\gamma_{L}(R)) = \gamma_{L}(R)$
+    \item $\gamma_{L}(R) = \gamma_{L}(\pi_{M}(R)),$ where $M$ must at least contain the attributed used in $L$.
+    \item 
+\end{itemize}
 \section{Converting Parse trees into logical expression}
 \section{Explain difficulties/ Time complexity}
 \section{Optimzation using relation algebra}
