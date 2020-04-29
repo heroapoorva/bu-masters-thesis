@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  24 APR 2020 01:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  28 APR 2020 08:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -509,12 +509,12 @@ File: lstlang1.sty 2019/09/10 1.8c listings language file
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
  [3] [4] [5]
-[6] [7]) [8]
+[6] [7] [8]) [9]
 \openout2 = `3_Stream_Optimization/stream_optimization.aux'.
 
  (./3_Stream_Optimization/stream_optimization.tex
 Chapter 3.
-) [9
+) [10
 
 
 
@@ -524,7 +524,7 @@ Chapter 3.
 
  (./4_Implementation/implementation.tex
 Chapter 4.
-) [10
+) [11
 
 
 
@@ -534,7 +534,7 @@ Chapter 4.
 
  (./5_Evaluation/evaluation.tex
 Chapter 5.
-) [11
+) [12
 
 
 
@@ -544,7 +544,7 @@ Chapter 5.
 
  (./6_Conclusion/conclusion.tex
 Chapter 6.
-) [12
+) [13
 
 
 
@@ -554,7 +554,7 @@ Chapter 6.
 
  (./Appendix/Appendix.tex
 Appendix A.
-) [13
+) [14
 
 
 
@@ -563,7 +563,7 @@ Appendix A.
 No file thesis.bbl.
 \openout2 = `0_Prelim/cv.aux'.
 
-(./0_Prelim/cv.tex) [14
+(./0_Prelim/cv.tex) [15
 
 
 
@@ -584,7 +584,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  7210 strings out of 492167
  99307 string characters out of 6131558
- 362304 words of memory out of 5000000
+ 362305 words of memory out of 5000000
  11373 multiletter control sequences out of 15000+600000
  13050 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -602,10 +602,10 @@ onts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
 fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (26 pages, 179739 bytes).
+Output written on thesis.pdf (27 pages, 182682 bytes).
 PDF statistics:
- 149 PDF objects out of 1000 (max. 8388607)
- 104 compressed objects within 2 object streams
+ 152 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

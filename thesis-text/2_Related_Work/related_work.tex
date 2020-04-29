@@ -52,6 +52,25 @@ First we start with simple properties of the $\sigma$ operator. Need to be caref
     \item $\sigma_{C}(R \cap S) = \sigma_{C}(R) \cap S$
 \end{itemize}
 \subsection{Projection operator $\pi$}
+While for the Select operator($\sigma$) the identities were quite straight forward with not many things to consider, the identities for Projection operator ($\pi$) are bit more involved.
+\begin{itemize}
+    \item $\pi_{L}(R \bowtie S) = \pi_{L}(\pi_{M}(R) \bowtie \pi_{N}(S))$, where $M,N$ are attributes required for the join or they are inputs to the projection.
+    \item $\pi_{L}(R \underset{D}{\bowtie} S) = \pi_{L}(\pi_{M}(R) \underset{D}{\bowtie} \pi_{N}(S))$, similar to above identity/ law.
+    \item $\pi_{L}(R \times S) = \pi_{L}(\pi_{M}(R) \times \pi_{N}(S))$
+    \item $\pi_{L}(R \cup_{B} S) = \pi_{L}(R) \cup_{B} \pi_{L}(S)$
+    \item $\pi_{L}(\sigma_{C}(R))=\pi_{L}(\sigma_{C}(\pi_{M}(R))$
+\end{itemize}
+\subsection{Duplicate Elimination operator $\delta$}
+The $\delta$ operator eliminates duplicates from bags. 
+\begin{itemize}
+    \item $\delta(R)= R,$ if $R$ does not have any duplicates.
+    \item $\delta(R \times S) = \delta(R) \times \delta(S)$
+    \item $\delta(R \bowtie S) = \delta(R) \bowtie \delta(S)$
+    \item $\delta(R \underset{D}{\bowtie} S) = \delta(R) \underset{D}{\bowtie} \delta(S)$
+    \item $\delta(\sigma_{C}(R)) = \sigma_{C}(\delta(R))$
+    \item $\delta(R \cap_{B} S) = \delta(R) \cap_{B} S$
+\end{itemize}
+\subsection{Aggregation operator $\gamma$}
 \section{Converting Parse trees into logical expression}
 \section{Explain difficulties/ Time complexity}
 \section{Optimzation using relation algebra}
