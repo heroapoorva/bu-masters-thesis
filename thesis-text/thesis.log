@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  29 APR 2020 08:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  30 APR 2020 12:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -365,7 +365,19 @@ Package: appendix 2009/09/02 v1.2b extra appendix facilities
 \c@@pps=\count131
 \c@@ppsavesec=\count132
 \c@@ppsaveapp=\count133
-) (./thesis.aux)
+) (./thesis.aux
+(./0_Prelim/prelim.aux) (./1_Intro/intro.aux)
+(./2_Related_Work/related_work.aux)
+(./3_Stream_Optimization/stream_optimization.aux)
+(./4_Implementation/implementation.aux) (./5_Evaluation/evaluation.aux
+
+LaTeX Warning: Label `chapter:stream_optimization' multiply defined.
+
+) (./6_Conclusion/conclusion.aux
+
+LaTeX Warning: Label `chapter:stream_optimization' multiply defined.
+
+) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
@@ -430,45 +442,44 @@ Overfull \hbox (7.9161pt too wide) in paragraph at lines 109--109
 
 (./0_Prelim/abs.tex) [6
 
-] (./thesis.toc)
+] (./thesis.toc
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [7
+
+
+])
 \tf@toc=\write4
 \openout4 = `thesis.toc'.
 
- [7
-
-
-] (./thesis.lot)
+ [8] (./thesis.lot)
 \tf@lot=\write5
 \openout5 = `thesis.lot'.
 
- [8
+
+[9
 
 
 ] (./thesis.lof)
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
-
-[9
+ [10
 
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 137
-.
- (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 137
-.
-
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
 Overfull \hbox (38.49323pt too wide) in paragraph at lines 137--148
  [] 
  []
 
-[10
+[11
 
 
 ])
@@ -562,7 +573,7 @@ No file thesis.bbl.
 (./4_Implementation/implementation.aux) (./5_Evaluation/evaluation.aux)
 (./6_Conclusion/conclusion.aux) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  )
 (\end occurred inside a group at level 2)
@@ -571,10 +582,10 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 ### simple group (level 1) entered at line 1 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7183 strings out of 492167
- 98587 string characters out of 6131558
- 357442 words of memory out of 5000000
- 11364 multiletter control sequences out of 15000+600000
+ 7210 strings out of 492167
+ 99307 string characters out of 6131558
+ 362305 words of memory out of 5000000
+ 11373 multiletter control sequences out of 15000+600000
  13050 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,8n,46p,640b,1452s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -591,10 +602,10 @@ onts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
 fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (26 pages, 176264 bytes).
+Output written on thesis.pdf (27 pages, 183399 bytes).
 PDF statistics:
- 149 PDF objects out of 1000 (max. 8388607)
- 104 compressed objects within 2 object streams
+ 152 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
