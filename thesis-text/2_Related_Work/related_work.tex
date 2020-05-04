@@ -18,6 +18,10 @@ A database can be thought of as a list of tables, where in each table itself can
 This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer.
 
 \section{Converting SQL queries to parse trees}
+This step has several functions.
+\par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
+\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking.
+If a parse tree passes the preprocessing then it is said to be \textbf{valid}
 We don't describe the exact grammar for the convertion to the parse tree. In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
 
 
@@ -81,10 +85,27 @@ It is difficult to give identities for the aggregation operator, like done for t
 \begin{itemize}
     \item $\sigma(\gamma_{L}(R)) = \gamma_{L}(R)$
     \item $\gamma_{L}(R) = \gamma_{L}(\pi_{M}(R)),$ where $M$ must at least contain the attributed used in $L$.
-    \item 
 \end{itemize}
 \section{Converting Parse trees into logical expression}
-Till now, the only SQL related information presented is how to convert a Query into the parse tree, which is grammar dependent.
+Till now, the only SQL related information presented is how to convert a Query into the parse tree, which is grammar dependent. Given the parse tree, need to substitute nodes by operators seen above, later this expression is optimized to be later converted to a physical query plan.
+\par Now to convert the parse tree into the logical expression. First, look at the transformation of select-from-where statement.
+\begin{itemize}
+\item $<Query> \rightarrow <SFW>.$
+\item $<SFW> \rightarrow SELECT <SelList> FROM <FromList> WHERE <Condition>.$
+\item $<SelList> \rightarrow \pi_{L}$, where $L$ is the list of attributes in $<SelList>.$
+\item $<Condition> \rightarrow \sigma_{C},$ where $C$ is the equivalent of $<Condition>$ 
+\end{itemize}
+While there is nothign inherently wrong about the last statement, need to consider the case where $<Condition>$ involves subqueries. A simple explanation about why it isn't allowed is a convention normally the subscript has to be a boolean condition, and if it was allowed otherwise, it would be a very expensive operation, as the subscript in the select operator has to evaluted at every element of the argument relation. This shows the redundance of it. While if this is allowed, it can be simplified and made efficient, but has to be done on a case by case basis with the use of $\bowtie, \times$ functions.
+\par Overall it is a good idea to not use subquerying and rather using joins.
+\par At this point, by making the substitutions mentioned above and using the algebraic identities, we obtain a starting logical query plan. The query has to be transformed into a query which the compiler believes to be the cheapest or the optimal. But, a thing which further complicates the process is the join order.
+\par With the current knowledge, few optimizing rules are evident.
+\begin{itemize}
+    \item \textbf{Selection repositioning}, Selections should be pushed down as much as possbile, but sometimes, might need to take the selection operator a level up first.
+    \item Pushing projections down the parse tree, being careful with the new projections made in the process.
+    \item Duplicate removal needs to be repositioned.
+    \item $\sigma$ combined with $\times$ below can result in equijoin, which is much more efficient. 
+\end{itemize}
+\par While 
 \section{Explain difficulties/ Time complexity}
 \section{Optimzation using relation algebra}
 \section{Introduction to Data Streams}
@@ -94,16 +115,13 @@ Till now, the only SQL related information presented is how to convert a Query i
 \section{Conclusion and discussion}
 
 
+
+\begin{comment}
+
 \section{SQL Query compiler}
-\label{sec:sql}
 The steps involved are
 \subsection{Parsing}
 In a very general sense, given an SQL query, SQL converts it into a parse tree based on SQL grammar.
-\subsection{Preprocessing}
-This step has several functions.
-\par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
-\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking.
-If a parse tree passes the preprocessing then it is said to be \textbf{valid}
 \subsection{Logical Query Plan}
 The first step is to modify the parse tree into using operators and operators of relational algebra.
 \par The next step is to convert expression obtained from the above substitution and modify it into an expression which can be converted to most efficient physical query plan.
@@ -155,7 +173,7 @@ We are still not certain about how the cost function $J$ is structured. We are s
 
 We are still not certain about how the cost function $J$ is structured.
 
-
+\end{comment}
 
 
 
