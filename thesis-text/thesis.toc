@@ -13,19 +13,22 @@
 \contentsline {subsection}{\numberline {2.3.4}Aggregation operator $\gamma $}{6}% 
 \contentsline {section}{\numberline {2.4}Converting Parse trees into logical expression}{6}% 
 \contentsline {section}{\numberline {2.5}Explain difficulties/ Time complexity}{8}% 
-\contentsline {section}{\numberline {2.6}Optimzation using relation algebra}{8}% 
-\contentsline {section}{\numberline {2.7}Introduction to Data Streams}{8}% 
-\contentsline {section}{\numberline {2.8}Data stream windowing}{8}% 
-\contentsline {section}{\numberline {2.9}Query Processing of data streams(Combine the DBMS and DSMS)}{8}% 
-\contentsline {section}{\numberline {2.10}Challenges of query optimization on data streams}{8}% 
-\contentsline {section}{\numberline {2.11}Conclusion and discussion}{8}% 
-\contentsline {chapter}{\numberline {3}Stream Optimization}{9}% 
-\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{9}% 
-\contentsline {chapter}{\numberline {4}Implementation}{10}% 
-\contentsline {section}{\numberline {4.1}Query Optimization of Data Streams}{10}% 
-\contentsline {chapter}{\numberline {5}Stream Optimization}{11}% 
-\contentsline {section}{\numberline {5.1}Query Optimization of Data Streams}{11}% 
-\contentsline {chapter}{\numberline {6}Stream Optimization}{12}% 
-\contentsline {section}{\numberline {6.1}Query Optimization of Data Streams}{12}% 
-\contentsline {chapter}{\numberline {A}Proof of xyz}{13}% 
-\contentsline {chapter}{Curriculum Vitae}{14}% 
+\contentsline {subsection}{\numberline {2.5.1}Estimating size and cost}{9}% 
+\contentsline {subsection}{\numberline {2.5.2}Estimation of Projection}{9}% 
+\contentsline {subsection}{\numberline {2.5.3}Estimation of Selection}{10}% 
+\contentsline {subsection}{\numberline {2.5.4}Estimation of Join, single attribute}{10}% 
+\contentsline {section}{\numberline {2.6}Introduction to Data Streams}{11}% 
+\contentsline {section}{\numberline {2.7}Data stream windowing}{11}% 
+\contentsline {section}{\numberline {2.8}Query Processing of data streams(Combine the DBMS and DSMS)}{11}% 
+\contentsline {section}{\numberline {2.9}Challenges of query optimization on data streams}{11}% 
+\contentsline {section}{\numberline {2.10}Conclusion and discussion}{11}% 
+\contentsline {chapter}{\numberline {3}Stream Optimization}{12}% 
+\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{12}% 
+\contentsline {chapter}{\numberline {4}Implementation}{13}% 
+\contentsline {section}{\numberline {4.1}Mathematics}{13}% 
+\contentsline {chapter}{\numberline {5}Evaluation}{14}% 
+\contentsline {section}{\numberline {5.1}Measures used}{14}% 
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{15}% 
+\contentsline {section}{\numberline {6.1}Conclusion}{15}% 
+\contentsline {chapter}{\numberline {A}Proof of xyz}{16}% 
+\contentsline {chapter}{Curriculum Vitae}{17}% 

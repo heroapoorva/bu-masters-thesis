@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  4 MAY 2020 08:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  4 MAY 2020 17:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -96,28 +96,61 @@ Package: amssymb 2013/01/14 v3.01 AMS font symbols
 \CommentStream=\write3
 
 Excluding comment 'comment')
-(/usr/share/texmf-dist/tex/latex/listings/listings.sty
+(/usr/share/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2019/07/31 v1.22 mathematical typesetting tools
+
 (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
 )
-\lst@mode=\count101
+(/usr/share/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count101
+\calc@Bcount=\count102
+\calc@Adimen=\dimen112
+\calc@Bdimen=\dimen113
+\calc@Askip=\skip46
+\calc@Bskip=\skip47
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count103
+\calc@Cskip=\skip48
+)
+(/usr/share/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count104
+\l_MT_multwidth_dim=\dimen114
+\origjot=\skip49
+\l_MT_shortvdotswithinadjustabove_dim=\dimen115
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen116
+\l_MT_above_intertext_sep=\dimen117
+\l_MT_below_intertext_sep=\dimen118
+\l_MT_above_shortintertext_sep=\dimen119
+\l_MT_below_shortintertext_sep=\dimen120
+)
+(/usr/share/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count105
 \lst@gtempboxa=\box29
 \lst@token=\toks20
-\lst@length=\count102
-\lst@currlwidth=\dimen112
-\lst@column=\count103
-\lst@pos=\count104
-\lst@lostspace=\dimen113
-\lst@width=\dimen114
-\lst@newlines=\count105
-\lst@lineno=\count106
-\lst@maxwidth=\dimen115
+\lst@length=\count106
+\lst@currlwidth=\dimen121
+\lst@column=\count107
+\lst@pos=\count108
+\lst@lostspace=\dimen122
+\lst@width=\dimen123
+\lst@newlines=\count109
+\lst@lineno=\count110
+\lst@maxwidth=\dimen124
 
 (/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
-\c@lstnumber=\count107
-\lst@skipnumbers=\count108
+\c@lstnumber=\count111
+\lst@skipnumbers=\count112
 \lst@framebox=\box30
 )
 (/usr/share/texmf-dist/tex/latex/listings/listings.cfg
@@ -147,11 +180,11 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
 (/usr/share/texmf-dist/tex/generic/bibtex/apalike.sty
-\bibhang=\skip46
+\bibhang=\skip50
 )
 (/usr/share/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count109
+\c@float@type=\count113
 \float@exts=\toks21
 \float@box=\box31
 \@float@everytoks=\toks22
@@ -163,38 +196,38 @@ Package: caption 2019/09/01 v3.3d Customizing captions (AR)
 (/usr/share/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2019/09/01 v1.8d caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 64.
-\captionmargin=\dimen116
-\captionmargin@=\dimen117
-\captionwidth=\dimen118
-\caption@tempdima=\dimen119
-\caption@indent=\dimen120
-\caption@parindent=\dimen121
-\caption@hangindent=\dimen122
+\captionmargin=\dimen125
+\captionmargin@=\dimen126
+\captionwidth=\dimen127
+\caption@tempdima=\dimen128
+\caption@indent=\dimen129
+\caption@parindent=\dimen130
+\caption@hangindent=\dimen131
 )
-\c@caption@flags=\count110
-\c@ContinuedFloat=\count111
+\c@caption@flags=\count114
+\c@ContinuedFloat=\count115
 Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
 )
 (/usr/share/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footer
 s
-\f@nch@headwidth=\skip47
-\f@nch@O@elh=\skip48
-\f@nch@O@erh=\skip49
-\f@nch@O@olh=\skip50
-\f@nch@O@orh=\skip51
-\f@nch@O@elf=\skip52
-\f@nch@O@erf=\skip53
-\f@nch@O@olf=\skip54
-\f@nch@O@orf=\skip55
+\f@nch@headwidth=\skip51
+\f@nch@O@elh=\skip52
+\f@nch@O@erh=\skip53
+\f@nch@O@olh=\skip54
+\f@nch@O@orh=\skip55
+\f@nch@O@elf=\skip56
+\f@nch@O@erf=\skip57
+\f@nch@O@olf=\skip58
+\f@nch@O@orf=\skip59
 )
 (/usr/share/texmf-dist/tex/latex/fancybox/fancybox.sty
 Package: fancybox 2010/05/15 1.4
 
 Style option: `fancybox' v1.4 <2010/05/15> (tvz)
 \@fancybox=\box33
-\shadowsize=\dimen123
+\shadowsize=\dimen132
 \@Sbox=\box34
 \do@VerbBox=\toks23
 \the@fancyput=\toks24
@@ -208,8 +241,8 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 (/usr/share/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-\degree=\count112
-\numadvisors=\count113
+\degree=\count116
+\numadvisors=\count117
 \@approvalreader=\box35
 )
 (/usr/share/texmf-dist/tex/latex/url/url.sty
@@ -295,39 +328,39 @@ e
 )))
 (/usr/share/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count114
-\sf@farskip=\skip56
-\sf@captopadj=\dimen124
-\sf@capskip=\skip57
-\sf@nearskip=\skip58
-\c@subfigure=\count115
-\c@subfigure@save=\count116
-\c@lofdepth=\count117
-\c@subtable=\count118
-\c@subtable@save=\count119
-\c@lotdepth=\count120
-\sf@top=\skip59
-\sf@bottom=\skip60
+\c@KVtest=\count118
+\sf@farskip=\skip60
+\sf@captopadj=\dimen133
+\sf@capskip=\skip61
+\sf@nearskip=\skip62
+\c@subfigure=\count119
+\c@subfigure@save=\count120
+\c@lofdepth=\count121
+\c@subtable=\count122
+\c@subtable@save=\count123
+\c@lotdepth=\count124
+\sf@top=\skip63
+\sf@bottom=\skip64
 )
 (/usr/share/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2019/03/01 v1.8w multicolumn formatting (FMi)
-\c@tracingmulticols=\count121
+\c@tracingmulticols=\count125
 \mult@box=\box38
-\multicol@leftmargin=\dimen125
-\c@unbalance=\count122
-\c@collectmore=\count123
-\doublecol@number=\count124
-\multicoltolerance=\count125
-\multicolpretolerance=\count126
-\full@width=\dimen126
-\page@free=\dimen127
-\premulticols=\dimen128
-\postmulticols=\dimen129
-\multicolsep=\skip61
-\multicolbaselineskip=\skip62
+\multicol@leftmargin=\dimen134
+\c@unbalance=\count126
+\c@collectmore=\count127
+\doublecol@number=\count128
+\multicoltolerance=\count129
+\multicolpretolerance=\count130
+\full@width=\dimen135
+\page@free=\dimen136
+\premulticols=\dimen137
+\postmulticols=\dimen138
+\multicolsep=\skip65
+\multicolbaselineskip=\skip66
 \partial@page=\box39
 \last@line=\box40
-\maxbalancingoverflow=\dimen130
+\maxbalancingoverflow=\dimen139
 \mult@rightbox=\box41
 \mult@grightbox=\box42
 \mult@gfirstbox=\box43
@@ -349,67 +382,60 @@ Package: multicol 2019/03/01 v1.8w multicolumn formatting (FMi)
 \@tempa=\box59
 \@tempa=\box60
 \@tempa=\box61
-\c@minrows=\count127
-\c@columnbadness=\count128
-\c@finalcolumnbadness=\count129
-\last@try=\dimen131
-\multicolovershoot=\dimen132
-\multicolundershoot=\dimen133
+\c@minrows=\count131
+\c@columnbadness=\count132
+\c@finalcolumnbadness=\count133
+\last@try=\dimen140
+\multicolovershoot=\dimen141
+\multicolundershoot=\dimen142
 \mult@nat@firstbox=\box62
 \colbreak@box=\box63
-\mc@col@check@num=\count130
+\mc@col@check@num=\count134
 )
 (/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-\Gin@req@height=\dimen134
-\Gin@req@width=\dimen135
+\Gin@req@height=\dimen143
+\Gin@req@width=\dimen144
 )
 (/usr/share/texmf-dist/tex/latex/appendix/appendix.sty
 Package: appendix 2009/09/02 v1.2b extra appendix facilities
-\c@@pps=\count131
-\c@@ppsavesec=\count132
-\c@@ppsaveapp=\count133
+\c@@pps=\count135
+\c@@ppsavesec=\count136
+\c@@ppsaveapp=\count137
 ) (./thesis.aux
 (./0_Prelim/prelim.aux) (./1_Intro/intro.aux)
 (./2_Related_Work/related_work.aux)
 (./3_Stream_Optimization/stream_optimization.aux)
-(./4_Implementation/implementation.aux) (./5_Evaluation/evaluation.aux
-
-LaTeX Warning: Label `chapter:stream_optimization' multiply defined.
-
-) (./6_Conclusion/conclusion.aux
-
-LaTeX Warning: Label `chapter:stream_optimization' multiply defined.
-
-) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
+(./4_Implementation/implementation.aux) (./5_Evaluation/evaluation.aux)
+(./6_Conclusion/conclusion.aux) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-\c@lstlisting=\count134
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+\c@lstlisting=\count138
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count135
-\scratchdimen=\dimen136
+\scratchcounter=\count139
+\scratchdimen=\dimen145
 \scratchbox=\box64
-\nofMPsegments=\count136
-\nofMParguments=\count137
+\nofMPsegments=\count140
+\nofMParguments=\count141
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count138
-\MPscratchDim=\dimen137
-\MPnumerator=\count139
-\makeMPintoPDFobject=\count140
+\MPscratchCnt=\count142
+\MPscratchDim=\dimen146
+\MPnumerator=\count143
+\makeMPintoPDFobject=\count144
 \everyMPtoPDFconversion=\toks29
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -513,13 +539,13 @@ File: lstlang1.sty 2019/09/10 1.8c listings language file
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 32.
  [3] [4] [5]
-[6] Excluding 'comment' comment.) [7] [8]
+[6] [7] [8] [9] Excluding 'comment' comment.) [10] [11]
 \openout2 = `3_Stream_Optimization/stream_optimization.aux'.
 
 
 (./3_Stream_Optimization/stream_optimization.tex
 Chapter 3.
-) [9
+) [12
 
 
 
@@ -529,7 +555,7 @@ Chapter 3.
 
  (./4_Implementation/implementation.tex
 Chapter 4.
-) [10
+) [13
 
 
 
@@ -539,7 +565,7 @@ Chapter 4.
 
  (./5_Evaluation/evaluation.tex
 Chapter 5.
-) [11
+) [14
 
 
 
@@ -549,7 +575,7 @@ Chapter 5.
 
  (./6_Conclusion/conclusion.tex
 Chapter 6.
-) [12
+) [15
 
 
 
@@ -559,7 +585,7 @@ Chapter 6.
 
  (./Appendix/Appendix.tex
 Appendix A.
-) [13
+) [16
 
 
 
@@ -568,7 +594,7 @@ Appendix A.
 No file thesis.bbl.
 \openout2 = `0_Prelim/cv.aux'.
 
-(./0_Prelim/cv.tex) [14
+(./0_Prelim/cv.tex) [17
 
 
 
@@ -576,21 +602,18 @@ No file thesis.bbl.
 (./1_Intro/intro.aux) (./2_Related_Work/related_work.aux)
 (./3_Stream_Optimization/stream_optimization.aux)
 (./4_Implementation/implementation.aux) (./5_Evaluation/evaluation.aux)
-(./6_Conclusion/conclusion.aux) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
-
-LaTeX Warning: There were multiply-defined labels.
-
- )
+(./6_Conclusion/conclusion.aux) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux)) 
+)
 (\end occurred inside a group at level 2)
 
 ### simple group (level 2) entered at line 3 ({)
 ### simple group (level 1) entered at line 1 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7246 strings out of 492167
- 99888 string characters out of 6131558
- 363134 words of memory out of 5000000
- 11405 multiletter control sequences out of 15000+600000
+ 7799 strings out of 492167
+ 109625 string characters out of 6131558
+ 375232 words of memory out of 5000000
+ 11948 multiletter control sequences out of 15000+600000
  13050 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,8n,46p,661b,1452s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -599,16 +622,17 @@ b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/shar
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.p
-fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (26 pages, 162164 bytes).
+/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pf
+b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (29 pages, 181643 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
+ 154 PDF objects out of 1000 (max. 8388607)
+ 107 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

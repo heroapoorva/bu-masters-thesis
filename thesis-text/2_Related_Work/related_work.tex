@@ -105,13 +105,76 @@ While there is nothign inherently wrong about the last statement, need to consid
     \item Duplicate removal needs to be repositioned.
     \item $\sigma$ combined with $\times$ below can result in equijoin, which is much more efficient. 
 \end{itemize}
-\par While 
+\par Normally, parsers only have nodes with $0, 1, 2$ children, which corresponds to uniary and binary operators. But many of the operators(natural join, union, and intersection) are commutative and associative, so it helps combine them on a single level to provide the opportunity to prioritize which ones are done first. To do this step, the following guidelines are sufficient.
+\begin{itemize}
+    \item We must replace the natural joins with theta-joins that equate the at­ tributes of the same name.
+    \item We must add a projection to eliminate duplicate copies of attributes in­volved in a natural join that has become a theta-join
+    \item The theta-join conditions must be associative.
+\end{itemize}
 \section{Explain difficulties/ Time complexity}
-\section{Optimzation using relation algebra}
+Currently, we have taken a query as an input and converted it into a logical plan, and then applied more transformation using relational algebra to make the optimal query plan. The next step is to convert it into a physical query plan which can be executed. To complete this step, need to compare the cost of various physical query plan derived from the logical query plan. This plan with the least cost is then passed query execution engine and executed. When trying to select a query plan, need to select:-
+\begin{itemize}
+    \item An order and grouping for associative-and-commutative operations like
+joins, unions, and intersections.
+    \item An algorithm for each operator in the logical plan, for instance, deciding whether a nested-loop join or a hash-join should be used.
+    \item Additional operators - scanning, sorting, and so on that are needed for the physical plan but that were not present explicitly in the logical plan.
+    \item The way in which arguments are passed from one operator to the next, for instance, by storing the intermediate result on disk or by using iterators and passing an argument one tuple or one main-memory buffer at a time.
+\end{itemize}
+But after selecting these for a physical plan, one obivious way to calculate the time is actually executing the plan to see the cost, but that way essentially every plan is carried out. That is expensive and redundant. Is there a better way?
+
+\subsection{Estimating size and cost}
+$B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of relation $R$.\\
+$T(R) \coloneqq$ is the number of tuples of relation $R$.\\
+$V(R,a) \coloneqq$ is the value count for attribute a of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.\\
+$V(R, [ a_1 , a_2,..., a_n]) \coloneqq$ is the number of distinct values $R$ has when all of attributes $a_1, a_2,..., a_n$ are considered together, that is, the number of tuples in $\delta(\pi_{a_1,a_2,...,a_n}(R))$
+\par Need to remember that physical plan is selected to minimize the estimated cost of evaluating the query and that intermidate/ temporary relations calculated will also incur a cost on the system. So need to take them into account as well. Over all the estimation method should pass the following sanity check:-
+\begin{itemize}
+    \item Give accurate estimates. No matter what method is used for executing query plans.
+    \item Are easy to compute.
+    \item Are logically consistent; that is, the size estimate for an intermediate re­lation should not depend on how that relation is computed. For instance, the size estimate for a join of several relations should not depend on the order in which we join the relations.
+\end{itemize}
+But there is no agreed upon method to do this, but the goal is to help select a query plan and not to find the exact minimum. So even if the estimated cost is wrong, but if it is wrong similarly then we will still have the least costing plan.
+
+\subsection{Estimation of Projection}
+The projection operator is a bag operation, so it does not reduce the number of tuples, only reduces the size of each tuple.\\
+$T(R) = T(\pi(R))$\\
+$B(R) \leq B(\pi(R))$
+
+\subsection{Estimation of Selection}
+Let $S = \sigma_{A=c}(R)$, here $A$ is an attribute of $R$ and $c$ is a constant\\
+$T(S)=\frac{T(R)}{V(R,A)}$, is it important to note that this is an estimate and not the actual value, this will be the actual value if all the attributes in $A$ have equal occurance. An even better estimate can be obtained if the DBMS stores a statistic know as histogram. 
+\par The above calculate was easy because of the equality. if $S=\sigma_{A < c}(R)$, we simply estimate $T(S)=\frac{T(R)}{3}$
+\par Now if $S=\sigma_{A\neq c}(R)$, can take $T(S)=T(R)$ or $T(S)= T(R) - \frac{T(R)}{V(R,A)}$
+\par If $S=\sigma_{A = c_1 \lor c_2}$, take them to be independent conditions.
+
+\subsection{Estimation of Join, single attribute}
+For natural joins, we assume, the natural join of two relations involves only the equality of two attributes. That is, we study the
+join $R(X, Y) \bowtie S(Y, Z)$ , but initially we assume that $Y$ is a single attribute although X and Z can represent any set of attributes. But it is hard to find a good estimate as $T(R\bowtie S) \in [0, T(R)*T(S)]$, to help with this two assumptions are made.
+\begin{itemize}
+    \item 
+    \item 
+\end{itemize}
+
+Guidelines for other type of joins:-
+\begin{itemize}
+    \item The number of tuples in the result of an equijoin can be computed exactly as for a natural join, after accounting for the change in variable names.
+    \item Other theta-joins can be estimated as if they were a selection following a
+product, with the following additional observations:
+\end{itemize}
+
+
 \section{Introduction to Data Streams}
+
+
 \section{Data stream windowing}
+
+
 \section{Query Processing of data streams(Combine the DBMS and DSMS)}
+
+
 \section{Challenges of query optimization on data streams}
+
+
 \section{Conclusion and discussion}
 
 
