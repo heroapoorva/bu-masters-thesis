@@ -20,7 +20,17 @@ This query is essentially asking to display the 2 columns from the table where t
 \section{Converting SQL queries to parse trees}
 This step has several functions.
 \par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
-\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking.
+\par The preprocessor also has to conduct semaContainment of Value Sets. If Y is an attribute appearing in several rela­
+tions, then each relation chooses its values from the front of a fixed list of
+values y1 , y2 , y3 ,
+and has all the values in that prefix. As a consequence,
+if R and S are two relations with an attributContainment of Value Sets. If Y is an attribute appearing in several rela­
+tions, then each relation chooses its values from the front of a fixed list of
+values y1 , y2 , y3 ,
+and has all the values in that prefix. As a consequence,
+if R and S are two relations with an attribute Y, and V(R, Y) ::; V(S, Y ),
+then every Y-value o f R will be a Y-value of S.e Y, and V(R, Y) ::; V(S, Y ),
+then every Y-value o f R will be a Y-value of S.ntic checking, that is, check if relations used exist, check for ambiguity, and type checking.
 If a parse tree passes the preprocessing then it is said to be \textbf{valid}
 We don't describe the exact grammar for the convertion to the parse tree. In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
 
@@ -151,15 +161,17 @@ $T(S)=\frac{T(R)}{V(R,A)}$, is it important to note that this is an estimate and
 For natural joins, we assume, the natural join of two relations involves only the equality of two attributes. That is, we study the
 join $R(X, Y) \bowtie S(Y, Z)$ , but initially we assume that $Y$ is a single attribute although X and Z can represent any set of attributes. But it is hard to find a good estimate as $T(R\bowtie S) \in [0, T(R)*T(S)]$, to help with this two assumptions are made.
 \begin{itemize}
-    \item 
-    \item 
+    \item \textbf{Containment of Value Sets} If Y is an attribute appearing in several rela­tions, then each relation chooses its values from the front of a fixed list of values $y_1, y_2, y_3,...$ and has all the values in that prefix. As a consequence, if $R$ and $S$ are two relations with an attribute $Y$, and $V(R, Y) \leq V(S, Y)$, then every $Y$-value of $R$ will be a $Y$-value of $S$. 
+    \item \textbf{Preservation of Value Sets} If we join a relation $R$ with another relation, then an attribute A that is not a join attribute (i.e., not present in both relations) does not lose values from its set of possible values. More precisely, if $A$ is an attribute of $R$ but not of $S$, then $V(R \bowtie S, A) = V(R, A)$. Note that the order of joining $R$ and $S$ is not important, so we could just as well have said that $V(S \bowtie R, A) = V (R, A)$.
 \end{itemize}
-
-Guidelines for other type of joins:-
+\par Using the above assumptions we can claim, 
+$$T(R\bowtie S)=\frac{T(R)*T(S)}{max(V(R,Y), V(S,Y))}$$
+Let $V(R,Y) \leq V(S,Y)$, then every tuple $t$ of $R$ has a chance of $\frac{1}{V(S,Y)}$ of joining with a given tuple of $S$. Since there are $T(S)$ tuples in $S$, the expected number of tuples that $t$ joins with is $\frac{T(S)}{V(S, Y)}$. As there are
+$T(R)$ tuples of $R$, the estimated size of $R \bowtie S$ is $\frac{T(R)*T(S)}{V(S,Y)}$, if it was $V(R,Y) \geq V(S,Y)$, then $\frac{T(R)*T(S)}{V(R,Y)}$
+\par Guidelines for other type of joins:-
 \begin{itemize}
     \item The number of tuples in the result of an equijoin can be computed exactly as for a natural join, after accounting for the change in variable names.
-    \item Other theta-joins can be estimated as if they were a selection following a
-product, with the following additional observations:
+    \item Other theta-joins can be estimated as if they were a selection following a product.
 \end{itemize}
 
 
