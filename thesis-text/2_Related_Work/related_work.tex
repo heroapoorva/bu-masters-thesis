@@ -121,6 +121,8 @@ While there is nothign inherently wrong about the last statement, need to consid
     \item We must add a projection to eliminate duplicate copies of attributes in­volved in a natural join that has become a theta-join
     \item The theta-join conditions must be associative.
 \end{itemize}
+
+
 \section{Explain difficulties/ Time complexity}
 Currently, we have taken a query as an input and converted it into a logical plan, and then applied more transformation using relational algebra to make the optimal query plan. The next step is to convert it into a physical query plan which can be executed. To complete this step, need to compare the cost of various physical query plan derived from the logical query plan. This plan with the least cost is then passed query execution engine and executed. When trying to select a query plan, need to select:-
 \begin{itemize}
@@ -174,6 +176,188 @@ $T(R)$ tuples of $R$, the estimated size of $R \bowtie S$ is $\frac{T(R)*T(S)}{V
     \item Other theta-joins can be estimated as if they were a selection following a product.
 \end{itemize}
 
+\subsection{Estimation of Join, multiple attribute}
+Now we assume $Y$ in $R(X, Y) \bowtie S(Y, Z)$ represents multiple attributes. Say for example, $R(X, y_1, y_2) \bowtie S(y_1, y_2, Z)$. We again do a probability calculation.
+\par Let $r \in R, s \in S$ be a tuples, the probability that $r,s$ agree on $y_1$ is $\frac{1}{max(V(R,y_1), V(S,y_1))}$, similarly for $y_2$. So we get the expected value to be
+$$\frac{T(R)*T(S)}{max(V(R,y_1), V(S,y_1))*max(V(R,y_2), V(S,y_2))}$$ 
+From this the pattern is clear, need to divide $T(R)*T(S)$ by maximum of $V(R,y), V(S,y)$ for each attribute.
+\par But this is only the calculation for $T(R\bowtie S)$, need to calculate for $B(R\bowtie S)$ as well.
+
+\subsection{Multiple Joins}
+For this case we work with $S = R_1 \bowtie R_2 \bowtie ... \bowtie R_n$
+\par Here we have to make use of the containment assumption. Say the attribute $A$ appears in $k$ of $R_i$'s and the values corresponding to $V(R_i,A)$ are $v_1 \leq v_2 \leq ... \leq v_k$, need to find the probability that tuples agree on $A$.
+\par Consider the tuple $t_1$ chosen from the relation that has the small­est number of $A-$values, $v_1$ . By the containment assumption, each of these $v_1$ values is among the $A-$values found in the other relations that have attribute $A$. Consider the relation that has $V_i$ values in attribute $A$. Its selected tuple $t_i$ has probability $\frac{1}{v_1}$ of agreeing with $t_1$ on $A$. Since this claim is true for all $i \in \{2, 3,..., k\}$, the probability that all $k$ tuples agree on $A$ is the product $\frac{1}{v_2 * v_3 *...* V_k}$. This analysis gives us the rule for estimating the size of any join.
+\par Start with the product of the number of tuples in each relation. Then for each attribute A appearing at least twice, divide by all but the least of the $V(R, A)$'s
+
+\subsection{Union}
+If $U_B$ is used, it is the sum of the two individually. 
+\par If $U_S$ is used, then number of tuples range from the max of two, to their sum. So take mean of the range.
+
+\subsection{Intersection}
+The number of tuples here ranges from $0$ to the minimum of the two(in case of set intersection), so again can take the mean of this range.
+
+\subsection{Difference}
+The range for $R-S$ is $[T(R)-T(S),T(R)]$, so again mean of the range.
+
+\subsection{Duplicate Elimination}
+The range for $\delta(R)$ is $[1, T(R)]$, so again can take the mean, there can be other estimates as well.
+\par A nice compromise is $min(\frac{T(R)}{2}, \prod V(R,a_i))$
+
+\subsection{Grouping and Aggregation}
+Same as duplicate.
+
+
+\section{Other tools}
+We assume that the "cost" of evaluating an expression is approximated well by the number of disk I/O's performed. The number of disk I/O's, in turn, is influenced by:
+\begin{itemize}
+    \item The particular logical operators chosen to implement the query, a matter decided when we choose the logical query plan.
+    \item The sizes of intermediate results.
+    \item The physical operators used to implement logical operators, e.g., the choice of a one-pass or two-pass join, or the choice to sort or not sort a given relation.
+    \item The ordering of similar operations, especially joins.
+    \item The method of passing arguments from one physical operator to the next.
+\end{itemize}
+
+\subsection{Histogram}
+In the earlier section the statistics were heavily used in calculations. Another statistic that can be stored is the histogram.
+\par If $V (R, A)$ is not too large, then the histogram may consist of the number (or fraction) of the tuples having each of the values of attribute $A$. If there are a great many values of this attribute, then only the most frequent values may be recorded individually, while other values are counted in groups.
+\par \textbf{Equal-width} select 2 parameters, $w$ the width and $v_0$ a begining point of a column in the histogram, which will initally be the considered the lower bound and if an even lower value is noticed, make a smaller column as well and update the lower bound.
+\par \textbf{Equal-height} These are the common "percentiles". A percentile $p, 2p$, so on.
+\par \textbf{Most-frequent-values} List the most common values and their numbers of occurrences. This information may be provided along with a count of occurrences for all the other values as a group, or we may record frequent values in addition to an equal-width or equal-height histogram for the other values.
+
+\subsection{Heuristics}
+One important use of cost estimates for queries or subqueries is in the appli­cation of heuristic transformations of the query.
+\par Heuristics applied independent of cost estimates can be expected almost certainly to improve the cost of a logical query plan
+\par However, there are other points in the query optimization process where es­timating the cost both before and after a transformation will allow us to apply a transformation where it appears to reduce cost and avoid the transformation otherwise. In particular, when the preferred logical query plan is being generated, we may consider a number of optional transformations and the costs before and after. Because we are estimating the cost of a logical query plan, so we have not yet made decisions about the physical operators that will be used to implement the operators of relational algebra, our cost estimate cannot be based on disk I / O's. Rather, we estimate the sizes of all intermediate results their sum is our heuristic estimate for the cost of the entire logical plan.
+
+\section{Enumeration Methods}
+The naive method of find the least costing plan is enumerating all the possible plans and calculating the cost for them and then selecting the minimum one.
+\par \textbf{Top-Down} Here, we work down the tree of the logical query plan from the root. For each possible implementation of the operation at the root, we consider each possible way to evaluate its argument(s) , and compute the cost of each combination, taking the best.
+\par \textbf{Bottom-up} For each subexpression of the logical-query-plan tree, we com­pute the costs of all possible ways to compute that subexpression. The possibilities and costs for a subexpression E are computed by consider­ing the options for the subexpressions for E , and combining them in all possible ways with implementations for the root operator of E.
+\par There is actually not much difference between the two approaches in their broadest interpretations, since either way, all possible combinations of ways to implement each operator in the query tree are considered. When limiting the search, a top-down approach may allow us to eliminate certain options that could not be eliminated bottom-up. However, bottom-up strategies that limit choices effectively have also been developed. there is an apparent simplification of the bottom-up method, where we consider only the best plan for each subexpression when we compute the plans for a larger subexpression. This approach, called \textbf{dynamic programming}, is not guaranteed to yield the best plan, although often it does. The approach called Selinger-style (or System-R-style) optimization exploits additional properties that some of the plans for a subexpression may have, in order to produce optimal overall plans from plans that are not optimal for certain subexpressions.
+
+\subsection{Heuristic Selection}
+One option is to use the same approach to selecting a physical plan that is
+generally used for selecting a logical plan: make a sequence of choices based
+on heuristics. Few common ones are:-
+\begin{itemize}
+    \item If the logical plan calls for a selection  $\sigma_{A=c}(R)$, and stored relation R has an index on attribute A, then perform an index-scan to obtain only the tuples of $R$ with $A-$value equal to $c$.
+    \item if the selection involves one condition like A = c above, and other conditions as well, we can implement the selection by an index­ scan followed by a further selection on the tuples, which we shall represent by the physical operator filter.
+    \item If an argument of a join has an index on the join attribute(s), then use an index-join with that relation in the inner loop.
+    \item If one argument of a join is sorted on the join attribute(s) , then prefer a sort-join to a hash-join, although not necessarily to an index-join if one is possible.
+    \item When computing the union or intersection of three or more relations, group the smallest relations first.
+\end{itemize}
+
+\subsection{Branch-and-Bound}
+This approach, often used in practice, begins by using heuristics to find a good physical plan for the entire logical query plan. Let the cost of this plan be $C$. Then as we consider other plans for subqueries, we can eliminate any plan for a sub query that has a cost greater than $C$, since that plan for the sub query could not possibly participate in a plan for the complete query that is better than what we already know. Likewise, if we construct a plan for the complete query that has cost less than $C$, we replace $C$ by the cost of this better plan in subsequent exploration of the space of physical query plans. An important advantage of this approach is that we can choose when to cut off the search and take the best plan found so far. For instance, if the cost $C$ is small, then even if there are much better plans to be found, the time spent finding them may exceed $C$, so it does not make sense to continue the search. However, if $C$ is large, then investing time in the hope of finding a faster plan is wise.
+
+\subsection{Hill Climbing}
+This approach, in which we really search for a "valley" in the space of physical plans and their costs, starts with a heuristically selected physical plan. We can then make small changes to the plan, e.g., replacing one method for an operator by another, or reordering joins by using the associative and/or commutativen laws, to find "nearby" plans that have lower cost. When we find a plan such that no small modification yields a plan of lower cost, we make that plan our chosen physical query plan .
+
+\subsection{Selinger-Style Optimization}
+This approach improves upon the dynamic-programming approach by keeping for each subexpression not only the plan of least cost, but certain other plans that have higher cost, yet produce a result that is sorted in an order that may be useful higher up in the expression tree. Examples of such interesting orders are when the result of the subexpression is sorted on one of:
+\begin{itemize}
+    \item The attribute(s) specified in a sort operator $(\tau)$ at the root.
+    \item The grouping attribute(s) of a later group-by operator $(\gamma)$.
+    \item The join attribute(s) of a later join. 
+\end{itemize}
+If we take the cost of a plan to be the sum of the sizes of the intermediate relations, then there appears to be no advantage to having an argument sorted. However, if we use the more accurate measure, disk I/O's, as the cost, then the advantage of having an argument sorted becomes clear if we can use one of the sort-based algorithms and save the work of the first pass for the argument that is sorted already.
+
+\section{Join Order}
+Join takes in two argument, while the end result is independent of the order of the two arguments, the method used to compute the result maybe dependent on the order. Perhaps most important, the one-pass join reads one relation preferably the smaller
+into main memory, creating a structure such as a hash table to facilitate matching of tuples from the other relation. It then reads the other relation, one block at a time, to join its tuples with the tuples stored in memory. 
+\par For instance, suppose that when we select a physical plan we decide to use a one-pass join. Then we shall assume the left argument of the join is the smaller relation and store it in a main-memory data structure. This relation is called the build relation. The right argument of the join, called the probe relation, is read a block at a time and its tuples are matched in main memory with those of the build relation. Other join algorithms that distinguish between their arguments include:
+\begin{itemize}
+    \item Nested-loop join, where we assume the left argument is the relation of the
+outer loop.
+    \item Index-join, where we assume the right argument has the index.
+\end{itemize}
+
+\subsection{Join Trees}
+When we have the join of two relations, we need to order the arguments. We shall conventionally select the one whose estimated size is the smaller as the left argument. Notice that the algorithms mentioned above -- one-pass, nested­ loop, and indexed - each work best if the left argument is the smaller. More precisely, one-pass and nested-loop joins each assign a special role to the smaller relation (build relation, or outer loop), and index-joins typically are reasonable choices only if one relation is small and the other has an index. It is quite common for there to be a significant and discernible difference in the sizes of arguments, because a query involving joins very often also involves a selection on at least one attribute, and that selection reduces the estimated size of one of the relations greatly.
+\par When we need to join more than $2$ relations, the order in which they are joined can be represented by a binary tree, where each node has either $0$ or $2$ children. A tree where the right child always a leaf node is called a left deep tree, one can similarly define a right deep tree. Any other tree is will be called \textbf{bushy}. We will stick with left deep tree due to their interaction with various common join algorithms. This introduced limitation also helps to reduce search space.
+\par If one-pass joins are used, and the build relation is on the left, then the amount of memory needed at any one time tends to be smaller than if we used a right-deep tree or a bushy tree for the same relations.
+\par If we use nested-loop joins, with the relation of the outer loop on the left, then we avoid constructing any intermediate relation more than once.
+
+\subsection{DP to decide join order}
+Suppose we need to calculate $R_1 \bowtie R_2 \bowtie ... \bowtie R_n$. For the DP algorithm construct a table with an entry for each subset of one or more of the n relations. In that table we put 
+\begin{itemize}
+    \item the estimated size of the join of these relations.
+    \item the least cost of computing the join of these relations. Other, more complex estimates, such as total disk I/O's, could be used if we were willing and able to do the extra calculation involved.
+    \item The expression that yields the least cost. This expression joins the set of relations in question, with some grouping. We can optionally restrict ourselves to left-deep expressions, in which case the expression is just an ordering of the relations.
+\end{itemize}
+
+\subsection{Greedy algorithm for join order}
+Even the carefully limited search of dynamic pro­gramming leads to a number of calculations that is exponential in the number
+of relations joined. It is reasonable to use an exhaustive method like dynamic programming or branch-and-bound search to find optimal join orders of five or six relations. However, when the number of joins grows beyond that, or if we choose not to invest the time necessary for an exhaustive search, then we can use a join-order heuristic in our query optimizer.
+\par The most common choice of heuristic is a greedy algorithm, where we make one decision at a time about the order of joins and never backtrack or reconsider decisions once made. We shall consider a greedy algorithm that only selects a left-deep tree. The "greediness" is based on the idea that we want to keep the intermediate relations as small as possible at each level of the tree.
+\par Start with the pair of relations whose estimated join size is smallest. The join of these relations becomes the current tree. Find, among all those relations not yet included in the current tree, the relation that, when joined with the current tree, yields the relation of smallest estimated size. The new current tree has the old current tree as its left argument and the selected relation as its right argument.
+
+
+\section{Physical Query Plan}
+We have parsed the query, converted it to an initial logical query plan, and improved that logical query plan with transformations. Part of the process of selecting the physical query plan is enumeration and cost­ estimation for all of our options, then focused on the question of enumeration, cost estimation, and ordering for joins of several relations. By extension, we can use similar techniques to order groups of unions, intersections, or any associative/commutative operation
+\par There are still several steps needed to turn the logical plan into a complete
+physical query plan.
+\begin{itemize}
+    \item Selection of algorithms to implement the operations of the query plan,
+when algorithm-selection was not done as part of some earlier step such
+as selection of a join order by dynamic programming.
+    \item Decisions regarding when intermediate results will be materialized ( cre­
+ated whole and stored on disk) , and when they will be pipelined (created
+only in main memory, and not necessarily kept in their entirety at any
+one time) .
+    \item Notation for physical-query-plan operators, which must include details
+regarding access methods for stored relations and algorithms for imple­
+mentation of relational-algebra operators.
+\end{itemize}
+
+\subsection{Choosing a Selection Method}
+One of the important steps in choosing a physical query plan is to pick algo­rithms for each selection operator.
+\par Assuming there are no multidimensional indexes on several of the attributes,
+then each physical plan uses some number of attributes that each have an index, and are compared to a constant in one of the terms of the selection. We then use these indexes to identify the sets of tuples that satisfy each of the
+conditions. For simplicity, we shall not consider the use of several indexes in this way. Rather, we limit our discussion to physical plans that:
+\begin{itemize}
+    \item Use one comparison of the form $A\theta c$, where $A$ is an attribute with an index, $c$ is a constant, and $\theta$ s a comparison operator such as $=$ or $<$.
+    \item Retrieve all tuples that satisfy the comparison, using the index­ scan physical operator.
+    \item Consider each tuple selected to decide whether it satisfies the rest of the selection condition. We shall call the physical operator that per­forms this step Filter; it takes the condition used to select tuples as a parameter, much as the rr operator of relational algebra does.
+\end{itemize}
+In addition to physical plans of this form, we must also consider the plan that uses no index but reads the entire relation (using the table-scan physical oper­ator) and passes each tuple to the Filter operator to check for satisfaction of the selection condition. 
+\par We decide among the physical plans with which to implement a given selec­tion by estimating the cost of reading data for each possible option. To compare costs of alternative plans we cannot continue using the simplified cost estimate of intermediate-relation size. The reason is that we are now considering imple­mentations of a single step of the logical query plan, and intermediate relations are independent of implementation. Thus, we shall refocus our attention and resume counting disk I/O's.
+
+\subsection{Choosing a Join Method}
+On the assumption that we know (or can estimate) how many buffers are available to perform the join, we can apply the formulas for sort/ indexed/ hash join. However, if we are not sure of, or cannot know, the number of buffers that will be available during the execution of this query (because we do not know what else the DBMS is doing at the same time), or if we do not have estimates of important size parameters such as the V (R, a)'s, then there are still some principles we can apply to choosing a join method. Similar ideas apply to other binary operations such as unions, and to the full-relation, unary operators, $\gamma, \delta$
+
+
+\subsection{Pipelining Versus Materialization}
+The last major issue we shall discuss in connection with choice of a physical query plan is pipelining of results. The naive way to execute a query plan is to order the operations appropriately (so an operation is not performed until the argument(s) below it have been performed), and store the result of each operation on disk until it is needed by another operation. This strategy is called materialization, since each intermediate relation is materialized on disk. A more subtle, and generally more efficient, way to execute a query plan is to interleave the execution of several operations. The tuples produced by one operation are passed directly to the operation that uses it, without ever storing the intermediate tuples on disk. This approach is called pipelining, and it typically is implemented by a network of iterators whose functions call each other at appropriate times. Since it saves disk I/O 's, there is an obvious advantage to pipelining, but there is a corresponding disadvan­tage. Since several operations must share main memory at any time, there is a chance that algorithms with higher disk-I/O requirements must be chosen , or thrashing will occur, thus giving back all the disk-I/O savings that were gained by pipelining, and possibly more.
+
+
+\subsection{Pipelining Unary Operations}
+Unary operations - selection and projection - are excellent candidates for pipelining. Since these operations are tuple-at-a-time, we never need to have more than one block for input, and one block for the output. We may implement a pipelined unary operation by iterators, The consumer of the pipelined result calls \textbf{GetNext()} each time another tuple is needed. In the case of a projection, it is only necessary to call \textbf{GetNext()} once on the source of tuples, project that tuple appropriately, and return the result to the consumer. For a selection $\sigma_C$ (technically, the physical operator \textbf{Filter(C)} ) , it may be necessary to call \textbf{GetNext()} several times at the source, until one tuple that satisfies condition $c$ is found.
+
+
+\subsection{Pipelining Binary Operations}
+The results of binary operations can also be pipelined. We use one buffer to pass the result to its consumer, one block at a time. However, the number of other buffers needed to compute the result and to consume the result varies, depending on the size of the result and the sizes of other relations involved in the query. We shall use an extended example to illustrate the tradeoffs and opportunities.
+
+
+\subsection{Notation for Physical Query Plans}
+
+
+\par \textbf{Operators for Leaves}
+
+\par \textbf{Physical Operators for Selection}
+
+\par \textbf{Physical Sort Operators}
+
+\par \textbf{Other Relational-Algebra Operations}
+
+\subsection{Ordering of Physical Operations}
+Our final topic regarding physical query plans is the matter of order of oper­ations. The physical query plan is generally represented as a tree, and trees imply something about order of operations, since data must flow up the tree.However, since bushy trees may have interior nodes that are neither ancestors nor descendants of one another, the order of evaluation of interior nodes may not always be clear. Moreover, since iterators can be used to implement opera­tions in a pipelined manner, it is possible that the times of execution for various nodes overlap, and the notion of "ordering" nodes makes no sense. 
+\par If materialization is implemented in the obvious store-and-later-retrieve way, and pipelining is implemented by iterators, then we may establish a fixed se­quence of events whereby each operation of a physical query plan is executed.The following rules summarize the ordering of events i m pl icit in a phy sical query-plan tree:
+\begin{itemize}
+    \item Break the tree into subtrees at each edge that represents materialization. The subtrees will be executed one-at-a-time.
+    \item Order the execution of the subtrees in a bottom-up, left-to-right manner. To be precise, perform a preorder traversal of the entire tree. Order the subtrees in the order in which the preorder traversal exits from the subtrees.
+    \item Execute all nodes of each subtree using a network of iterators. Thus, all the nodes in one subtree are executed simultaneously, with GetNext calls among their operators determining the exact order of events.
+\end{itemize}
 
 \section{Introduction to Data Streams}
 
@@ -193,17 +377,6 @@ $T(R)$ tuples of $R$, the estimated size of $R \bowtie S$ is $\frac{T(R)*T(S)}{V
 
 \begin{comment}
 
-\section{SQL Query compiler}
-The steps involved are
-\subsection{Parsing}
-In a very general sense, given an SQL query, SQL converts it into a parse tree based on SQL grammar.
-\subsection{Logical Query Plan}
-The first step is to modify the parse tree into using operators and operators of relational algebra.
-\par The next step is to convert expression obtained from the above substitution and modify it into an expression which can be converted to most efficient physical query plan.
-\par To improve the algebraic expression obtained, few common steps taken are pushing down selections and projections carefully, carefully placing duplicate eliminations, combining selections, showing associativity and commutivity in the expression to help with enumeration.
-\par At the end when we have the expression ready, we enumerate the physical plans and calculate their cost of execution and select the method with the lowest cost.
-\subsection{Cost Estimation}
-We need to consider what algorithm each operator in the expression is going to use, such as join, sort, scanning and more. Also need to consider the order for the associative and commutative operators, because at the end the operators are binary and how the output of one operator is provided as an input to the next/ outter operator in the expression. 
 \section{System R}
 \label{sec:systemR}
 \section{Deep Reinforcement learning}

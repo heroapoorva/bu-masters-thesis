@@ -17,18 +17,45 @@
 \contentsline {subsection}{\numberline {2.5.2}Estimation of Projection}{9}% 
 \contentsline {subsection}{\numberline {2.5.3}Estimation of Selection}{10}% 
 \contentsline {subsection}{\numberline {2.5.4}Estimation of Join, single attribute}{10}% 
-\contentsline {section}{\numberline {2.6}Introduction to Data Streams}{11}% 
-\contentsline {section}{\numberline {2.7}Data stream windowing}{11}% 
-\contentsline {section}{\numberline {2.8}Query Processing of data streams(Combine the DBMS and DSMS)}{11}% 
-\contentsline {section}{\numberline {2.9}Challenges of query optimization on data streams}{11}% 
-\contentsline {section}{\numberline {2.10}Conclusion and discussion}{11}% 
-\contentsline {chapter}{\numberline {3}Stream Optimization}{12}% 
-\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{12}% 
-\contentsline {chapter}{\numberline {4}Implementation}{13}% 
-\contentsline {section}{\numberline {4.1}Mathematics}{13}% 
-\contentsline {chapter}{\numberline {5}Evaluation}{14}% 
-\contentsline {section}{\numberline {5.1}Measures used}{14}% 
-\contentsline {chapter}{\numberline {6}Conclusion and Further work}{15}% 
-\contentsline {section}{\numberline {6.1}Conclusion}{15}% 
-\contentsline {chapter}{\numberline {A}Proof of xyz}{16}% 
-\contentsline {chapter}{Curriculum Vitae}{17}% 
+\contentsline {subsection}{\numberline {2.5.5}Estimation of Join, multiple attribute}{11}% 
+\contentsline {subsection}{\numberline {2.5.6}Multiple Joins}{12}% 
+\contentsline {subsection}{\numberline {2.5.7}Union}{12}% 
+\contentsline {subsection}{\numberline {2.5.8}Intersection}{12}% 
+\contentsline {subsection}{\numberline {2.5.9}Difference}{13}% 
+\contentsline {subsection}{\numberline {2.5.10}Duplicate Elimination}{13}% 
+\contentsline {subsection}{\numberline {2.5.11}Grouping and Aggregation}{13}% 
+\contentsline {section}{\numberline {2.6}Other tools}{13}% 
+\contentsline {subsection}{\numberline {2.6.1}Histogram}{13}% 
+\contentsline {subsection}{\numberline {2.6.2}Heuristics}{14}% 
+\contentsline {section}{\numberline {2.7}Enumeration Methods}{15}% 
+\contentsline {subsection}{\numberline {2.7.1}Heuristic Selection}{16}% 
+\contentsline {subsection}{\numberline {2.7.2}Branch-and-Bound}{16}% 
+\contentsline {subsection}{\numberline {2.7.3}Hill Climbing}{17}% 
+\contentsline {subsection}{\numberline {2.7.4}Selinger-Style Optimization}{17}% 
+\contentsline {section}{\numberline {2.8}Join Order}{18}% 
+\contentsline {subsection}{\numberline {2.8.1}Join Trees}{18}% 
+\contentsline {subsection}{\numberline {2.8.2}DP to decide join order}{19}% 
+\contentsline {subsection}{\numberline {2.8.3}Greedy algorithm for join order}{20}% 
+\contentsline {section}{\numberline {2.9}Physical Query Plan}{20}% 
+\contentsline {subsection}{\numberline {2.9.1}Choosing a Selection Method}{21}% 
+\contentsline {subsection}{\numberline {2.9.2}Choosing a Join Method}{22}% 
+\contentsline {subsection}{\numberline {2.9.3}Pipelining Versus Materialization}{23}% 
+\contentsline {subsection}{\numberline {2.9.4}Pipelining Unary Operations}{23}% 
+\contentsline {subsection}{\numberline {2.9.5}Pipelining Binary Operations}{24}% 
+\contentsline {subsection}{\numberline {2.9.6}Notation for Physical Query Plans}{24}% 
+\contentsline {subsection}{\numberline {2.9.7}Ordering of Physical Operations}{24}% 
+\contentsline {section}{\numberline {2.10}Introduction to Data Streams}{25}% 
+\contentsline {section}{\numberline {2.11}Data stream windowing}{25}% 
+\contentsline {section}{\numberline {2.12}Query Processing of data streams(Combine the DBMS and DSMS)}{25}% 
+\contentsline {section}{\numberline {2.13}Challenges of query optimization on data streams}{25}% 
+\contentsline {section}{\numberline {2.14}Conclusion and discussion}{25}% 
+\contentsline {chapter}{\numberline {3}Stream Optimization}{26}% 
+\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{26}% 
+\contentsline {chapter}{\numberline {4}Implementation}{27}% 
+\contentsline {section}{\numberline {4.1}Mathematics}{27}% 
+\contentsline {chapter}{\numberline {5}Evaluation}{28}% 
+\contentsline {section}{\numberline {5.1}Measures used}{28}% 
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{29}% 
+\contentsline {section}{\numberline {6.1}Conclusion}{29}% 
+\contentsline {chapter}{\numberline {A}Proof of xyz}{30}% 
+\contentsline {chapter}{Curriculum Vitae}{31}% 
