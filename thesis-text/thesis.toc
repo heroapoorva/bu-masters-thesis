@@ -43,19 +43,19 @@
 \contentsline {subsection}{\numberline {2.9.4}Pipelining Unary Operations}{23}% 
 \contentsline {subsection}{\numberline {2.9.5}Pipelining Binary Operations}{24}% 
 \contentsline {subsection}{\numberline {2.9.6}Notation for Physical Query Plans}{24}% 
-\contentsline {subsection}{\numberline {2.9.7}Ordering of Physical Operations}{24}% 
-\contentsline {section}{\numberline {2.10}Introduction to Data Streams}{25}% 
-\contentsline {section}{\numberline {2.11}Data stream windowing}{25}% 
-\contentsline {section}{\numberline {2.12}Query Processing of data streams(Combine the DBMS and DSMS)}{25}% 
-\contentsline {section}{\numberline {2.13}Challenges of query optimization on data streams}{25}% 
-\contentsline {section}{\numberline {2.14}Conclusion and discussion}{25}% 
-\contentsline {chapter}{\numberline {3}Stream Optimization}{26}% 
-\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{26}% 
-\contentsline {chapter}{\numberline {4}Implementation}{27}% 
-\contentsline {section}{\numberline {4.1}Mathematics}{27}% 
-\contentsline {chapter}{\numberline {5}Evaluation}{28}% 
-\contentsline {section}{\numberline {5.1}Measures used}{28}% 
-\contentsline {chapter}{\numberline {6}Conclusion and Further work}{29}% 
-\contentsline {section}{\numberline {6.1}Conclusion}{29}% 
-\contentsline {chapter}{\numberline {A}Proof of xyz}{30}% 
-\contentsline {chapter}{Curriculum Vitae}{31}% 
+\contentsline {subsection}{\numberline {2.9.7}Ordering of Physical Operations}{26}% 
+\contentsline {section}{\numberline {2.10}Introduction to Data Streams}{26}% 
+\contentsline {section}{\numberline {2.11}Data stream windowing}{27}% 
+\contentsline {section}{\numberline {2.12}Query Processing of data streams(Combine the DBMS and DSMS)}{27}% 
+\contentsline {section}{\numberline {2.13}Challenges of query optimization on data streams}{27}% 
+\contentsline {section}{\numberline {2.14}Conclusion and discussion}{27}% 
+\contentsline {chapter}{\numberline {3}Stream Optimization}{28}% 
+\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{28}% 
+\contentsline {chapter}{\numberline {4}Implementation}{29}% 
+\contentsline {section}{\numberline {4.1}Mathematics}{29}% 
+\contentsline {chapter}{\numberline {5}Evaluation}{30}% 
+\contentsline {section}{\numberline {5.1}Measures used}{30}% 
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{31}% 
+\contentsline {section}{\numberline {6.1}Conclusion}{31}% 
+\contentsline {chapter}{\numberline {A}Proof of xyz}{32}% 
+\contentsline {chapter}{Curriculum Vitae}{33}% 
