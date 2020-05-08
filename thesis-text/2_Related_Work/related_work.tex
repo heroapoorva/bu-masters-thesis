@@ -20,19 +20,7 @@ This query is essentially asking to display the 2 columns from the table where t
 \section{Converting SQL queries to parse trees}
 This step has several functions.
 \par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
-\par The preprocessor also has to conduct semaContainment of Value Sets. If Y is an attribute appearing in several rela­
-tions, then each relation chooses its values from the front of a fixed list of
-values y1 , y2 , y3 ,
-and has all the values in that prefix. As a consequence,
-if R and S are two relations with an attributContainment of Value Sets. If Y is an attribute appearing in several rela­
-tions, then each relation chooses its values from the front of a fixed list of
-values y1 , y2 , y3 ,
-and has all the values in that prefix. As a consequence,
-if R and S are two relations with an attribute Y, and V(R, Y) ::; V(S, Y ),
-then every Y-value o f R will be a Y-value of S.e Y, and V(R, Y) ::; V(S, Y ),
-then every Y-value o f R will be a Y-value of S.ntic checking, that is, check if relations used exist, check for ambiguity, and type checking.
-If a parse tree passes the preprocessing then it is said to be \textbf{valid}
-We don't describe the exact grammar for the convertion to the parse tree. In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
+\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking. If a parse tree passes the preprocessing then it is said to be \textbf{valid}. We don't describe the exact grammar for the convertion to the parse tree. In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
 
 
 \section{Relational algebra}

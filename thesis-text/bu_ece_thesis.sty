@@ -178,14 +178,14 @@
         \sl\sffamily\begin{center}\MakeUppercase{\@author}\end{center}
         \rm\sffamily
         \ifcase\degree\or\thisdegree{Master of Science}\or
-                         \thisdegree{Doctor of Philosophy}\or
+                         \thisdegree{Master of Science}\or
                          \thisdegree{\gdef\@degreeword{degrees}
-                           Master of Science \and Doctor of Philosophy}
+                           Master of Science \and Master of Science}
                          \fi
         \centerline{\ifcase\degree\or Thesis \or Dissertation \or Dissertation\fi
                     submitted in partial fulfillment}
         \centerline{of the requirements for the \@degreeword\ of}
-        \centerline{\@thisdegree}}}\vfill}}
+        \centerline{Masters of Science}}}\vfill}}
     \vglue 6.0cm\hglue 4.5cm
     \vglue -1.0cm\hglue 4.5cm\includegraphics[width=4.0cm]{BUlogo_cmyk.eps}\\
     \clearpage\mbox{}\thispagestyle{empty}\clearpage
@@ -231,8 +231,8 @@ by\par\vfill
 \@prevdegrees
 \end{singlespace}
 \ifcase\degree\or\thisdegree{Master of Science}\or
-                 \thisdegree{Doctor of Philosophy}\or
-                 \thisdegree{Master of Science \and Doctor of Philosophy}
+                 \thisdegree{Master of Science}\or
+                 \thisdegree{Master of Science \and Master of Science}
                  \fi
 \par\vfill
 Submitted in partial fulfillment of the\\
@@ -513,5 +513,5 @@ minus
 %               USEFUL MACROS
 \def\BU{BOSTON UNIVERSITY}
 \def\Bu{Boston University}
-\def\COE{COLLEGE OF ENGINEERING}
-\def\Coe{College of Engineering}
+\def\COE{METROPOLITAN COLLEGE}
+\def\Coe{Metropolitan College }
