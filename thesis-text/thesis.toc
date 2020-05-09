@@ -47,14 +47,17 @@
 \contentsline {section}{\numberline {2.10}Introduction to Data Streams}{28}% 
 \contentsline {section}{\numberline {2.11}Windowing and QoS}{29}% 
 \contentsline {section}{\numberline {2.12}Challenges of query optimization on data streams}{30}% 
-\contentsline {section}{\numberline {2.13}Conclusion}{30}% 
-\contentsline {chapter}{\numberline {3}Stream Optimization}{31}% 
-\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{31}% 
-\contentsline {chapter}{\numberline {4}Implementation}{32}% 
-\contentsline {section}{\numberline {4.1}Mathematics}{32}% 
-\contentsline {chapter}{\numberline {5}Evaluation}{33}% 
-\contentsline {section}{\numberline {5.1}Measures used}{33}% 
-\contentsline {chapter}{\numberline {6}Conclusion and Further work}{34}% 
-\contentsline {section}{\numberline {6.1}Conclusion}{34}% 
-\contentsline {chapter}{\numberline {A}Proof of xyz}{35}% 
-\contentsline {chapter}{Curriculum Vitae}{36}% 
+\contentsline {subsection}{\numberline {2.12.1}Resource Scheduling Strategies}{31}% 
+\contentsline {subsection}{\numberline {2.12.2}Load Shedding and Run-Time Optimization}{31}% 
+\contentsline {subsection}{\numberline {2.12.3}Complex Event and Rule Processing}{31}% 
+\contentsline {section}{\numberline {2.13}Conclusion}{32}% 
+\contentsline {chapter}{\numberline {3}Stream Optimization}{33}% 
+\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{33}% 
+\contentsline {chapter}{\numberline {4}Implementation}{34}% 
+\contentsline {section}{\numberline {4.1}Mathematics}{34}% 
+\contentsline {chapter}{\numberline {5}Evaluation}{35}% 
+\contentsline {section}{\numberline {5.1}Measures used}{35}% 
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{36}% 
+\contentsline {section}{\numberline {6.1}Conclusion}{36}% 
+\contentsline {chapter}{\numberline {A}Proof of xyz}{37}% 
+\contentsline {chapter}{Curriculum Vitae}{38}% 

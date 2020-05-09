@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  8 MAY 2020 20:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  9 MAY 2020 15:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -555,13 +555,13 @@ $
  []
 
 [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26]
-[27] [28] [29] Excluding 'comment' comment.) [30]
+[27] [28] [29] [30] [31] Excluding 'comment' comment.) [32]
 \openout2 = `3_Stream_Optimization/stream_optimization.aux'.
 
 
 (./3_Stream_Optimization/stream_optimization.tex
 Chapter 3.
-) [31
+) [33
 
 
 
@@ -571,7 +571,7 @@ Chapter 3.
 
  (./4_Implementation/implementation.tex
 Chapter 4.
-) [32
+) [34
 
 
 
@@ -581,7 +581,7 @@ Chapter 4.
 
  (./5_Evaluation/evaluation.tex
 Chapter 5.
-) [33
+) [35
 
 
 
@@ -591,7 +591,7 @@ Chapter 5.
 
  (./6_Conclusion/conclusion.tex
 Chapter 6.
-) [34
+) [36
 
 
 
@@ -601,7 +601,7 @@ Chapter 6.
 
  (./Appendix/Appendix.tex
 Appendix A.
-) [35
+) [37
 
 
 
@@ -610,7 +610,7 @@ Appendix A.
 No file thesis.bbl.
 \openout2 = `0_Prelim/cv.aux'.
 
-(./0_Prelim/cv.tex) [36
+(./0_Prelim/cv.tex) [38
 
 
 
@@ -640,10 +640,10 @@ m/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></
 usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (48 pages, 222087 bytes).
+Output written on thesis.pdf (50 pages, 225637 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
+ 223 PDF objects out of 1000 (max. 8388607)
+ 155 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
