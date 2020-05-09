@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  7 MAY 2020 21:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  8 MAY 2020 20:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -514,20 +514,20 @@ Overfull \hbox (39.17992pt too wide) in paragraph at lines 134--145
 
  (./1_Intro/intro.tex
 Chapter 1.
-) [1
+[1
 
 
 
 
 
-]
+]) [2]
 \openout2 = `2_Related_Work/related_work.aux'.
 
  (./2_Related_Work/related_work.tex
 Chapter 2.
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2019/09/10 1.8c listings language file
-) [2
+) [3
 
 
 
@@ -535,8 +535,8 @@ File: lstlang1.sty 2019/09/10 1.8c listings language file
 ]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 30.
- [3] [4] [5]
-[6] [7] [8] [9] [10]
+ [4] [5] [6]
+[7] [8] [9] [10] [11]
 Overfull \hbox (8.74353pt too wide) in paragraph at lines 169--170
 []\OT1/cmr/m/n/12 Let $\OML/cmm/m/it/12 r \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 R
 ; s \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 S$ \OT1/cmr/m/n/12 be a tu-ples, the pr
@@ -554,14 +554,14 @@ i-mum of $\OML/cmm/m/it/12 V\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R; y\OT1/cmr/m/n/
 $
  []
 
-[11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25]
-[26] Excluding 'comment' comment.) [27] [28]
+[12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26]
+[27] [28] [29] Excluding 'comment' comment.) [30]
 \openout2 = `3_Stream_Optimization/stream_optimization.aux'.
 
 
 (./3_Stream_Optimization/stream_optimization.tex
 Chapter 3.
-) [29
+) [31
 
 
 
@@ -571,7 +571,7 @@ Chapter 3.
 
  (./4_Implementation/implementation.tex
 Chapter 4.
-) [30
+) [32
 
 
 
@@ -581,7 +581,7 @@ Chapter 4.
 
  (./5_Evaluation/evaluation.tex
 Chapter 5.
-) [31
+) [33
 
 
 
@@ -591,7 +591,7 @@ Chapter 5.
 
  (./6_Conclusion/conclusion.tex
 Chapter 6.
-) [32
+) [34
 
 
 
@@ -601,7 +601,7 @@ Chapter 6.
 
  (./Appendix/Appendix.tex
 Appendix A.
-) [33
+) [35
 
 
 
@@ -610,7 +610,7 @@ Appendix A.
 No file thesis.bbl.
 \openout2 = `0_Prelim/cv.aux'.
 
-(./0_Prelim/cv.tex) [34
+(./0_Prelim/cv.tex) [36
 
 
 
@@ -627,7 +627,7 @@ Here is how much of TeX's memory you used:
  11943 multiletter control sequences out of 15000+600000
  11651 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,8n,46p,1323b,1355s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,8n,46p,1768b,1355s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -640,10 +640,10 @@ m/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></
 usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (46 pages, 216471 bytes).
+Output written on thesis.pdf (48 pages, 222087 bytes).
 PDF statistics:
- 210 PDF objects out of 1000 (max. 8388607)
- 146 compressed objects within 2 object streams
+ 216 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
