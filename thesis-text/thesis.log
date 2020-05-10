@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  9 MAY 2020 15:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.4.14)  9 MAY 2020 20:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -537,15 +537,15 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 30.
  [4] [5] [6]
 [7] [8] [9] [10] [11]
-Overfull \hbox (8.74353pt too wide) in paragraph at lines 169--170
+Overfull \hbox (8.74353pt too wide) in paragraph at lines 170--171
 []\OT1/cmr/m/n/12 Let $\OML/cmm/m/it/12 r \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 R
 ; s \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 S$ \OT1/cmr/m/n/12 be a tu-ples, the pr
 ob-a-bil-ity that $\OML/cmm/m/it/12 r; s$ \OT1/cmr/m/n/12 agree on $\OML/cmm/m/
 it/12 y[]$ \OT1/cmr/m/n/12 is $[]$,
  []
 
-
-Overfull \hbox (13.64215pt too wide) in paragraph at lines 170--172
+[12]
+Overfull \hbox (13.64215pt too wide) in paragraph at lines 171--173
 \OT1/cmr/m/n/12 From this the pat-tern is clear, need to di-vide $\OML/cmm/m/it
 /12 T\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R\OT1/cmr/m/n/12 ) \OMS/cmsy/m/n/12 ^^C 
 \OML/cmm/m/it/12 T\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 S\OT1/cmr/m/n/12 )$ by max-
@@ -554,8 +554,8 @@ i-mum of $\OML/cmm/m/it/12 V\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R; y\OT1/cmr/m/n/
 $
  []
 
-[12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26]
-[27] [28] [29] [30] [31] Excluding 'comment' comment.) [32]
+[13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27]
+[28] [29] [30] [31] Excluding 'comment' comment.) [32]
 \openout2 = `3_Stream_Optimization/stream_optimization.aux'.
 
 
@@ -627,7 +627,7 @@ Here is how much of TeX's memory you used:
  11943 multiletter control sequences out of 15000+600000
  11651 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,8n,46p,1768b,1355s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,8n,46p,1693b,1355s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -640,7 +640,7 @@ m/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></
 usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (50 pages, 225637 bytes).
+Output written on thesis.pdf (50 pages, 226216 bytes).
 PDF statistics:
  223 PDF objects out of 1000 (max. 8388607)
  155 compressed objects within 2 object streams

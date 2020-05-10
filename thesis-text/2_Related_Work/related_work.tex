@@ -18,8 +18,8 @@ A database can be thought of as a list of tables, where in each table itself can
 This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer.
 
 \section{Converting SQL queries to parse trees}
-We don't describe the exact grammar for the convertion to the parse tree. But this step isn't simply conversion to a parse tree, the preprocessor which does the conversion also has several more functions.
-\par If a "view" is used in the query as a relation, then each instance has to be replaced by the parse tree.
+The exact grammar for the convertion to parse tree is not listed below. But this step isn't simply conversion to a parse tree, the preprocessor which does the conversion also has several more functions.
+\par For example, if the SQL query uses a "view" in the query as a relation, then each instance has to be replaced by the parse tree.
 \par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking. If a parse tree passes the preprocessing then it is said to be \textbf{valid}.  In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
 
 
@@ -84,14 +84,16 @@ It is difficult to give identities for the aggregation operator, like done for t
     \item $\sigma(\gamma_{L}(R)) = \gamma_{L}(R)$
     \item $\gamma_{L}(R) = \gamma_{L}(\pi_{M}(R)),$ where $M$ must at least contain the attributed used in $L$.
 \end{itemize}
+
+
 \section{Converting Parse trees into logical expression}
 Till now, the only SQL related information presented is how to convert a Query into the parse tree, which is grammar dependent. Given the parse tree, need to substitute nodes by operators seen above, later this expression is optimized to be later converted to a physical query plan.
 \par Now to convert the parse tree into the logical expression. First, look at the transformation of select-from-where statement.
 \begin{itemize}
-\item $<Query> \rightarrow <SFW>.$
-\item $<SFW> \rightarrow SELECT <SelList> FROM <FromList> WHERE <Condition>.$
-\item $<SelList> \rightarrow \pi_{L}$, where $L$ is the list of attributes in $<SelList>.$
-\item $<Condition> \rightarrow \sigma_{C},$ where $C$ is the equivalent of $<Condition>$ 
+    \item $<Query> \rightarrow <SFW>.$
+    \item $<SFW> \rightarrow SELECT <SelList> FROM <FromList> WHERE <Condition>.$
+    \item $<SelList> \rightarrow \pi_{L}$, where $L$ is the list of attributes in $<SelList>.$
+    \item $<Condition> \rightarrow \sigma_{C},$ where $C$ is the equivalent of $<Condition>$ 
 \end{itemize}
 While there is nothign inherently wrong about the last statement, need to consider the case where $<Condition>$ involves subqueries. A simple explanation about why it isn't allowed is a convention normally the subscript has to be a boolean condition, and if it was allowed otherwise, it would be a very expensive operation, as the subscript in the select operator has to evaluted at every element of the argument relation. This shows the redundance of it. While if this is allowed, it can be simplified and made efficient, but has to be done on a case by case basis with the use of $\bowtie, \times$ functions.
 \par Overall it is a good idea to not use subquerying and rather using joins.
@@ -114,26 +116,25 @@ While there is nothign inherently wrong about the last statement, need to consid
 \section{Explain difficulties/ Time complexity}
 Currently, we have taken a query as an input and converted it into a logical plan, and then applied more transformation using relational algebra to make the optimal query plan. The next step is to convert it into a physical query plan which can be executed. To complete this step, need to compare the cost of various physical query plan derived from the logical query plan. This plan with the least cost is then passed query execution engine and executed. When trying to select a query plan, need to select:-
 \begin{itemize}
-    \item An order and grouping for associative-and-commutative operations like
-joins, unions, and intersections.
-    \item An algorithm for each operator in the logical plan, for instance, deciding whether a nested-loop join or a hash-join should be used.
-    \item Additional operators - scanning, sorting, and so on that are needed for the physical plan but that were not present explicitly in the logical plan.
-    \item The way in which arguments are passed from one operator to the next, for instance, by storing the intermediate result on disk or by using iterators and passing an argument one tuple or one main-memory buffer at a time.
+    \item An order for the bracketing for associative and commutative operations like joins, unions, and intersections.
+    \item The underlying algorithm for each operator in the logical plan, for instance, deciding whether a nested-loop join or a hash-join should be used.
+    \item Need to consider additional operators like scanning, sorting, and so on that are needed for the physical plan but that were not present explicitly in the logical plan.
+    \item A method for passing information/ variable values fromt the output of one operator to the next, for instance, by storing the intermediate result on disk or by using iterators and passing an argument one tuple or one main-memory buffer at a time.
 \end{itemize}
-But after selecting these for a physical plan, one obivious way to calculate the time is actually executing the plan to see the cost, but that way essentially every plan is carried out. That is expensive and redundant. Is there a better way?
+Finally after selecting all these methods need to actually check the time required to excute the plan, one obivious way to calculate the time is actually executing the plan to see the cost. But if we try to find the optimal plan by this method then we are essentially executing every plan. That is expensive and redundant. The next few section presents few methods which can help in this task.
 
 \subsection{Estimating size and cost}
 $B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of relation $R$.\\
 $T(R) \coloneqq$ is the number of tuples of relation $R$.\\
 $V(R,a) \coloneqq$ is the value count for attribute a of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.\\
 $V(R, [ a_1 , a_2,..., a_n]) \coloneqq$ is the number of distinct values $R$ has when all of attributes $a_1, a_2,..., a_n$ are considered together, that is, the number of tuples in $\delta(\pi_{a_1,a_2,...,a_n}(R))$
-\par Need to remember that physical plan is selected to minimize the estimated cost of evaluating the query and that intermidate/ temporary relations calculated will also incur a cost on the system. So need to take them into account as well. Over all the estimation method should pass the following sanity check:-
+\par Compared to algorithms learnt in an introductory algorithms class, here the memory usage is huge and need to remember that intermidate/ temporary relations calculated will also incur a cost on the system. So need to take them into account as well because the physical plan is selected to minimize the estimated cost of evaluating the query. Over all the estimation method should pass the following sanity check:-
 \begin{itemize}
     \item Give accurate estimates. No matter what method is used for executing query plans.
     \item Are easy to compute.
     \item Are logically consistent; that is, the size estimate for an intermediate re­lation should not depend on how that relation is computed. For instance, the size estimate for a join of several relations should not depend on the order in which we join the relations.
 \end{itemize}
-But there is no agreed upon method to do this, but the goal is to help select a query plan and not to find the exact minimum. So even if the estimated cost is wrong, but if it is wrong similarly then we will still have the least costing plan.
+Even though there is no agreed upon method to do this, it does not matter because the goal is to help select a query plan and not to find the exact minimum cost. So even if the estimated cost is wrong, but if it is wrong similarly then we will still have the least costing plan.
 
 \subsection{Estimation of Projection}
 The projection operator is a bag operation, so it does not reduce the number of tuples, only reduces the size of each tuple.\\
@@ -198,8 +199,8 @@ Same as duplicate.
 \section{Other tools}
 We assume that the "cost" of evaluating an expression is approximated well by the number of disk I/O's performed. The number of disk I/O's, in turn, is influenced by:
 \begin{itemize}
-    \item The particular logical operators chosen to implement the query, a matter decided when we choose the logical query plan.
-    \item The sizes of intermediate results.
+    \item The particular logical operators chosen to implement the query.
+    \item The sizes of intermediate results, need to pass them to the next function.
     \item The physical operators used to implement logical operators, e.g., the choice of a one-pass or two-pass join, or the choice to sort or not sort a given relation.
     \item The ordering of similar operations, especially joins.
     \item The method of passing arguments from one physical operator to the next.
@@ -208,9 +209,9 @@ We assume that the "cost" of evaluating an expression is approximated well by th
 \subsection{Histogram}
 In the earlier section the statistics were heavily used in calculations. Another statistic that can be stored is the histogram.
 \par If $V (R, A)$ is not too large, then the histogram may consist of the number (or fraction) of the tuples having each of the values of attribute $A$. If there are a great many values of this attribute, then only the most frequent values may be recorded individually, while other values are counted in groups.
-\par \textbf{Equal-width} select 2 parameters, $w$ the width and $v_0$ a begining point of a column in the histogram, which will initally be the considered the lower bound and if an even lower value is noticed, make a smaller column as well and update the lower bound.
-\par \textbf{Equal-height} These are the common "percentiles". A percentile $p, 2p$, so on.
-\par \textbf{Most-frequent-values} List the most common values and their numbers of occurrences. This information may be provided along with a count of occurrences for all the other values as a group, or we may record frequent values in addition to an equal-width or equal-height histogram for the other values.
+\par \textbf{Equal width} To start, select 2 parameters, $w$ the width and $v_0$ a begining point of a column in the histogram, which will initally be the considered the lower bound and if an even lower value is noticed, make a smaller column as well and update the lower bound.
+\par \textbf{Equal height} These are the common "percentiles". A percentile $p, 2p$, so on.
+\par \textbf{Most frequent values} List the most common values and their numbers of occurrences. This information may be provided along with a count of occurrences for all the other values as a group, or we may record frequent values in addition to an equal width or equal height histogram for the other values.
 
 \subsection{Heuristics}
 One important use of cost estimates for queries or subqueries is in the appli­cation of heuristic transformations of the query.
@@ -224,9 +225,7 @@ The naive method of find the least costing plan is enumerating all the possible 
 \par There is actually not much difference between the two approaches in their broadest interpretations, since either way, all possible combinations of ways to implement each operator in the query tree are considered. When limiting the search, a top-down approach may allow us to eliminate certain options that could not be eliminated bottom-up. However, bottom-up strategies that limit choices effectively have also been developed. there is an apparent simplification of the bottom-up method, where we consider only the best plan for each subexpression when we compute the plans for a larger subexpression. This approach, called \textbf{dynamic programming}, is not guaranteed to yield the best plan, although often it does. The approach called Selinger-style (or System-R-style) optimization exploits additional properties that some of the plans for a subexpression may have, in order to produce optimal overall plans from plans that are not optimal for certain subexpressions.
 
 \subsection{Heuristic Selection}
-One option is to use the same approach to selecting a physical plan that is
-generally used for selecting a logical plan: make a sequence of choices based
-on heuristics. Few common ones are:-
+One option is to use the same approach to selecting a physical plan that is generally used for selecting a logical plan: make a sequence of choices based on heuristics. Few common ones are:-
 \begin{itemize}
     \item If the logical plan calls for a selection  $\sigma_{A=c}(R)$, and stored relation R has an index on attribute A, then perform an index-scan to obtain only the tuples of $R$ with $A-$value equal to $c$.
     \item if the selection involves one condition like A = c above, and other conditions as well, we can implement the selection by an index­ scan followed by a further selection on the tuples, which we shall represent by the physical operator filter.
@@ -363,12 +362,13 @@ Our final topic regarding physical query plans is the matter of order of oper­a
 \end{itemize}
 
 \section{Introduction to Data Streams}
-The sequence of data items continuously generated by sources is termed a data stream. Because of the possible never-ending nature of a data stream, the amount of data to be processed is likely to be unbounded. In addition, timely detection of interesting changes or patterns or aggregations over incoming data is critical for many of these applications. Furthermore, the data arrival rates may fluctuate over a period of time and may be bursty at times. For most of these applications, Quality of Service (or QoS) requirements, such as response time, memory usage, and throughput are extremely important. These application requirements make it infeasible to simply load the incoming data streams into a persistent store and process them effectively using currently available database management techniques. As stream data is handled by applications in disparate domains, stream data processing can be addressed at different levels and in different contexts: processing of sensor data, pervasive computing, situation monitoring, real-time response, approximate algorithms, on-the-fly mining, complex event processing, or a combination thereof. Although the applications are diverse, some of the fundamental characteristics of stream data and their processing requirements remain common to most applications.
-\par Queries that are processed by a traditional DBMS are termed ad hoc queries. They are (typically) specified, optimized, and evaluated once over a snapshot of a database. In contrast, queries in a stream processing environment are termed continuous queries or CQs. CQs are specified once and evaluated repeatedly against new data over a specified life span or as long as there exists data in the stream. They are long-running queries that produce output continuously. The result is also assumed to be a stream possibly with differing rates and schema (as compared to the input). The difference between ad hoc queries and CQs can be best understood based on their relationship to the data over which they are processed. Different or changing ad hoc queries are processed over (relatively) static data in contrast to the same (or static) CQs that are processed repeatedly over frequently changing (or dynamic) data. It is clear that DBMS can't really cope with data streams in terms on high frequency updates, fulfilling QoS and continuous output. Hence we make use of Data Stream Management Systems (DSMSs).
+A \textbf{Data Stream} can be thought of as a continuously generated never ending sequence of data. For example, network logistics, healthcare monitoring information, security cameras, all of these continuously produce data, these data sequences/ streams are crucial to their respective users/ organisations, realtime detection of anomally, pattern or changes thereof, or any other type of analytics is in need currently.
+\par But there are many complications while trying to do this, the frequency of data generation isn't stable as it can keep changing throughout the cycle. Most of these service have a Quality of Service (or QoS) requirements defined which takes into account various metrics such as response time, memory usage, and throughput and more. Sometimes these requirements are so heavy and indulgent that it is infeasible to load the incoming data streams into a persistent store and process them effectively using DBMS tools. Hence special tools are required for these, similar to how DBMS has a variety of steps, Data Stream Management Systems (DSMSs) have multiple steps as well processing of sensor data, pervasive computing, situation monitoring, real-time response, approximate algorithms, on-the-fly mining, complex event processing, and more. While it may seem that optimizing Data stream applications to their specific domains may make them difficult to study, it is possible the generalize the functions/ steps enough to have a basic architecture to study.
+\par Queries used in traditional DBMS are called \textbf{ad hoc queries}, where are the queries used in DSMS are called \textbf{ContinuousQueries (CQ)}. Ad hoc queries are generally specified, optimized, and evaluated over a snapshot of a database. Whereas, CQs are specified once and evaluated repeatedly against new data over a specified life span or as long as there exists data in the stream. They are long-running queries that produce output continuously. The result is also assumed to be a stream possibly with differing rates and schema (as compared to the input). The difference between ad hoc queries and CQs can be best understood based on their relationship to the data over which they are processed. Different or changing ad hoc queries are processed over (relatively) static data in contrast to the same (or static) CQs that are processed repeatedly over frequently changing (or dynamic) data. It is clear that DBMS can't really cope with data streams in terms on high frequency updates, fulfilling QoS and continuous output. Hence we make use of Data Stream Management Systems (DSMSs).
 
 
 \section{Windowing and QoS}
-Most of the languages used for this are based on SQL, some of them are,  Continuous Query Language (CQL), StreamSQL and ESP. Typically, continuous queries consist of relational operators 3 such as select, project, join, and other aggregation operators. A logical query plan, analogous to a query tree used in a traditional DBMS, can be generated from the specification of a continuous query. It can then be transformed into a query plan consisting of detailed algorithms used for computing each operator. Continuous queries are computed using a push or dataflow paradigm in contrast to the traditional pipelined or iterator-based pull paradigm employed by traditional DBMSs. All operators in a DSMS compute on data items as they arrive and cannot assume the stream to be finite. This has significant implications for the computation of a number of operators such as join, sort, and some aggregation operators. These operations cannot be completed without processing the entire input data set (or sets) which poses problems due to the unbounded nature of streams. As a result, these operators will block and produce no output until the stream ends. Hence, they are termed blocking operators. For an operator to output results continuously (and hopefully smoothly) and not wait until the end of the stream, it is imperative that these blocking operators be converted into non-blocking ones. The notion of a window has been introduced to overcome the blocking aspect of a number of operators. Informally, a window defines a finite portion of the stream (as a relation) for processing purposes. A window specification, added to a continuous query specification, can produce time-varying, finite relations out of a stream.
+Most of the languages used for this are based on SQL, some of them are,  Continuous Query Language (CQL), StreamSQL and ESP. Typically, continuous queries consist of relational operators 3 such as select, project, join, and other aggregation operators. A logical query plan, analogous to a query tree used in a traditional DBMS, can be generated from the specification of a CQ. It can then be transformed into a query plan consisting of detailed algorithms used for computing each operator. Compared to DBMS where either pipelines or materialization is used, DSMS use a push or dataflow methodology. All operators in a DSMS compute on data items as they arrive and cannot assume the stream to be finite. This has significant implications for the computation of a number of operators such as join, sort, and some aggregation operators. These operations cannot be completed without processing the entire input data set (or sets) which poses problems due to the unbounded nature of streams. As a result, these operators will block and produce no output until the stream ends. Hence, they are termed blocking operators. For an operator to output results continuously (and hopefully smoothly) and not wait until the end of the stream, it is imperative that these blocking operators be converted into non-blocking ones. The notion of a window has been introduced to overcome the blocking aspect of a number of operators. Informally, a window defines a finite portion of the stream (as a relation) for processing purposes. A window specification, added to a continuous query specification, can produce time-varying, finite relations out of a stream.
 \par QoS management is important and critical to the success of a DSMS. Few of the popular QoS metrices are Tuple latency, Memory usage, Throughput, Smooth or bursty nature of output streams, Accuracy of results in terms of error tolerance. Most of the metrices can be specified in the query written. Overall to correlate CQs and QoS a simple question can be asked 
 \begin{center}
 Given a set of CQs with their QoS specifications, what resources are needed to compute the given CQs and satisfy their QoS requirements?
@@ -405,6 +405,8 @@ To summarize this chapter, we illustrated the process of converting queries into
 \end{itemize}
 
 Then we looked at DSMS and saw the challenged they face and how they overcome them. This essentially is the how the metrices used to measure QoS are inter-related and the windowing method.
+
+
 
 \begin{comment}
 
