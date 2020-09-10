@@ -3,7 +3,7 @@ Each chapter has to have introduction and conclusion
 
 Chapter 1:- Introduction
         
-        - 1.1)Motivation(Use cases, examples)
+        -1.1)Motivation(Use cases, examples)
         -1.2)Research Problem definition.
         -1.3)Structure of thesis
         -1.4)Conclusion/ what reader can expect in the next chapter(Short para of what has been seen and what to expect in next)
