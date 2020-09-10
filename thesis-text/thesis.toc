@@ -1,63 +1,65 @@
-\contentsline {chapter}{\numberline {1}Introduction}{1}% 
-\contentsline {section}{\numberline {1.1}Motivation}{1}% 
-\contentsline {section}{\numberline {1.2}Problem at hand}{1}% 
-\contentsline {section}{\numberline {1.3}Structure of thesis}{2}% 
-\contentsline {section}{\numberline {1.4}Conclusion}{2}% 
-\contentsline {chapter}{\numberline {2}Related Work}{3}% 
-\contentsline {section}{\numberline {2.1}Introduction, Query optimization}{3}% 
-\contentsline {section}{\numberline {2.2}Converting SQL queries to parse trees}{3}% 
-\contentsline {section}{\numberline {2.3}Relational algebra}{4}% 
-\contentsline {subsection}{\numberline {2.3.1}Select operator $\sigma $}{5}% 
-\contentsline {subsection}{\numberline {2.3.2}Projection operator $\pi $}{6}% 
-\contentsline {subsection}{\numberline {2.3.3}Duplicate Elimination operator $\delta $}{6}% 
-\contentsline {subsection}{\numberline {2.3.4}Aggregation operator $\gamma $}{7}% 
-\contentsline {section}{\numberline {2.4}Converting Parse trees into logical expression}{7}% 
-\contentsline {section}{\numberline {2.5}Explain difficulties/ Time complexity}{9}% 
-\contentsline {subsection}{\numberline {2.5.1}Estimating size and cost}{10}% 
-\contentsline {subsection}{\numberline {2.5.2}Estimation of Projection}{11}% 
-\contentsline {subsection}{\numberline {2.5.3}Estimation of Selection}{11}% 
-\contentsline {subsection}{\numberline {2.5.4}Estimation of Join, single attribute}{11}% 
-\contentsline {subsection}{\numberline {2.5.5}Estimation of Join, multiple attribute}{12}% 
-\contentsline {subsection}{\numberline {2.5.6}Multiple Joins}{13}% 
-\contentsline {subsection}{\numberline {2.5.7}Union}{13}% 
-\contentsline {subsection}{\numberline {2.5.8}Intersection}{14}% 
-\contentsline {subsection}{\numberline {2.5.9}Difference}{14}% 
-\contentsline {subsection}{\numberline {2.5.10}Duplicate Elimination}{14}% 
-\contentsline {subsection}{\numberline {2.5.11}Grouping and Aggregation}{14}% 
-\contentsline {section}{\numberline {2.6}Other tools}{14}% 
-\contentsline {subsection}{\numberline {2.6.1}Histogram}{15}% 
-\contentsline {subsection}{\numberline {2.6.2}Heuristics}{15}% 
-\contentsline {section}{\numberline {2.7}Enumeration Methods}{16}% 
-\contentsline {subsection}{\numberline {2.7.1}Heuristic Selection}{17}% 
-\contentsline {subsection}{\numberline {2.7.2}Branch-and-Bound}{18}% 
-\contentsline {subsection}{\numberline {2.7.3}Hill Climbing}{18}% 
-\contentsline {subsection}{\numberline {2.7.4}Selinger-Style Optimization}{18}% 
-\contentsline {section}{\numberline {2.8}Join Order}{19}% 
-\contentsline {subsection}{\numberline {2.8.1}Join Trees}{20}% 
-\contentsline {subsection}{\numberline {2.8.2}DP to decide join order}{21}% 
-\contentsline {subsection}{\numberline {2.8.3}Greedy algorithm for join order}{21}% 
-\contentsline {section}{\numberline {2.9}Physical Query Plan}{22}% 
-\contentsline {subsection}{\numberline {2.9.1}Choosing a Selection Method}{23}% 
-\contentsline {subsection}{\numberline {2.9.2}Choosing a Join Method}{24}% 
-\contentsline {subsection}{\numberline {2.9.3}Pipelining Versus Materialization}{24}% 
-\contentsline {subsection}{\numberline {2.9.4}Pipelining Unary Operations}{25}% 
-\contentsline {subsection}{\numberline {2.9.5}Pipelining Binary Operations}{25}% 
-\contentsline {subsection}{\numberline {2.9.6}Notation for Physical Query Plans}{25}% 
-\contentsline {subsection}{\numberline {2.9.7}Ordering of Physical Operations}{27}% 
-\contentsline {section}{\numberline {2.10}Introduction to Data Streams}{28}% 
-\contentsline {section}{\numberline {2.11}Windowing and QoS}{29}% 
-\contentsline {section}{\numberline {2.12}Challenges of query optimization on data streams}{30}% 
-\contentsline {subsection}{\numberline {2.12.1}Resource Scheduling Strategies}{31}% 
-\contentsline {subsection}{\numberline {2.12.2}Load Shedding and Run-Time Optimization}{31}% 
-\contentsline {subsection}{\numberline {2.12.3}Complex Event and Rule Processing}{31}% 
-\contentsline {section}{\numberline {2.13}Conclusion}{32}% 
-\contentsline {chapter}{\numberline {3}Stream Optimization}{33}% 
-\contentsline {section}{\numberline {3.1}Query Optimization of Data Streams}{33}% 
-\contentsline {chapter}{\numberline {4}Implementation}{34}% 
-\contentsline {section}{\numberline {4.1}Mathematics}{34}% 
-\contentsline {chapter}{\numberline {5}Evaluation}{35}% 
-\contentsline {section}{\numberline {5.1}Measures used}{35}% 
-\contentsline {chapter}{\numberline {6}Conclusion and Further work}{36}% 
-\contentsline {section}{\numberline {6.1}Conclusion}{36}% 
-\contentsline {chapter}{\numberline {A}Proof of xyz}{37}% 
-\contentsline {chapter}{Curriculum Vitae}{38}% 
+\contentsline {chapter}{\numberline {1}Introduction}{1}%
+\contentsline {section}{\numberline {1.1}Motivation}{1}%
+\contentsline {section}{\numberline {1.2}Problem at hand}{1}%
+\contentsline {section}{\numberline {1.3}Structure of thesis}{2}%
+\contentsline {section}{\numberline {1.4}Conclusion}{2}%
+\contentsline {chapter}{\numberline {2}Related Work}{3}%
+\contentsline {section}{\numberline {2.1}Introduction, Query optimization}{3}%
+\contentsline {section}{\numberline {2.2}Converting SQL queries to parse trees}{3}%
+\contentsline {section}{\numberline {2.3}Relational algebra}{4}%
+\contentsline {subsection}{\numberline {2.3.1}Select operator $\sigma $}{5}%
+\contentsline {subsection}{\numberline {2.3.2}Projection operator $\pi $}{6}%
+\contentsline {subsection}{\numberline {2.3.3}Duplicate Elimination operator $\delta $}{6}%
+\contentsline {subsection}{\numberline {2.3.4}Aggregation operator $\gamma $}{7}%
+\contentsline {section}{\numberline {2.4}Converting Parse trees into logical expression}{7}%
+\contentsline {section}{\numberline {2.5}Explain difficulties/ Time complexity}{9}%
+\contentsline {subsection}{\numberline {2.5.1}Estimating size and cost}{10}%
+\contentsline {subsection}{\numberline {2.5.2}Estimation of Projection}{11}%
+\contentsline {subsection}{\numberline {2.5.3}Estimation of Selection}{11}%
+\contentsline {subsection}{\numberline {2.5.4}Estimation of Join, single attribute}{11}%
+\contentsline {subsection}{\numberline {2.5.5}Estimation of Join, multiple attribute}{12}%
+\contentsline {subsection}{\numberline {2.5.6}Multiple Joins}{13}%
+\contentsline {subsection}{\numberline {2.5.7}Union}{13}%
+\contentsline {subsection}{\numberline {2.5.8}Intersection}{14}%
+\contentsline {subsection}{\numberline {2.5.9}Difference}{14}%
+\contentsline {subsection}{\numberline {2.5.10}Duplicate Elimination}{14}%
+\contentsline {subsection}{\numberline {2.5.11}Grouping and Aggregation}{14}%
+\contentsline {section}{\numberline {2.6}Other tools}{14}%
+\contentsline {subsection}{\numberline {2.6.1}Histogram}{15}%
+\contentsline {subsection}{\numberline {2.6.2}Heuristics}{15}%
+\contentsline {section}{\numberline {2.7}Enumeration Methods}{16}%
+\contentsline {subsection}{\numberline {2.7.1}Heuristic Selection}{17}%
+\contentsline {subsection}{\numberline {2.7.2}Branch-and-Bound}{18}%
+\contentsline {subsection}{\numberline {2.7.3}Hill Climbing}{18}%
+\contentsline {subsection}{\numberline {2.7.4}Selinger-Style Optimization}{18}%
+\contentsline {section}{\numberline {2.8}Join Order}{19}%
+\contentsline {subsection}{\numberline {2.8.1}Join Trees}{20}%
+\contentsline {subsection}{\numberline {2.8.2}DP to decide join order}{21}%
+\contentsline {subsection}{\numberline {2.8.3}Greedy algorithm for join order}{21}%
+\contentsline {section}{\numberline {2.9}Physical Query Plan}{22}%
+\contentsline {subsection}{\numberline {2.9.1}Choosing a Selection Method}{23}%
+\contentsline {subsection}{\numberline {2.9.2}Choosing a Join Method}{24}%
+\contentsline {subsection}{\numberline {2.9.3}Pipelining Versus Materialization}{24}%
+\contentsline {subsection}{\numberline {2.9.4}Pipelining Unary Operations}{25}%
+\contentsline {subsection}{\numberline {2.9.5}Pipelining Binary Operations}{25}%
+\contentsline {subsection}{\numberline {2.9.6}Notation for Physical Query Plans}{25}%
+\contentsline {subsection}{\numberline {2.9.7}Ordering of Physical Operations}{27}%
+\contentsline {section}{\numberline {2.10}Introduction to Data Streams}{28}%
+\contentsline {section}{\numberline {2.11}Windowing and QoS}{29}%
+\contentsline {section}{\numberline {2.12}Challenges of query optimization on data streams}{30}%
+\contentsline {subsection}{\numberline {2.12.1}Resource Scheduling Strategies}{31}%
+\contentsline {subsection}{\numberline {2.12.2}Load Shedding and Run-Time Optimization}{31}%
+\contentsline {subsection}{\numberline {2.12.3}Complex Event and Rule Processing}{31}%
+\contentsline {section}{\numberline {2.13}Deep Learning}{32}%
+\contentsline {section}{\numberline {2.14}Reinforcement Learning}{32}%
+\contentsline {section}{\numberline {2.15}Conclusion}{32}%
+\contentsline {chapter}{\numberline {3}Stream Optimization}{34}%
+\contentsline {section}{\numberline {3.1}Formal Problem statement}{34}%
+\contentsline {chapter}{\numberline {4}Implementation}{35}%
+\contentsline {section}{\numberline {4.1}Mathematics}{35}%
+\contentsline {chapter}{\numberline {5}Evaluation}{36}%
+\contentsline {section}{\numberline {5.1}Measures used}{36}%
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{37}%
+\contentsline {section}{\numberline {6.1}Conclusion}{37}%
+\contentsline {chapter}{\numberline {A}Proof of xyz}{38}%
+\contentsline {chapter}{Curriculum Vitae}{39}%
