@@ -51,15 +51,20 @@
 \contentsline {subsection}{\numberline {2.12.2}Load Shedding and Run-Time Optimization}{31}%
 \contentsline {subsection}{\numberline {2.12.3}Complex Event and Rule Processing}{31}%
 \contentsline {section}{\numberline {2.13}Deep Learning}{32}%
-\contentsline {section}{\numberline {2.14}Reinforcement Learning}{32}%
-\contentsline {section}{\numberline {2.15}Conclusion}{32}%
-\contentsline {chapter}{\numberline {3}Stream Optimization}{34}%
-\contentsline {section}{\numberline {3.1}Formal Problem statement}{34}%
-\contentsline {chapter}{\numberline {4}Implementation}{35}%
-\contentsline {section}{\numberline {4.1}Mathematics}{35}%
-\contentsline {chapter}{\numberline {5}Evaluation}{36}%
-\contentsline {section}{\numberline {5.1}Measures used}{36}%
-\contentsline {chapter}{\numberline {6}Conclusion and Further work}{37}%
-\contentsline {section}{\numberline {6.1}Conclusion}{37}%
-\contentsline {chapter}{\numberline {A}Proof of xyz}{38}%
-\contentsline {chapter}{Curriculum Vitae}{39}%
+\contentsline {section}{\numberline {2.14}Reinforcement Learning}{33}%
+\contentsline {subsection}{\numberline {2.14.1}Markov decision processes}{33}%
+\contentsline {subsection}{\numberline {2.14.2}Finding Optima}{34}%
+\contentsline {section}{\numberline {2.15}Deep Reinforcement Learning}{35}%
+\contentsline {section}{\numberline {2.16}Conclusion}{35}%
+\contentsline {chapter}{\numberline {3}Stream Optimization}{37}%
+\contentsline {section}{\numberline {3.1}Introduction}{37}%
+\contentsline {section}{\numberline {3.2}Deep Reinforcement Learning}{38}%
+\contentsline {section}{\numberline {3.3}Formalization}{38}%
+\contentsline {chapter}{\numberline {4}Implementation}{39}%
+\contentsline {section}{\numberline {4.1}Mathematics}{39}%
+\contentsline {chapter}{\numberline {5}Evaluation}{40}%
+\contentsline {section}{\numberline {5.1}Measures used}{40}%
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{41}%
+\contentsline {section}{\numberline {6.1}Conclusion}{41}%
+\contentsline {chapter}{\numberline {A}Proof of xyz}{42}%
+\contentsline {chapter}{Curriculum Vitae}{43}%

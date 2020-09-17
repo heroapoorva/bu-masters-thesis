@@ -5,9 +5,18 @@
 % set this to the location of the figures for this chapter. it may
 % also want to be ../Figures/2_Body/ or something. make sure that
 % it has a trailing directory separator (i.e., '/')!
-\graphicspath{{3_Conclusion/Figures/}}
+\graphicspath{}
 
-\section{Formal Problem statement}
+\section{Introduction}
+\cite{stream_query_optimization}A stream is an ordered sequence of data items, which are values that can range from simple numbers to flat tuples to more  elaborate structured data that may be deeply nested and have variable size. Streams are conceptually infinite, in the sense that  as the streaming computation unfolds over time, the sequence of data items is unbounded in length.
+\par Stream query optimization is the process of modifying a stream processing query, often by changing its graph topology and/or  operators, with the aim of achieving better performance (such as higher throughput, lower latency, or reduced resource usage), while preserving the semantics of the original query.
+\par An optimization should be both safe and profitable. An optimization is safe if it can be applied to a stream query without   changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query  faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. There is a  substantial literature on different stream query optimizations, with different safety and profitability characteristics. This  entry lists the most common optimizations along with short descriptions.
+\par Possible areas of optimization are, batch size, operation combining/ dividing, memory assignment, message passing, operation reordering, garbage collection. We focus mostly on operation reordering.
+
+\section{Deep Reinforcement Learning}
+Last chapter showcased how Deep reinforcement learning can help solve problems, by telling the best course of action. We are going to use those techniques to improve our operation reordering.
+
+\section{Formalization}
 To define a concrete problem statement, we will need to decide upon
 \begin{itemize}
     \item The learning data, which will work as the input to our model, the data should be replicable so that model can be tested consistently.
@@ -15,7 +24,6 @@ To define a concrete problem statement, we will need to decide upon
     \item After fixing the input data and method, for DSMS need to decide upon queries of sufficient complexity for the results to be interesting. 
     Only by having sufficiently complex queries will the query graph lead to interesting results.
     \item At this point need to combine the knowledge from chapter 2 regarding querying processing to come up with a prediction model, its execution, training and evaluation.
-
 \end{itemize}
 
 % 1. What is the stream query optimization? 

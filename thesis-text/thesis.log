@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.8.7)  10 SEP 2020 05:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.8.7)  17 SEP 2020 09:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -427,20 +427,20 @@ File: l3backend-pdfmode.def 2020-06-03 L3 backend support: PDF mode
 (./3_Stream_Optimization/stream_optimization.aux)
 (./4_Implementation/implementation.aux) (./5_Evaluation/evaluation.aux)
 (./6_Conclusion/conclusion.aux) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
 \c@lstlisting=\count292
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -549,45 +549,57 @@ $
  []
 
 [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27]
-[28] [29] [30] [31] [32] Excluding 'comment' comment.) [33]
+[28] [29] [30] [31] [32]
+
+LaTeX Warning: Citation `Reinforcement_Learning' on page 33 undefined on input 
+line 408.
+
+[33] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+) [34]
+Excluding 'comment' comment.) [35] [36]
 (./3_Stream_Optimization/stream_optimization.tex
 Chapter 3.
-) [34
+
+LaTeX Warning: Citation `stream_query_optimization' on page 37 undefined on inp
+ut line 11.
+
+[37
 
 
 
 
-] (./4_Implementation/implementation.tex
+]) [38] (./4_Implementation/implementation.tex
 Chapter 4.
-) [35
+) [39
 
 
 
 
 ] (./5_Evaluation/evaluation.tex
 Chapter 5.
-) [36
+) [40
 
 
 
 
 ] (./6_Conclusion/conclusion.tex
 Chapter 6.
-) [37
+) [41
 
 
 
 
 ] (./Appendix/Appendix.tex
 Appendix A.
-) [38
+) [42
 
 
 
 
 ]
 No file thesis.bbl.
-(./0_Prelim/cv.tex) [39
+(./0_Prelim/cv.tex) [43
 
 
 
@@ -598,13 +610,13 @@ No file thesis.bbl.
 (./6_Conclusion/conclusion.aux) (./Appendix/Appendix.aux) (./0_Prelim/cv.aux)) 
 ) 
 Here is how much of TeX's memory you used:
- 7982 strings out of 480478
- 114664 string characters out of 5905960
- 552137 words of memory out of 5000000
- 23790 multiletter control sequences out of 15000+600000
+ 8127 strings out of 480478
+ 116139 string characters out of 5905960
+ 571747 words of memory out of 5000000
+ 23933 multiletter control sequences out of 15000+600000
  540770 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,8n,46p,1693b,1379s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,46p,1693b,1716s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -614,15 +626,16 @@ r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sf
-rm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb>
-Output written on thesis.pdf (51 pages, 235162 bytes).
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></us
+r/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb>
+Output written on thesis.pdf (55 pages, 258386 bytes).
 PDF statistics:
- 235 PDF objects out of 1000 (max. 8388607)
- 164 compressed objects within 2 object streams
+ 252 PDF objects out of 1000 (max. 8388607)
+ 176 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -392,10 +392,59 @@ It is important to note that optimizing resource allocation using any state of t
 In the first section we said we proceed with the second strategy, i.e. monitor the metrics. Can extend that idea further to monitor the output of CQs to detect anomalies. Initially, Comple Event Processing was not a part of DSMS, but now many models have been developed to integrate the two. With the integration comes many additional functionalities and helps develop a theoretical base, but also puts additional burden on the system. This along with run time optimiations makes the implementation of DSMS quite complicated.
 
 \section{Deep Learning}
-
-
+We expand on linear regression model. Given $\{(x^{(i)},y^{(i)})\}_{i=1}^{n}$ as data points, the goal is to find a function $h_{\theta}(x)$ which is "as close as possible" to $y_i$.
+\par One way to do that is, define a loss function $J$ which measures the distance between prediction and actual value of $y^{(i)}$ as
+$$J^{(i)}(\theta)=\frac{1}{2}(h_{\theta}(x^{(i)})-y^{(i)})^{2}$$
+$$J(\theta)=\frac{1}{n}\sum_{i=1}^{n}J^{(i)}(\theta)$$
+The goal then reduces to finding parametrize $h_{\theta}$ and finding the $\theta$ so that $J(\theta)$ is minimized.
+\par Similarly in neural networks, we define a parameterization of $h$ and then try to minimize the loss function.
+\par Consider the simplest neural network, which consists of an input layer and a output layer with a single neuron. Say, the input is $x$, then the output neuron has input $h_{\theta}(x)$, and the output from the neuron is $A(h_{\theta}(x))$, where $A$ is an activation function.
+\par In the above example, if $x\in\mathbb{R}^{n}$ then, $h:\mathbb{R}^{n}\rightarrow\mathbb{R}$, which required us to find a single $\theta$. Now say, $h:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$, then we need to find $\theta_{1},\theta_{2},...,\theta_{m}$. Which results in a matrix of dimension $n*m$. For each of the $m$ neurons in the output layer, the input will then be $h_{\theta_{i}}(x)$ and the output of the $m$ neurons will be a vector $A(h_{\theta_{1}}(x)),A(h_{\theta_{2}}(x)),...,A(h_{\theta_{m}}(x)) \in \mathbb{R}^{m}$. This is an example of \textbf{Fully connected $2-$layer neural network}.  
+\par \textbf{Multi-layer fully connected neural network}, for this keep on adding one layer at a time to the neural network, and use the output from the last layer as the input.
+\par At the end the problem is still reduced to finding parameters which minimize the loss and hence can solved using gradient descent and similar methods, but it is much more computationa intense.
 
 \section{Reinforcement Learning}
+\subsection{Markov decision processes}
+\cite{Reinforcement_Learning}Markov decision process(MDP) is used to formalize various types of stochastic processes. In MDPs, the goal of the agent is to make a sequence of actions to optimize/ maximize an objective function. \\
+Formally a MDP is a $4-$tuple 
+\begin{center}
+$\langle S,A,P(s,a),R(s,a) \rangle $\\
+$S \to $ Set of all possible states the agent can be in.\\
+$A \to $ Set of all possible actions the agent can take.\\
+$P(s,a) \to $ A probability distribution of going to various states given current state and action. $s^{1} \sim P(s,a)$\\
+$R(s,a) \to $ Reward for taking action $a$ on state $s$.\\
+\end{center}
+To the above 4 tuple, additional parameters such as starting state and discount factor can be added.
+\par A run of MDP looks like following:-
+\par Start from the state $s_0$, choose an action $a_0\in A$ to take, the action will result in transition in state from $s_0\rightarrow s_1$, where $s_1$ is taken from the probability distribution $P(s_0,a_0)$. This change in state results in a reward $R(s_0,a_0)$. Then again an action $a_1$ is taken, which then results in a transition from state $s_1\rightarrow s_2$, where $s_2$ is taken from the probability distribution $P(s_1,a_1)$. This change in state results in a reward $\gamma R(s_1,a_1)$. and so on.\\
+This will result in a total reward of
+$$\sum_{i=0}^{n} \gamma^{i}R(s_i,a_i)$$
+The goal with reinforcement learning is to maximize $\mathbb{E}[\sum_{i=0}^{n} \gamma^{i}R(s_i,a_i)]$.\\
+\textbf{Policy} is a function $\pi:S\rightarrow A$. \textbf{Executing a policy} means at state $s$, action $a=\pi(s)$ is executed. This leads to the \textbf{value function} for policy $\pi$.
+$$V^{\pi}(s)=\mathbb{E}[\sum_{i=0}^{n} \gamma^{i}R(s_i,a_i)|s_0=s,\pi]$$,
+This value function satisfies the Bellman Equation.
+$$V^{\pi}(s)=R(s)+\gamma\sum_{s^{'}\in S}P(s,\pi(s))(s^{'})V^{\pi}(s^{'})$$ 
+Now we need to find the optimal policy, which can be formally written as
+$$V^{*}(S)=\max_{\pi}V^{\pi}(S)$$
+\subsection{Finding Optima}
+\begin{lstlisting}[language=python]
+for s in S:
+    V(s)=0
+while(not converged):
+    for s in S:
+        V(s)=R(s)+max over all action[gamma*(sum(P(s,a,s')V(s')))]
+\end{lstlisting}
+The above algorithm is called the value iteration algorithm.
+\begin{lstlisting}[language=python]
+initialize random pi
+while(not converged):
+    V=V(pi)
+    for s in S:
+        pi(s)=max over all actions[sum(P(s,a,s')V(S'))]
+\end{lstlisting}
+The second algorithm is called Policy iteration algorithm.
+
+\section{Deep Reinforcement Learning}
 
 
 \section{Conclusion}
@@ -421,16 +470,7 @@ Then we looked at DSMS and saw the challenged they face and how they overcome th
 \section{Deep Reinforcement learning}
 \label{sec:drl}
 
-Markov decision process(MDP) is used to formalize various types of stochastic processes. In MDPs, the goal of the agent is to make a sequence of actions to optimize/ maximize an objective function. \\
-Formally a MDP is a $5-$tuple 
-\begin{center}
-$\langle S,A,P(s,a),R(s,a), s_0 \rangle $\\
-$S \to $ Set of all possible states the agent can be in.\\
-$A \to $ Set of all possible actions the agent can take.\\
-$P(s,a) \to $ A probability distribution of going to various states given current state and action. $s^{1} \sim P(s,a)$\\
-$R(s,a) \to $ Reward for taking action $a$ on state $s$.\\
-$s_0 \to $ Describes the initial state of the system/ agent.
-\end{center}
+
 The performance of the agent is measured using the rewards collected along the way through various states. So the objective of an MDP is to find a policy $\pi:S\rightarrow A$, a function that maps states to actions, in order to maximize the expected value:-
 \begin{center}
     \[ 
