@@ -12,19 +12,41 @@
 \par Stream query optimization is the process of modifying a stream processing query, often by changing its graph topology and/or  operators, with the aim of achieving better performance (such as higher throughput, lower latency, or reduced resource usage), while preserving the semantics of the original query.
 \par An optimization should be both safe and profitable. An optimization is safe if it can be applied to a stream query without   changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query  faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. There is a  substantial literature on different stream query optimizations, with different safety and profitability characteristics. This  entry lists the most common optimizations along with short descriptions.
 \par Possible areas of optimization are, batch size, operation combining/ dividing, memory assignment, message passing, operation reordering, garbage collection. We focus mostly on operation reordering.
-
-\section{Deep Reinforcement Learning}
-Last chapter showcased how Deep reinforcement learning can help solve problems, by telling the best course of action. We are going to use those techniques to improve our operation reordering.
+\par Last chapter showcased how Deep reinforcement learning can help solve problems by telling the best course of action. We are going to use this technique to improve our operation reordering.
 
 \section{Formalization}
-To define a concrete problem statement, we will need to decide upon
+To even being to tackle the problem first we need to define the problem formally to be able to analyze it.
+\\ For the experiment to be reconstructible and to define a concrete problem statement for reinforcement learning, we will need to decide upon the following at least:-
 \begin{itemize}
-    \item The learning data, which will work as the input to our model, the data should be replicable so that model can be tested consistently.
-    \item While more implementation based, the method to take input needs to be decided as well and maintained for consistancy reasons.
-    \item After fixing the input data and method, for DSMS need to decide upon queries of sufficient complexity for the results to be interesting. 
-    Only by having sufficiently complex queries will the query graph lead to interesting results.
-    \item At this point need to combine the knowledge from chapter 2 regarding querying processing to come up with a prediction model, its execution, training and evaluation.
+    \item Data Soucre generator
+    \item Query to execute
+    \item Window size, fixed or dynamic
+    \item The underlying algorithms have to be fixed
+    \item Featurization method of DRL
+    \item How will DRL change over time
+    \item Output of DRL
+    \item Evaluation
 \end{itemize}
+Before going on the give answers to the above, we also need to justify using this(DRL) technique.
+
+
+\section{Optimization Specifications}
+A first attempt at making a DQN we might narrow down to the fact that DQN will be query specific, we do not know the exact state we will be in nor do we know the exact reward we get until we do the action. 
+\par The interesting part of this problem only arises due to complex queries, hence we need to remember that when choosing a query to solve, operations like join, Aggregation, duplication elemination and more result in complex queries generally.
+\par Window size kept for training can change and a good window size needs to be figured out.
+\par The underlying algorithms for joins, memory access and message passing should be fixed so results aren't affected by multiple attributes.
+\par Need to encode the query and convert it into features for the DQN.
+\par To determine what all should the features should capture, we need to look at the operations we will be performing, we also need an encoding for the query itself as well as the notations used in the previous chapter to calculate complexity.
+\begin{itemize}
+\item $B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of relation $R$.
+\item $T(R) \coloneqq$ is the number of tuples of relation $R$.
+\item $V(R,a) \coloneqq$ is the value count for attribute a of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.
+\item $V(R, [ a_1 , a_2,..., a_n]) \coloneqq$ is the number of distinct values $R$ has when all of attributes $a_1, a_2,..., a_n$ are considered together, that is, the number of tuples in $\delta(\pi_{a_1,a_2,...,a_n}(R))$
+\end{itemize}
+
+\par The DQN should tell according to it's estimates what is the best action to take, what is the best ordering, which operation to perform.
+
+
 
 % 1. What is the stream query optimization? 
 % We can have complex queries. Conctinous queries because it runs on top of the data stream. 
