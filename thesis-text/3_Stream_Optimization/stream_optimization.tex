@@ -14,13 +14,12 @@
 \par Possible areas of optimization are, batch size, operation combining/ dividing, memory assignment, message passing, operation reordering, garbage collection. We focus mostly on operation reordering.
 \par Last chapter showcased how Deep reinforcement learning can help solve problems by telling the best course of action. We are going to use this technique to improve our operation reordering.
 
-\section{Formalization}
+\section{Formalization Requirements}
 To even being to tackle the problem first we need to define the problem formally to be able to analyze it.
 \\ For the experiment to be reconstructible and to define a concrete problem statement for reinforcement learning, we will need to decide upon the following at least:-
 \begin{itemize}
     \item Data Soucre generator
     \item Query to execute
-    \item Window size, fixed or dynamic
     \item The underlying algorithms have to be fixed
     \item Featurization method of DRL
     \item How will DRL change over time
@@ -29,7 +28,28 @@ To even being to tackle the problem first we need to define the problem formally
 \end{itemize}
 Before going on the give answers to the above, we also need to justify using this(DRL) technique.
 
+\section{Assumptions and Problem Statement}
+Currently we make the following assumptions:-
+\begin{itemize}
+    \item We have our data source generator with say a fixed seed, which will ensure we have a constant source of data.
+    \item The query to execute is given, that is the window size for data streams is given.
+    \item The query has combination of data streams and static relations as well as operators such as selection, projections, groupby and more.
+\end{itemize}
+As mentioned eariler, we are going to focus on finding an order of operations to execute to reduce/ minimize the query execution time.
+\par Say there are data streams $S_1,S_2,...,S_{n_1}$ and relations $R_1,R_2,...,R_{n_2}$. Let $S_i$ have $m_i$ attributes. Then total attributes are $a_{S_1,1}, a_{S_1,2},..., a_{S_1,m_1},..., a_{R_{n_2},m_{n_1+n_2}}$. 
+\\ That is to say there are total of $\sum_{i=1}^{n_1+n_2}m_i=g$ attributes. We can use $1-0$ encoding so that any attribute or a combination in this schema can be represented by an array/vector $v$ of length $g$, 
 
+\[ 
+   v_i=
+   \begin{cases} 
+      1 & if, i \in combination \\
+      0 & otherwise 
+   \end{cases}
+\] 
+This vector will help represent attributes listed in the query.
+\par For Deep reinforcement learning we will need the rewards, actions, current and next possible state, we will need to encode these in a $5-$tuple, $(F_c,F_n,$ Action, Reward $)$. When we have enough of these examples we are use them to train our model and get a better ordering.
+
+\begin{comment}
 \section{Optimization Specifications}
 A first attempt at making a DQN we might narrow down to the fact that DQN will be query specific, we do not know the exact state we will be in nor do we know the exact reward we get until we do the action. 
 \par The interesting part of this problem only arises due to complex queries, hence we need to remember that when choosing a query to solve, operations like join, Aggregation, duplication elemination and more result in complex queries generally.
@@ -45,7 +65,7 @@ A first attempt at making a DQN we might narrow down to the fact that DQN will b
 \end{itemize}
 
 \par The DQN should tell according to it's estimates what is the best action to take, what is the best ordering, which operation to perform.
-
+\end{comment}
 
 
 % 1. What is the stream query optimization? 

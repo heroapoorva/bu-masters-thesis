@@ -58,8 +58,8 @@
 \contentsline {section}{\numberline {2.16}Conclusion}{35}%
 \contentsline {chapter}{\numberline {3}Stream Optimization}{37}%
 \contentsline {section}{\numberline {3.1}Introduction}{37}%
-\contentsline {section}{\numberline {3.2}Formalization}{38}%
-\contentsline {section}{\numberline {3.3}Optimization Specifications}{38}%
+\contentsline {section}{\numberline {3.2}Formalization Requirements}{38}%
+\contentsline {section}{\numberline {3.3}Assumptions and Problem Statement}{38}%
 \contentsline {chapter}{\numberline {4}Implementation}{40}%
 \contentsline {section}{\numberline {4.1}Mathematics}{40}%
 \contentsline {chapter}{\numberline {5}Evaluation}{41}%
