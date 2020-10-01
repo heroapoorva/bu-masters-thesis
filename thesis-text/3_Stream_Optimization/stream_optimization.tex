@@ -28,7 +28,11 @@ To even being to tackle the problem first we need to define the problem formally
 \end{itemize}
 Before going on the give answers to the above, we also need to justify using this(DRL) technique.
 
-\section{Assumptions and Problem Statement}
+\section{Problem Statement}
+As discussed in the previous chapter, given a query there are multiple ways of executing the query to return the result, these ways correspond to a query plan and for each query plan there is a cost associated to it, which is the time of execution.\\
+We can represent them as $\{(P_{i},C_{i})\}_{i=1}^{n}$, out goal is to find query plan $P_{i}$ such that $C_{i}$ is minimum.
+
+\section{Approach}
 Currently we make the following assumptions:-
 \begin{itemize}
     \item We have our data source generator with say a fixed seed, which will ensure we have a constant source of data.
@@ -36,8 +40,15 @@ Currently we make the following assumptions:-
     \item The query has combination of data streams and static relations as well as operators such as selection, projections, groupby and more.
 \end{itemize}
 As mentioned eariler, we are going to focus on finding an order of operations to execute to reduce/ minimize the query execution time.
-\par Say there are data streams $S_1,S_2,...,S_{n_1}$ and relations $R_1,R_2,...,R_{n_2}$. Let $S_i$ have $m_i$ attributes. Then total attributes are $a_{S_1,1}, a_{S_1,2},..., a_{S_1,m_1},..., a_{R_{n_2},m_{n_1+n_2}}$. 
-\\ That is to say there are total of $\sum_{i=1}^{n_1+n_2}m_i=g$ attributes. We can use $1-0$ encoding so that any attribute or a combination in this schema can be represented by an array/vector $v$ of length $g$, 
+
+% Can assume there is only 1 stream, it contains all the attributes.
+% Specific example and show its execution. show a simple and a complex query, show it's execution plans.
+% A smaller problem definition, then tell the approach.
+% Attribute(ordering, algorithms, operators) for plan execution and properties(entropy, speed, throughput) for the data streams. overall execution time of plan depends on both attribute of plan and properties of data stream.
+% continuous queries not historical.
+
+\par Say there are data streams $S$ and relations $R_1,R_2,...,R_{n}$. Let $S$ have $m$ attributes. Then total attributes are $a_{S,1}, a_{S_1,m},..., a_{R_{1},1},..., a_{R_n},m_n$. 
+\\ That is to say there are total of $(m + \sum_{i=1}^{n}m_i)=g$ attributes. We can use $1-0$ encoding so that any attribute or a combination in this schema can be represented by an array/vector $v$ of length $g$. 
 
 \[ 
    v_i=
@@ -48,6 +59,89 @@ As mentioned eariler, we are going to focus on finding an order of operations to
 \] 
 This vector will help represent attributes listed in the query.
 \par For Deep reinforcement learning we will need the rewards, actions, current and next possible state, we will need to encode these in a $5-$tuple, $(F_c,F_n,$ Action, Reward $)$. When we have enough of these examples we are use them to train our model and get a better ordering.
+
+\section{Example}
+\subsection{Input}
+\textbf{CarLocStr}: Stream of car location reports. This forms primary input to the system. 
+\begin{lstlisting}[language=SQL]
+    CarLocStr(car_id,        /* unique car identifier       */
+              speed,         /* speed of the car            */
+              exp_way,       /* expressway: 0..10           */
+              lane,          /* lane: 0,1,2,3               */ 
+              dir,           /* direction: 0(east), 1(west) */
+              x-pos);        /* coordinate in express way   */
+\end{lstlisting}
+\textbf{AccBalQueryStr}: Stream of account-balance adhoc queries. Each query requests the current account balance of a car. 
+\begin{lstlisting}[language=SQL]
+    AccBalQueryStr(car_id,   
+                   query_id);/* id used to associate 
+                              * responses with queries      */
+\end{lstlisting}
+\textbf{ExpQueryStr}: Stream of adhoc queries requesting the expenditure of a car for the current day. 
+\begin{lstlisting}[language=SQL]
+    ExpQueryStr(car_id,
+                query_id);
+\end{lstlisting}
+\textbf{TravelTimeQueryStr}: Stream of expected-travel-time adhoc queries. 
+\begin{lstlisting}[language=SQL]
+    TravelTimeQueryStr(query_id,
+                       exp_way,
+                       init_seg,      /* initial segment */
+                       fin_seg,       /* final segment   */
+                       time_of_day,   
+                       day_of_week);
+\end{lstlisting}
+\textbf{CreditStr}: The stream of credits to the account corresponding to a car. 
+\begin{lstlisting}[language=SQL]                   
+    CreditStream(car_id, credit);
+\end{lstlisting}
+
+\subsection{Query}
+In this section we showcase the query statement for a simple and a complex query, convert it into a SQL query and show the complexity within. We use the query statement from linear road itself.
+\begin{itemize}
+    \item \textbf{Segment Average Speed } : The average speed of the cars in a segment over the last 5 minutes. 
+    \item \textbf{Negative Toll Generation} : Negative tolls are provided to cars on two occasions. First, if a car exits on a segment, the toll for the segment is waived; we model this waiver as a negative toll. Second, if a car exits on any of the five segments upstream of an accident segment, a negative toll of \$X is credited to the car's account. 
+\end{itemize}
+
+Now to convert the query statement to actual syntax/ query. We start with the simplier one.
+\begin{lstlisting}[language=SQL]
+    SELECT exp_way, dir, seg, AVG(speed) as speed,
+    FROM CarSegStr [RANGE 5 MINUTES]
+    GROUP BY exp_way, dir, seg;
+\end{lstlisting}
+
+
+
+
+
+Before going to that, note the steps to perform a query on streams requires to first generate a relation from stream, make relations from this derived relation and then output a stream from the derived relation. This is a 3 step process. \\
+Now we look at the more complex query.
+\par  \textbf{CarExitStr}: Stream of events of cars exiting from the freeways. A car has exited if it is no longer "active" (i.e., it has not reported its location in the last $30$ seconds). The exiting of cars is determined by applying the $DSTREAM$ operator on the CurActiveCars relation. The relation CurActiveCars does not store the latest segment of the car; this is determined by using the last location report of the car in CarSegStr. 
+\begin{lstlisting}[language=SQL]
+SELECT RSTREAM (S.car_id, S.exp_way, S.dir, S.seg)
+FROM (DSTREAM (CurActiveCars)) [NOW] AS A,
+     CarSegStr [PARTITION BY car_id ROWS 1] AS S
+WHERE A.car_id = S.car_id;
+\end{lstlisting}
+\textbf{NegTollStr}: Stream of negative tolls to cars exiting on a segment. The amount of the negative toll for an exiting car is equal to the latest charged toll (TollStr) for the car. 
+\begin{lstlisting}[language=SQL]
+SELECT RSTREAM (E.car_id, T.toll)
+FROM CarExitStr [NOW] AS E, TollStr [PARTITION BY car_id ROWS 1] AS T
+WHERE E.car_id = T.car_id;
+\end{lstlisting}
+\textbf{NegAccTollStr}: Stream of negative tolls given to cars exiting less than five segments upstream from an accident segment (relation AccSeg). 
+\begin{lstlisting}[language=SQL]
+SELECT RSTREAM (car_id, X)
+FROM CarExitStr [NOW] as E, AccSeg as A
+WHERE (E.exp_way = A.exp_way AND E.dir = EAST AND A.dir = EAST and 
+       E.seg < A.seg AND E.seg > A.seg - 5) OR
+      (E.exp_way = A.exp_way AND E.dir = WEST AND A.dir = WEST and 
+       E.seg > A.seg AND E.seg < A.seg + 5);
+\end{lstlisting}
+These 3 steps combined give us the desired query.
+
+
+
 
 \begin{comment}
 \section{Optimization Specifications}

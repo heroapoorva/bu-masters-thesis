@@ -59,12 +59,16 @@
 \contentsline {chapter}{\numberline {3}Stream Optimization}{37}%
 \contentsline {section}{\numberline {3.1}Introduction}{37}%
 \contentsline {section}{\numberline {3.2}Formalization Requirements}{38}%
-\contentsline {section}{\numberline {3.3}Assumptions and Problem Statement}{38}%
-\contentsline {chapter}{\numberline {4}Implementation}{40}%
-\contentsline {section}{\numberline {4.1}Mathematics}{40}%
-\contentsline {chapter}{\numberline {5}Evaluation}{41}%
-\contentsline {section}{\numberline {5.1}Measures used}{41}%
-\contentsline {chapter}{\numberline {6}Conclusion and Further work}{42}%
-\contentsline {section}{\numberline {6.1}Conclusion}{42}%
-\contentsline {chapter}{\numberline {A}Proof of xyz}{43}%
-\contentsline {chapter}{Curriculum Vitae}{44}%
+\contentsline {section}{\numberline {3.3}Problem Statement}{38}%
+\contentsline {section}{\numberline {3.4}Approach}{39}%
+\contentsline {section}{\numberline {3.5}Example}{40}%
+\contentsline {subsection}{\numberline {3.5.1}Input}{40}%
+\contentsline {subsection}{\numberline {3.5.2}Query}{40}%
+\contentsline {chapter}{\numberline {4}Implementation}{43}%
+\contentsline {section}{\numberline {4.1}Mathematics}{43}%
+\contentsline {chapter}{\numberline {5}Evaluation}{44}%
+\contentsline {section}{\numberline {5.1}Measures used}{44}%
+\contentsline {chapter}{\numberline {6}Conclusion and Further work}{45}%
+\contentsline {section}{\numberline {6.1}Conclusion}{45}%
+\contentsline {chapter}{\numberline {A}Proof of xyz}{46}%
+\contentsline {chapter}{Curriculum Vitae}{47}%
