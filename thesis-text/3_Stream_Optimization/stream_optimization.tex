@@ -8,7 +8,7 @@
 \graphicspath{}
 
 \section{Introduction}
-\cite{stream_query_optimization}A stream is an ordered sequence of data items, which are values that can range from simple numbers to flat tuples to more  elaborate structured data that may be deeply nested and have variable size. Streams are conceptually infinite, in the sense that  as the streaming computation unfolds over time, the sequence of data items is unbounded in length.
+ A stream is an ordered sequence of data items, which are values that can range from simple numbers to flat tuples to more  elaborate structured data that may be deeply nested and have variable size. Streams are conceptually infinite, in the sense that  as the streaming computation unfolds over time, the sequence of data items is unbounded in length.
 \par Stream query optimization is the process of modifying a stream processing query, often by changing its graph topology and/or  operators, with the aim of achieving better performance (such as higher throughput, lower latency, or reduced resource usage), while preserving the semantics of the original query.
 \par An optimization should be both safe and profitable. An optimization is safe if it can be applied to a stream query without   changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query  faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. There is a  substantial literature on different stream query optimizations, with different safety and profitability characteristics. This  entry lists the most common optimizations along with short descriptions.
 \par Possible areas of optimization are, batch size, operation combining/ dividing, memory assignment, message passing, operation reordering, garbage collection. We focus mostly on operation reordering.
@@ -99,21 +99,37 @@ This vector will help represent attributes listed in the query.
 \subsection{Query}
 In this section we showcase the query statement for a simple and a complex query, convert it into a SQL query and show the complexity within. We use the query statement from linear road itself.
 \begin{itemize}
-    \item \textbf{Segment Average Speed } : The average speed of the cars in a segment over the last 5 minutes. 
-    \item \textbf{Negative Toll Generation} : Negative tolls are provided to cars on two occasions. First, if a car exits on a segment, the toll for the segment is waived; we model this waiver as a negative toll. Second, if a car exits on any of the five segments upstream of an accident segment, a negative toll of \$X is credited to the car's account. 
+    \item \textbf{Query 1, Segment Average Speed } : The average speed of a particular car in a segment over the last 5 minutes. 
+    \item \textbf{Query 2, Negative Toll Generation} : Negative tolls are provided to cars on two occasions. First, if a car exits on a segment, the toll for the segment is waived; we model this waiver as a negative toll. Second, if a car exits on any of the five segments upstream of an accident segment, a negative toll of \$X is credited to the car's account. 
 \end{itemize}
+Now to convert the query statement to actual syntax/ query and showcase few different query plans and how the cost might change.
 
-Now to convert the query statement to actual syntax/ query. We start with the simplier one.
+
+
+\subsection{Segment Average Speed}
+First we convert the simpler query.
 \begin{lstlisting}[language=SQL]
     SELECT exp_way, dir, seg, AVG(speed) as speed,
     FROM CarSegStr [RANGE 5 MINUTES]
+    WHERE car_id = target
     GROUP BY exp_way, dir, seg;
 \end{lstlisting}
+To convert this into a query plan, as seen in the previous chapter, we use relational algebra to convert into a query plan.
+$$\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\sigma_{\text{car\_id = target}}(\text{CarSegStr}))$$
+Of course, the above mentioned method/ bracketing is one way of executing the query. A small modification from the rules in previous chapter can lead to the following improvement!
+$$\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\pi_{\text{exp\_way,dir,seg, speed}}(\sigma_{\text{car\_id = target}} (\text{CarSegStr})))$$
+Now here we are assuming that $CarSegStr$ is a single stream, ready to be used, incase it was a more complicated, that is, it was obtained by joining 2 different streams/ relations with a condition $C$ a further improvement is possible!\\
+$$\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\pi_{\text{exp\_way,dir,seg, speed}}(\sigma_{\text{car\_id = target}} (S_1\underset{C \land (\text{car\_id = target})}{\bowtie}S_2)))$$
+Of course further improvements can be made, but that will require us to look into attributes of the two streams $S_1$ and $S_2$
+\par So to conclude, we made an improvement from the naive plan to a much more efficient plan
+\begin{itemize}
+    \item $\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\sigma_{\text{car\_id = target}}(\text{CarSegStr}))$
+    \item $\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\pi_{\text{exp\_way,dir,seg, speed}}(\sigma_{\text{car\_id = target}} (\text{CarSegStr})))$
+    \item $\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\pi_{\text{exp\_way,dir,seg, speed}}(\sigma_{\text{car\_id = target}} (S_1\underset{C \land (\text{car\_id = target})}{\bowtie}S_2)))$
+\end{itemize}
 
-
-
-
-
+\subsection{Negative Toll Generation}
+Now to convert tackle the more complex query, \textbf{Query 2, }\\
 Before going to that, note the steps to perform a query on streams requires to first generate a relation from stream, make relations from this derived relation and then output a stream from the derived relation. This is a 3 step process. \\
 Now we look at the more complex query.
 \par  \textbf{CarExitStr}: Stream of events of cars exiting from the freeways. A car has exited if it is no longer "active" (i.e., it has not reported its location in the last $30$ seconds). The exiting of cars is determined by applying the $DSTREAM$ operator on the CurActiveCars relation. The relation CurActiveCars does not store the latest segment of the car; this is determined by using the last location report of the car in CarSegStr. 
@@ -139,11 +155,23 @@ WHERE (E.exp_way = A.exp_way AND E.dir = EAST AND A.dir = EAST and
        E.seg > A.seg AND E.seg < A.seg + 5);
 \end{lstlisting}
 These 3 steps combined give us the desired query.
-
-
-
-
+$$\pi_{\text{car\_id,X}}$$
+$$\sigma_{ (\text{(E.exp\_way=A.exp\_way)} \land \text{(E.dir=East)} \land \text{(A.dir=East)} \land (E.seg < A.seg) \land (E.seg > A.seg - 5) )}(\text{CarExitStr, AccSeg})$$
+$$\cup_B$$
+$$\sigma_{ (\text{(E.exp\_way=A.exp\_way)} \land \text{(E.dir=West)} \land \text{(A.dir=West)} \land (E.seg > A.seg) \land (E.seg < A.seg + 5) )}(\text{CarExitStr, AccSeg})$$
+For the sake of notation, let us call these conditions $C_1,C_2$
+$$\pi_{\text{car\_id,X}}(\sigma_{C_1\lor C_2}(\text{E, A}))$$
+From the second query, we have  $E.car\_id$ as
+$$\pi_{\text{E.car\_id,T.toll}}(\sigma_{\text{E.car\_id = T.car\_id}}(E,T))$$
+$$\pi_{\text{E.car\_id,T.toll}}(\sigma_{\text{E.car\_id = T.car\_id}}(\pi_{\text{E.car\_id,}}(E),\pi_{\text{T.car\_id,T.toll}}(T)))$$
+We use this optimized plan for the $2^{nd}$ query in the $3^{rd}$ query.
 \begin{comment}
+
+$$(\text{E.exp\_way=A.exp\_way}\land \text{E.dir=East}\land \text{A.dir=EAST}\land \text{E.seg<A.seg} \land \text{E.seg>A.seg-5})}$$
+
+
+
+
 \section{Optimization Specifications}
 A first attempt at making a DQN we might narrow down to the fact that DQN will be query specific, we do not know the exact state we will be in nor do we know the exact reward we get until we do the action. 
 \par The interesting part of this problem only arises due to complex queries, hence we need to remember that when choosing a query to solve, operations like join, Aggregation, duplication elemination and more result in complex queries generally.
