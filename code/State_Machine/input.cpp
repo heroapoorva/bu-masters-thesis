@@ -28,16 +28,32 @@ Generate randomness and record time of runs
 // argc is the number of command line arguments
 // argv is an array of command line arguments
 
-void input(FILE * pFile, int database[][4], int window_size)
+void input_toll(FILE * pFile, int d[][4], int window_size)
 {
     int i;
     for(i=0;i<window_size;i++)
     {
-        fscanf (pFile, "%i,%i,%i,%i", &database[i][0],&database[i][1],&database[i][2],&database[i][3]);
+        fscanf (pFile, "%i,%i,%i,%i", &d[i][0],&d[i][1],&d[i][2],&d[i][3]);
         //printf ("%i,\n",database[i][0]);
     }
     
 }
+
+void input_database(FILE * pFile, int d[][15], int window_size)
+{
+    int i;
+    /*
+    for(i=0;i<window_size;i++)
+    {
+        fscanf (pFile, "%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i", &d[i][0],
+        &d[i][1],&d[i][2],&d[i][3],&d[i][4],&d[i][5],&d[i][6],&d[i][7],&d[i][8],
+        &d[i][9],&d[i][10],&d[i][11],&d[i][12],&d[i][13],&d[i][14]);
+        //printf ("%i,\n",database[i][0]);
+    }*/
+    
+}
+
+
 
 void create_state_machine()
 {
@@ -52,37 +68,46 @@ void format()
 int main(int argc, char** argv)
 {
     //The size of window we consider.
-    int window_size=100;
+    int window_size=20000;
     
-    FILE * pFile;
+    FILE *pFile,*pFile2;
     // Say the first arguement is the location of the stream.
     //pFile = fopen ("test.err","r");
     pFile = fopen (argv[1],"r");
     
-    int database[window_size][4];
-    int i=1;
+    pFile2 = fopen (argv[2],"r");
+    
+    
+    int toll[window_size][4];
+    int database[window_size][15];
+    int i=100;
     
     //The state machine creation
     create_state_machine();
     // The first assignment is going to be slower
     while(i)
     {
-        
         auto start = std::chrono::high_resolution_clock::now();
+        
         //Take input everytime
-        input(pFile, database, window_size);
+        input_toll(pFile, toll, window_size);
         
+        std::cout<<"yolo";
+        
+        input_database(pFile2, database, window_size);
+
         //Extract information, features
-        format();
+        //format();
         // 
-        
+
         //std::cout <<1<<std::endl; adds 172 microsec
         //printf("%i\n",1);adds 121 microsec
         auto stop = std::chrono::high_resolution_clock::now(); 
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
         std::cout << duration.count() << std::endl;
-        i=0;
-    }  
+        i--;
+    }
     fclose(pFile);
+    fclose(pFile2);
     return 0;
 }
