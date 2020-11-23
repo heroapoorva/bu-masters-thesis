@@ -29,14 +29,13 @@ Generate randomness and record time of runs
 // argc is the number of command line arguments
 // argv is an array of command line arguments
 
-void input_database(FILE * pFile, int d[][15],int window_size)
+void input_database(FILE * pFile, int d[][4],int window_size)
 {
-    int i;
+    int i,j;
     for(i=0;i<window_size;i++)
     {
-        fscanf (pFile, "%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i", &d[i][0],
-        &d[i][1],&d[i][2],&d[i][3],&d[i][4],&d[i][5],&d[i][6],&d[i][7],&d[i][8],
-        &d[i][9],&d[i][10],&d[i][11],&d[i][12],&d[i][13],&d[i][14]);
+        fscanf (pFile, "%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i", &j,
+        &j,&j,&d[i][0],&d[i][1],&j,&d[i][2],&d[i][3],&j,&j,&j,&j,&j,&j,&j);
         //printf ("%i,\n",database[i][0]);
     }
 }
@@ -46,10 +45,10 @@ void create_state_machine()
     int i = 0;
 }
 
-bool my_sort(std::vector<int> v1, std::vector<int> v2)
+bool my_sort(std::vector<int> &v1, std::vector<int> &v2)
 {
-    int i = 0;
-    for(i;i<v1.size();i++)
+    int i;
+    for(i=0;i<v1.size();i++)
     {
         if(v1[i]>v2[i])
         {
@@ -64,6 +63,7 @@ bool my_sort(std::vector<int> v1, std::vector<int> v2)
             continue;
         }
     }
+    return(v1[i]>v2[i]);
 }
 
 void print_2dvector(std::vector<std::vector<int>> output)
@@ -81,7 +81,7 @@ void print_2dvector(std::vector<std::vector<int>> output)
 }
 
 
-void format(int d[][15],std::vector<std::vector<int>> output, std::vector<int> vect, int window_size)
+void format(int d[][4],std::vector<std::vector<int>> &output, std::vector<int> &vect, int window_size)
 {
     int i = 0,j = 0;
     int count;
@@ -90,10 +90,10 @@ void format(int d[][15],std::vector<std::vector<int>> output, std::vector<int> v
     {
         if(d[i][2]==0)
         {
-            vect.push_back(d[i][4]);
-            vect.push_back(d[i][6]);
-            vect.push_back(d[i][7]);
+            vect.push_back(d[i][1]);
+            vect.push_back(d[i][2]);
             vect.push_back(d[i][3]);
+            vect.push_back(d[i][0]);
             output.push_back(vect);
         }
         vect.clear();
@@ -103,7 +103,7 @@ void format(int d[][15],std::vector<std::vector<int>> output, std::vector<int> v
     {
         count = 1;
         std::sort(output.begin(),output.end(), my_sort);
-        print_2dvector(output);
+        //print_2dvector(output);
         op.push_back(output[0]);
         for(i=1;i<output.size();i++)
         {
@@ -124,7 +124,8 @@ void format(int d[][15],std::vector<std::vector<int>> output, std::vector<int> v
         op.back()[3]=op.back()[3]/count;
         output.clear();
         output=op;
-        print_2dvector(output);
+        op.clear();
+        //print_2dvector(output);
     }
 }
 
@@ -138,30 +139,31 @@ int main(int argc, char** argv)
     // pFile = fopen ("test.err","r");
     pFile = fopen (argv[1],"r");
     
-    int database[window_size][15];
+    int database[window_size][4];
     
     std::vector<int> vect;
     vect.clear();
     std::vector<std::vector<int>> output;
     
     //The state machine creation
-    create_state_machine();
-    
+    auto start = std::chrono::high_resolution_clock::now();
     while(!feof(pFile))
     {
-        auto start = std::chrono::high_resolution_clock::now();
+        
         //Take input everytime
         input_database(pFile, database, window_size);
-
+        
         //Extract information, features
         format(database, output, vect, window_size);
         // 
         
-        auto stop = std::chrono::high_resolution_clock::now(); 
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-        std::cout << duration.count() << std::endl;
         output.clear();
+        vect.clear();
+        break;
     }
+    auto stop = std::chrono::high_resolution_clock::now(); 
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    std::cout << duration.count() << std::endl;
     fclose(pFile);
     return 0;
 }
