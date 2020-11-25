@@ -56,7 +56,7 @@ bool my_sort(std::vector<int> &v1, std::vector<int> &v2)
         }
         else if(v1[i]<v2[i])
         {
-            return(v1[i]>v2[i]);
+            return(v1[i]<v2[i]);
         }
         else
         {
