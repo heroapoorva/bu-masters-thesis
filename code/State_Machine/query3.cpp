@@ -291,7 +291,6 @@ void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v,
     //v=(count of cars,exp,dir,seg)
     //s=(express,dir,seg, average speed)
     int times;
-    int order[4]={0,1,2,3};
     std::vector<int> order;
     order.push_back(0);
     order.push_back(1);
