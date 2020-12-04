@@ -222,6 +222,56 @@ std::vector<float> entropy_calc(std::vector<std::vector<int>> &s, std::vector<st
     return vect;
 }
 
+void my_swap(std::vector<int> &d, int a, int b)
+{
+    int temp;
+    temp= d[a];
+    d[a]=d[b];
+    d[b]=temp;
+}
+
+void my_reverse(std::vector<int> &d, int a)
+{
+    int start,end;
+    start=a+1;
+    end=d.size()-1;
+    while(true)
+    {
+        my_swap(d,start,end);
+        if(start==end or end-start==1)
+        {
+            break;
+        }
+        start++;
+        end--;
+    }
+}
+
+void next_perm(std::vector<int> &d)
+{
+    int i,bp,target;
+    bp=-1;
+    for(i=d.size()-1;i>0;i--)
+    {
+        if(d[i]>d[i-1])
+        {
+            bp=i-1;
+            break;
+        }
+    }
+    if(bp!=-1)
+    {
+        for(i=d.size()-1;i>bp;i--)
+        {
+            if(d[i]>d[bp])
+            {
+                my_swap(d,i,bp);
+                break;
+            }
+        }
+        my_reverse(d,bp);
+    }
+}
 
 void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v, std::ofstream &op_file)
 {       
@@ -242,11 +292,17 @@ void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v,
     //s=(express,dir,seg, average speed)
     int times;
     int order[4]={0,1,2,3};
+    std::vector<int> order;
+    order.push_back(0);
+    order.push_back(1);
+    order.push_back(2);
+    order.push_back(3);
+
     int max_times=24;
+
     for(times=0;times<max_times;times++)
     {
-        srand(time(NULL));
-        std::random_shuffle(order, order+4);
+        
         auto start = std::chrono::high_resolution_clock::now();
         for(i=0;i<s.size();i++)
         {
@@ -294,12 +350,14 @@ void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v,
 //        fprintf(op_file, "\n");
 //        fprintf(op_file, "%d", duration.count());
 //        fprintf(op_file, "\n");
+
+        next_perm(order);
     }
 }
 
 int main(int argc, char** argv)
 {
-    int window_size=8000;
+    int window_size=10000;
     
     FILE *pFile;
     pFile = fopen (argv[1],"r");
