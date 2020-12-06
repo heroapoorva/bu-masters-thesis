@@ -235,13 +235,9 @@ void my_reverse(std::vector<int> &d, int a)
     int start,end;
     start=a+1;
     end=d.size()-1;
-    while(true)
+    while(start>=end)
     {
         my_swap(d,start,end);
-        if(start==end or end-start==1)
-        {
-            break;
-        }
         start++;
         end--;
     }
