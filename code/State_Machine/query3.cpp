@@ -235,7 +235,7 @@ void my_reverse(std::vector<int> &d, int a)
     int start,end;
     start=a+1;
     end=d.size()-1;
-    while(start>=end)
+    while(start<=end)
     {
         my_swap(d,start,end);
         start++;
@@ -294,40 +294,47 @@ void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v,
     order.push_back(3);
 
     int max_times=24;
-
+    int num_op;
+    bool b;
     for(times=0;times<max_times;times++)
     {
-        
+        num_op=0;
         auto start = std::chrono::high_resolution_clock::now();
         for(i=0;i<s.size();i++)
         {
             for(j=0;j<v.size();j++)
             {
+                b=false;
                 for(k=0;k<4;k++)
                 {
                     operation=order[k];
+                    num_op++;
                     switch(operation)
                     {
                         case 0:
                             if(s[i][0]!=v[j][1])
                             {
-                                break;
+                                b=true;
                             }
                         case 1:
                             if(s[i][1]!=v[j][2])
                             {
-                                break;
+                                b=true;
                             }
                         case 2:
                             if(s[i][2]!=v[j][3])
                             {
-                                break;
+                                b=true;
                             }
                         case 3:
                             if(s[i][3]>=40)
                             {
-                                break;
+                                b=true;
                             }
+                    }
+                    if(b)
+                    {
+                        break;
                     }
                 }
             }
@@ -335,17 +342,15 @@ void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v,
         auto stop = std::chrono::high_resolution_clock::now(); 
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
         
-        
         for(i=0;i<4;i++)
         {
             op_file<<order[i]<<" ";
 //            fprintf(op_file, "%d ", order[i]);
         }
-        op_file<<std::endl<<duration.count()<<std::endl;
+        op_file<<std::endl<<duration.count()<<" "<<num_op<<std::endl;
 //        fprintf(op_file, "\n");
 //        fprintf(op_file, "%d", duration.count());
 //        fprintf(op_file, "\n");
-
         next_perm(order);
     }
 }
@@ -366,6 +371,7 @@ int main(int argc, char** argv)
     std::vector<std::vector<int>> segVol;
     
     int read_times=0;
+    int temp;
     while(!feof(pFile))
     {
         
@@ -373,11 +379,14 @@ int main(int argc, char** argv)
         read_times++;
         printf("read times is, %d\n", read_times);
         curcarseg(database, curCarSeg);
-        printf("    CurCarSeg size is, %d\n", curCarSeg.size());
+        temp=curCarSeg.size();
+        printf("    CurCarSeg size is, %d\n", temp);
         segavgspeed(database,segAvgSpeed);
-        printf("    SegAvgSpeed size is, %d\n", segAvgSpeed.size());
+        temp=segAvgSpeed.size();
+        printf("    SegAvgSpeed size is, %d\n", temp);
         segvol(curCarSeg,segVol);
-        printf("    SegVol size is, %d\n", segVol.size());
+        temp=segVol.size();
+        printf("    SegVol size is, %d\n", temp);
         segtoll(segAvgSpeed,segVol,op_file);
         
         curCarSeg.clear();
