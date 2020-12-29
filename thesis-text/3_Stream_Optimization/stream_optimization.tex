@@ -29,8 +29,8 @@ To even being to tackle the problem first we need to define the problem formally
 Before going on the give answers to the above, we also need to justify using this(DRL) technique.
 
 \section{Problem Statement}
-As discussed in the previous chapter, given a query there are multiple ways of executing the query to return the result, these ways correspond to a query plan and for each query plan there is a cost associated to it, which is the time of execution.\\
-We can represent them as $\{(P_{i},C_{i})\}_{i=1}^{n}$, out goal is to find query plan $P_{i}$ such that $C_{i}$ is minimum.
+As discussed in the previous chapter, given a query there are multiple ways of executing the query to return the result, these ways correspond to a query plan and for each query plan there is a cost associated to it, one component of the costs is the time required for execution.\\
+We can represent the plans by $P_{i}$ and the time corresponding to the plan as $C_{i}$. So we can represent them as $\{(P_{i},C_{i})\}_{i=1}^{n}$. Our goal is to find query plan $P_{i}$ with the minimum $C_{i}$.
 
 \section{Approach}
 Currently we make the following assumptions:-
@@ -47,7 +47,7 @@ As mentioned eariler, we are going to focus on finding an order of operations to
 % Attribute(ordering, algorithms, operators) for plan execution and properties(entropy, speed, throughput) for the data streams. overall execution time of plan depends on both attribute of plan and properties of data stream.
 % continuous queries not historical.
 
-\par Say there are data streams $S$ and relations $R_1,R_2,...,R_{n}$. Let $S$ have $m$ attributes. Then total attributes are $a_{S,1}, a_{S_1,m},..., a_{R_{1},1},..., a_{R_n},m_n$. 
+\par Say there is a data streams $S$ with $m$ attributes and relations $R_1,R_2,...,R_{n}$ each with $m_{i}$ attributes.
 \\ That is to say there are total of $(m + \sum_{i=1}^{n}m_i)=g$ attributes. We can use $1-0$ encoding so that any attribute or a combination in this schema can be represented by an array/vector $v$ of length $g$. 
 
 \[ 
@@ -57,10 +57,11 @@ As mentioned eariler, we are going to focus on finding an order of operations to
       0 & otherwise 
    \end{cases}
 \] 
-This vector will help represent attributes listed in the query.
-\par For Deep reinforcement learning we will need the rewards, actions, current and next possible state, we will need to encode these in a $5-$tuple, $(F_c,F_n,$ Action, Reward $)$. When we have enough of these examples we are use them to train our model and get a better ordering.
+This vector will help represent attributes listed in the query. We can further replace $1$ with the entropy of the attribute.
+\par For our Deep reinforcement learning data we will need the rewards, actions, current and next possible state, we will need to encode these in a $4-$tuple, $(F_c,F_n,$ Action, Reward $)$. When we have enough of these examples we are use them to train our model and try to get a better ordering.
 
 \section{Example}
+We look at linear road benchmark to test our hypothesis.
 \subsection{Input}
 \textbf{CarLocStr}: Stream of car location reports. This forms primary input to the system. 
 \begin{lstlisting}[language=SQL]
@@ -95,16 +96,15 @@ This vector will help represent attributes listed in the query.
 \begin{lstlisting}[language=SQL]                   
     CreditStream(car_id, credit);
 \end{lstlisting}
+Instead of assuming multiple streams for input we will combine them and assuming a single data stream as input.
 
 \subsection{Query}
 In this section we showcase the query statement for a simple and a complex query, convert it into a SQL query and show the complexity within. We use the query statement from linear road itself.
 \begin{itemize}
     \item \textbf{Query 1, Segment Average Speed } : The average speed of a particular car in a segment over the last 5 minutes. 
-    \item \textbf{Query 2, Negative Toll Generation} : Negative tolls are provided to cars on two occasions. First, if a car exits on a segment, the toll for the segment is waived; we model this waiver as a negative toll. Second, if a car exits on any of the five segments upstream of an accident segment, a negative toll of \$X is credited to the car's account. 
+    \item \textbf{Query 2, Toll Computation for Segments} : The toll for each segment depends on the average speed and volume of the cars in the segment, and on the presence of accidents in downstream segments. 
 \end{itemize}
 Now to convert the query statement to actual syntax/ query and showcase few different query plans and how the cost might change.
-
-
 
 \subsection{Segment Average Speed}
 First we convert the simpler query.
@@ -128,43 +128,56 @@ Of course further improvements can be made, but that will require us to look int
     \item $\gamma_{\text{exp\_way,dir,seg, AVG(speed)}}(\pi_{\text{exp\_way,dir,seg, speed}}(\sigma_{\text{car\_id = target}} (S_1\underset{C \land (\text{car\_id = target})}{\bowtie}S_2)))$
 \end{itemize}
 
-\subsection{Negative Toll Generation}
+\subsection{Toll Computation for Segments}
 Now to convert tackle the more complex query, \textbf{Query 2, }\\
 Before going to that, note the steps to perform a query on streams requires to first generate a relation from stream, make relations from this derived relation and then output a stream from the derived relation. This is a 3 step process. \\
 Now we look at the more complex query.
-\par  \textbf{CarExitStr}: Stream of events of cars exiting from the freeways. A car has exited if it is no longer "active" (i.e., it has not reported its location in the last $30$ seconds). The exiting of cars is determined by applying the $DSTREAM$ operator on the CurActiveCars relation. The relation CurActiveCars does not store the latest segment of the car; this is determined by using the last location report of the car in CarSegStr. 
+\par \textbf{SegAvgSpeed}: The average speed of the cars in a segment over the last 5 minutes. 
+
 \begin{lstlisting}[language=SQL]
-SELECT RSTREAM (S.car_id, S.exp_way, S.dir, S.seg)
-FROM (DSTREAM (CurActiveCars)) [NOW] AS A,
-     CarSegStr [PARTITION BY car_id ROWS 1] AS S
-WHERE A.car_id = S.car_id;
+SELECT exp_way, dir, seg, AVG(speed) as speed,
+FROM CarSegStr [RANGE 5 MINUTES]
+GROUP BY exp_way, dir, seg;
 \end{lstlisting}
-\textbf{NegTollStr}: Stream of negative tolls to cars exiting on a segment. The amount of the negative toll for an exiting car is equal to the latest charged toll (TollStr) for the car. 
+
+
+\par \textbf{SegVol}: Relation containing the number of cars currently in a segment. The relation CurCarSeg is used to determine the cars in each segment.
+
 \begin{lstlisting}[language=SQL]
-SELECT RSTREAM (E.car_id, T.toll)
-FROM CarExitStr [NOW] AS E, TollStr [PARTITION BY car_id ROWS 1] AS T
-WHERE E.car_id = T.car_id;
+SELECT exp_way, dir, seg, COUNT(*) as volume
+FROM CurCarSeg
+GROUP BY exp_way, dir, seg;
 \end{lstlisting}
-\textbf{NegAccTollStr}: Stream of negative tolls given to cars exiting less than five segments upstream from an accident segment (relation AccSeg). 
+
+
+\par \textbf{SegToll}:The toll for each segment. There are no entries in the relation for segments having no toll. A segment is tolled only if the average speed of the segment is less than $40$, and if it is not affected by an accident. If a segment is tolled, its toll is basetoll $* (\#$cars $- 150) * (\#$cars $- 150)$. We modify this query to remove the not affected by accident  condition.
+
+
 \begin{lstlisting}[language=SQL]
-SELECT RSTREAM (car_id, X)
-FROM CarExitStr [NOW] as E, AccSeg as A
-WHERE (E.exp_way = A.exp_way AND E.dir = EAST AND A.dir = EAST and 
-       E.seg < A.seg AND E.seg > A.seg - 5) OR
-      (E.exp_way = A.exp_way AND E.dir = WEST AND A.dir = WEST and 
-       E.seg > A.seg AND E.seg < A.seg + 5);
+SELECT S.exp_way, S.dir, S.seg, basetoll*(V.volume-150)*(V.volume-150)
+FROM SegAvgSpeed as S, SegVol as V
+WHERE S.exp_way = V.exp_way and S.dir = V.dir and S.seg = V.seg
+      and S.speed <= 40;
 \end{lstlisting}
+
 These 3 steps combined give us the desired query.
-$$\pi_{\text{car\_id,X}}$$
-$$\sigma_{ (\text{(E.exp\_way=A.exp\_way)} \land \text{(E.dir=East)} \land \text{(A.dir=East)} \land (E.seg < A.seg) \land (E.seg > A.seg - 5) )}(\text{CarExitStr, AccSeg})$$
-$$\cup_B$$
-$$\sigma_{ (\text{(E.exp\_way=A.exp\_way)} \land \text{(E.dir=West)} \land \text{(A.dir=West)} \land (E.seg > A.seg) \land (E.seg < A.seg + 5) )}(\text{CarExitStr, AccSeg})$$
-For the sake of notation, let us call these conditions $C_1,C_2$
-$$\pi_{\text{car\_id,X}}(\sigma_{C_1\lor C_2}(\text{E, A}))$$
-From the second query, we have  $E.car\_id$ as
-$$\pi_{\text{E.car\_id,T.toll}}(\sigma_{\text{E.car\_id = T.car\_id}}(E,T))$$
-$$\pi_{\text{E.car\_id,T.toll}}(\sigma_{\text{E.car\_id = T.car\_id}}(\pi_{\text{E.car\_id,}}(E),\pi_{\text{T.car\_id,T.toll}}(T)))$$
-We use this optimized plan for the $2^{nd}$ query in the $3^{rd}$ query.
+Where $S$ in turn calculated via this process
+$$\pi_{\text{exp\_way, dir, seg, speed}}(\gamma_{\text{exp\_way,dir,seg}} (\text{CarSegStr}))$$
+Where $S$ in turn calculated via this process
+$$\pi_{\text{exp\_way, dir, seg, columm}}(\gamma_{\text{exp\_way,dir,seg}} (\text{CurCarSeg}))$$
+
+Finally combining the two with the $3^{rd}$ query 
+$$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}$$
+$$\sigma_{(\text{S.exp\_way = V.exp\_way}) \land (\text{S.dir = V.dir}) \land (\text{S.seg = V.seg})\land (\text{S.speed} \leq 40)}(\text{S,V})$$
+We can push down the projection and then break down the selection condition, for ease of notation, substitute the 4 conditions as $C_1,C_2,C_3,C_4$ respectively.
+$$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_2}(\sigma_{C_3}(\sigma_{C_4}(\text{S,V})))))$$
+Now we can list few different query plans
+$$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_2}(\sigma_{C_3}(\sigma_{C_4}(\text{S,V})))))$$
+$$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_2}(\sigma_{C_4}(\sigma_{C_3}(\text{S,V})))))$$
+$$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_3}(\sigma_{C_2}(\sigma_{C_4}(\text{S,V})))))$$
+
+The goal is to try to figure out the best possible method of rearranging these associative operations, in this thesis we try out using deep reinforcement learning to try to predict the best possible move.
+
 \begin{comment}
 
 $$(\text{E.exp\_way=A.exp\_way}\land \text{E.dir=East}\land \text{A.dir=EAST}\land \text{E.seg<A.seg} \land \text{E.seg>A.seg-5})}$$

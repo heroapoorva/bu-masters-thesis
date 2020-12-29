@@ -6,6 +6,49 @@
 % also want to be ../Figures/2_Body/ or something. make sure that
 % it has a trailing directory separator (i.e., '/')!
 \graphicspath{}
+This chapter explores the steup required to conduct the experiments. The chapter is divided into data generation, query execution and lastly deep reinforcement learning for move prediction.
 
-\section{Mathematics}
+\section{Data Generation}
+The data is generated using the walmart linear road found \cite{walmart_linearoad}
 
+\begin{lstlisting}[language=bash]
+java com.walmart.linearroad.generator.LinearGen [-o <output file>] [-x <number of xways>] [-m <dummy value to activate multi-threading>]
+\end{lstlisting}
+
+\subsection{Schema}
+The above generated data can be interpretated as follows:-
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+  Column$1$ & Tells the type of query. \\  
+ \hline
+  Column$2$ & Timestamp position. \\  
+ \hline
+  Column$3$ & Vehicle identification number\\  
+ \hline
+  Column$4$ & Speed of the vehicle \\  
+ \hline
+  Column$5$ & Express way number \\  
+ \hline
+  Column$6$ & Lane ID $(0,...,4)$\\  
+ \hline
+  Column$7$ & Direction of movement($0=$East or $1=$West) \\  
+ \hline
+  Column$8$ & Segment ID $(0,...,99)$ \\
+ \hline
+  Column$9$ & Position of the vehicle. \\  
+ \hline
+  Column$10$ & Query identifier \\  
+ \hline
+  Column$11$ & Start Segment \\  
+ \hline
+  Column$12$ & End Segment \\  
+ \hline
+  Column$13$ & Day of the week \\  
+ \hline
+  Column$14$ & Minute of the day \\  
+ \hline
+  Column$15$ & Day in the past $10$ weeks \\  
+ \hline
+\end{tabular}
+\end{center}
