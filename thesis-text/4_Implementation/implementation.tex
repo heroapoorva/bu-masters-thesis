@@ -358,8 +358,46 @@ Next 2 lines can be interpretted as the first operation executed is the $0^{th}(
 \par The fact that the number of operations remains same but the time required changes is due to the internal scheduling by the kernel.
  
 \section{Deep Reinforcement Learning}
-Now the data for Deep reinforcement learning is stored and ready to be used.  
+Now the data for Deep reinforcement learning is stored and ready to be used. For our reinforcement learning it is important to note, any $1$ move will lead us into the final state. So a simple implementation of Deep Neural Networks to estimate the reward function works. And as it is possible that it may be difficult to estimate the rewards, we will check whether the shift on the rewards of various actions is similar so that choosing the best rewarding action based on estimates is still optimal.
+\par We consider the sequence/order of moves as an action for our reinforcement learning model, and convert it into a $1$hot encoding.\\
+Consider the set of permutations of $\{0,1,2,3\}$, we can order them lexicgraphically.\\
+Given a permutation $\mathbb{P}$, it will have a rank $i$ in the ordering. To convert the permutation into a $1$hot encoding, start with a $24$ element vector $v$ with all $0$s, then update $v[i]=1$. Call this resulting vector $\mathbb{V}$.\\
+Our DNN will have the training $X$ points as a combination of the entropy, the size of $SegVol$ and $SegAvgSpeed$ and the $1$ hot encoding of the move. In all a vector of length $34$. And the $Y$ coordinate is the number of moves required.\\
+
 \begin{lstlisting}[language=Python]
+def reinforcement_learning(fin_train,save_loc,epoch_number):
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Dense(34,activation='relu'))
+    model.add(tf.keras.layers.Dense(68,activation='relu'))
+    model.add(tf.keras.layers.Dense(136,activation='relu'))
+    model.add(tf.keras.layers.Dense(68,activation='relu'))
+    model.add(tf.keras.layers.Dense(34,activation='relu'))
+    model.add(tf.keras.layers.Dense(1))
+    model.compile(optimizer='adam', loss='mse')
+
+
+    times = int(epoch_number)
+    for i in range(times):
+        history=model.fit(x_tr, y2_tr, batch_size=32, epochs=1, callbacks=[cp_callback])
+        print(history.history)
+        ans=model.predict(x_te)
+        seen=0
+        correct=0
+        for j in range(len(ans)):
+            if(seen==0):
+                m1=j
+                m2=j
+            if(ans[j]<ans[m1]):
+                m1=j
+            if(y2_te[j]<y2_te[m2]):
+                m2=j
+            if(seen==23):
+                seen=0
+                if(m1==m2):
+                    correct+=1
+            else:
+                seen+=1
+        print(len(ans)/24,correct)
 \end{lstlisting}
-\begin{lstlisting}[language=Python]
-\end{lstlisting}
+The model is trained multiple times and each time we check the number of times the predictions/ estimates lead to an optimal strategy.\\
+This is done by comparing the number of operations predicted and the actual number of operations required. If the index with optimal prediction is also index of the the actual optmal value then it is the correct choice.
