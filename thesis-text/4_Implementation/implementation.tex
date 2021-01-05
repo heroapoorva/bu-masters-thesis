@@ -377,9 +377,9 @@ def reinforcement_learning(fin_train,save_loc,epoch_number):
 
 
     times = int(epoch_number)
-    for i in range(times):
-        history=model.fit(x_tr, y2_tr, batch_size=32, epochs=1, callbacks=[cp_callback])
-        print(history.history)
+    for i in range(times):    
+        cm=np.zeros(576).reshape(24,24)
+        history=model.fit(x_tr, y2_tr, batch_size=100, epochs=1, callbacks=[cp_callback])
         ans=model.predict(x_te)
         seen=0
         correct=0
@@ -391,13 +391,32 @@ def reinforcement_learning(fin_train,save_loc,epoch_number):
                 m1=j
             if(y2_te[j]<y2_te[m2]):
                 m2=j
+            #m1 is the prediction
+            #m2 is the actual
             if(seen==23):
                 seen=0
+                cm[m1%24,m2%24]+=1
                 if(m1==m2):
                     correct+=1
             else:
                 seen+=1
+        total=cm.sum()
+        tp = np.asarray([cm[i,i] for i in range(24)])
+        fp = cm.sum(axis=1) - tp
+        fn = cm.sum(axis=0) - tp
+        tn = np.asarray([total-(tp[i]+fp[i]+fn[i]) for i in range(24)]
+        for i in range(24):
+            try:
+                a=(tp[i]+tn[i])/(tp[i]+tn[i]+fn[i]+fp[i])
+                p=(tp[i])/(tp[i]+fp[i])
+                r=(tp[i])/(tp[i]+fn[i])
+                f=(2*p*r)/(p+r)
+                print(a,p,r,f)
+            except:
+                print(i)   
+        
         print(len(ans)/24,correct)
+        del cm
 \end{lstlisting}
 The model is trained multiple times and each time we check the number of times the predictions/ estimates lead to an optimal strategy.\\
 This is done by comparing the number of operations predicted and the actual number of operations required. If the index with optimal prediction is also index of the the actual optmal value then it is the correct choice.

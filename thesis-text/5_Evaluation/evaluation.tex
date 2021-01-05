@@ -7,5 +7,38 @@
 % it has a trailing directory separator (i.e., '/')!
 \graphicspath{}
 
-\section{Measures used}
-
+After the data is created and queried, the output is then used for reinforcement learning. In reinforcement learning, the data is divided randomly into $70\%,30\%$ for training and testing. In the $30\%$ the frequency of the fastest moves are
+\begin{lstlisting}
+[    0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
+     0.     0.    31.    29.    17.    23.    20.    16.    88.    49.
+   656.   374. 13217. 13161.]
+\end{lstlisting}
+For these, the prediction made had the following True positive values for the $24$ orders.
+\begin{lstlisting}
+[    0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
+     0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
+     0.     0. 10523.  2934.]
+\end{lstlisting}
+Next the True Negatives for the $24$ orders.
+\begin{lstlisting}
+[27681. 27681. 27681. 27681. 27681. 27681. 27681. 27681. 27681. 27681.
+ 27681. 27681. 27650. 27652. 27664. 27658. 27661. 27665. 27593. 27632.
+ 27025. 27307.  3437. 11323.]
+\end{lstlisting}
+Then the False positives for the $24$ orders.
+\begin{lstlisting}
+[    0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
+     0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
+     0.     0. 11027.  3197.]
+\end{lstlisting}
+Lastly the false negatives for the $24$ orders.
+\begin{lstlisting}
+[    0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
+     0.     0.    31.    29.    17.    23.    20.    16.    88.    49.
+   656.   374.  2694. 10227.]
+\end{lstlisting}
+Then use these predictions to actually evaulate the model. We calculate the sum of number of operations required by the order which we predict and compare it to the number of operations required by a random selection and the number of operations required by the worst ordering.\\
+Sum of operations required according to predicted order $902290014$.\\
+Sum of operations required according to a random order  $1843558912$.\\
+Sum of operations required according to the worst possible order $2315913010$.\\
+Hence, the predictions reduces the amount of operations required to around $38\%$ of the worst case scenario.

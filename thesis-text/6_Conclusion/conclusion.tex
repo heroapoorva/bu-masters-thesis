@@ -8,4 +8,28 @@
 \graphicspath{}
 
 \section{Conclusion}
+The goal of this thesis is to act as a proof of concept for the application of Deep Reinforcement Learning for optimization of query processing on streams.\\
+Assuming, for a particular window of data the size of SegVol $=x$ and size of SegAvgSpeed $=y$, due to the query used in the experiments, the number of operations required to execute the query lie between $[x*y,4*x*y]$. The worst and best possible cases can both arise in the same window depending on the order used and the data in the query.\\
+Of the $24$ possible operation orders, we were able to predict the optimal order of operations around $48\%$ cases, reducing the number of operations to around $38\%$ of the worst observed(which is better than the actual worst).
+\begin{center}
+$x*y \leq$ optimal $\leq$ predicted $\leq$ worst observed $\leq 4*x*y$
+\end{center}
 
+\section{Further Work}
+This thesis proposed a method for optimization of query execution on data stream and provided a demo implementation for experimentation. There are still many areas which can be improved and developed further.
+
+\subsection{Data Generation}
+As shown in chapter $5$, the data generated is highly biased. A source producing more diverse data and a query on that may lead to more interesting results. Real world data stream can be used to get better variety in the data and take input via different methods.
+
+\subsection{Data Storage}
+Currently, for executing the query, we store data in vectors where as SQL uses B-trees, a change like this can impact the time required for query execution and then lead to a different learnd model if the time of execution is used as reward.\\
+On a further note data storage on systems like AWS S3 buckets, filesystems like Hadoop, hdfs and others can lead to changes in time of execution as well.
+
+\subsection{Features extraction}
+The current features only include the entropy of the columns and the size of the tables. Whereas in traditional SQL with a static database(relatively) a lot more features of generally extracted. Better starting feature can perhaps lead to a better results. 
+
+\subsection{Deep Reinforcement Learning}
+The Deep reinforcement learning model used was rather simplfied due to the less number of moves and convert the game into a single step game. Further intensive state, action and reward tuples can be constructed to get better intermediate rewards and policies. 
+
+\subsection{Integration} 
+The learnt DQN can be integrated with an actual stream processing system and tested in full for scalability, reliability and more. Need to note that there is a speedup by number of operations, the runtime due to various other network constraints might have a different result. 
