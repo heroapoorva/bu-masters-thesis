@@ -434,7 +434,7 @@ while(not converged):
     for s in S:
         V(s)=R(s)+max over all action[gamma*(sum(P(s,a,s')V(s')))]
 \end{lstlisting}
-The above algorithm is called the value iteration algorithm.
+The above algorithm is called the value iteration algorithm\cite{solving_rl}.
 \begin{lstlisting}[language=python]
 initialize random pi
 while(not converged):
@@ -442,7 +442,7 @@ while(not converged):
     for s in S:
         pi(s)=max over all actions[sum(P(s,a,s')V(S'))]
 \end{lstlisting}
-The second algorithm is called Policy iteration algorithm.
+The second algorithm is called Policy iteration algorithm\cite{solving_rl}.
 
 \section{Deep Reinforcement Learning}
 
