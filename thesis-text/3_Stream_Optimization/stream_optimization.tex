@@ -8,15 +8,15 @@
 \graphicspath{}
 
 \section{Introduction}
- A stream is an ordered sequence of data items, which are values that can range from simple numbers to flat tuples to more  elaborate structured data that may be deeply nested and have variable size. Streams are conceptually infinite, in the sense that  as the streaming computation unfolds over time, the sequence of data items is unbounded in length.
+ A stream is an ordered sequence of data items, which are values that can range from simple numbers to flat tuples to more  elaborate structured data that may be deeply nested and have variable size. Streams are conceptually infinite, in the sense that  as the streaming computation unfolds over time, the sequence of data items is unbounded in length\cite{stream_query_optimization}.
 \par Stream query optimization is the process of modifying a stream processing query, often by changing its graph topology and/or  operators, with the aim of achieving better performance (such as higher throughput, lower latency, or reduced resource usage), while preserving the semantics of the original query.
 \par An optimization should be both safe and profitable. An optimization is safe if it can be applied to a stream query without   changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query  faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. There is a  substantial literature on different stream query optimizations, with different safety and profitability characteristics. This  entry lists the most common optimizations along with short descriptions.
 \par Possible areas of optimization are, batch size, operation combining/ dividing, memory assignment, message passing, operation reordering, garbage collection. We focus mostly on operation reordering.
 \par Last chapter showcased how Deep reinforcement learning can help solve problems by telling the best course of action. We are going to use this technique to improve our operation reordering.
 
 \section{Formalization Requirements}
-To even being to tackle the problem first we need to define the problem formally to be able to analyze it.
-\\ For the experiment to be reconstructible and to define a concrete problem statement for reinforcement learning, we will need to decide upon the following at least:-
+To even being to tackle the problem first we need to define the problem formally to be able to analyze it.\\
+For the experiment to be reconstructible to the closest possible degree and to define a concrete problem statement for reinforcement learning, we will need to decide upon the following at least:-
 \begin{itemize}
     \item Data Soucre generator
     \item Query to execute
@@ -61,7 +61,7 @@ This vector will help represent attributes listed in the query. We can further r
 \par For our Deep reinforcement learning data we will need the rewards, actions, current and next possible state, we will need to encode these in a $4-$tuple, $(F_c,F_n,$ Action, Reward $)$. When we have enough of these examples we are use them to train our model and try to get a better ordering.
 
 \section{Example}
-We look at linear road benchmark to test our hypothesis.
+We look at linear road benchmark to test our hypothesis.\
 \subsection{Input}
 \textbf{CarLocStr}: Stream of car location reports. This forms primary input to the system. 
 \begin{lstlisting}[language=SQL]

@@ -443,9 +443,33 @@ while(not converged):
         pi(s)=max over all actions[sum(P(s,a,s')V(S'))]
 \end{lstlisting}
 The second algorithm is called Policy iteration algorithm\cite{solving_rl}.
-
 \section{Deep Reinforcement Learning}
-
+Combining the two ideas as shown\cite{drl}\\
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\begin{algorithm}
+\caption{Deep Q-Network (DQN)}
+\begin{algorithmic}
+\BState \emph{Input}: MDP $(S, A, P, R, \gamma)$, replay memory $M$, number of iterations $T$, minibatch size $n$, exploration probability $\epsilon\in(0,1)$, a family of deep $Q-$networks $Q_{\theta}:S\times  A\rightarrow R$, an integer $T_{\text{target}}$ for updating the target network, and a sequence of stepsizes $\{\alpha_{t}\}_{t\geq 0}$\\
+Initialize the replay memory $M$ to be empty.\\
+Initialize the $Q-$network with random weights $\theta$.\\
+Initialize the weights of the target network with $\theta^{\ast }=\theta$\\
+Initialize the initial state$S_{0}$.
+\For {$t=0,1,...,T$} \\
+    \State With probability $\epsilon$, choose $A_{t}$ uniformly at random from $A$, and with probability $1-\epsilon$, choose $A_{t}$ such that $Q_{\theta}(S_{t},A_{t})=\text{max}_{a\in A}Q_{\theta}(S_{t},a)$.\\
+    \State Execute $A_{t}$ and observe reward $R_{t}$ and the next state $S_{t+1}$.\\
+    \State Store transition $(S_{t},A_{t},R_{t},S_{t+1})$ in $M$.\\
+    \State Experience replay: Sample random minibatch of transitions $\{(s_{i},a_{i},r_{i},s^{'}_{i})\}_{i\in [n]}$\\
+    \State For each $i \in [n]$, compute the target $Y_{i}=r_{i}+\gamma*\text{max}_{a\in A}Q_{\theta^{*}}(s^{'}_{i},a)$
+    \State Update the Q-network: Perform a gradient descent step
+    $$\theta\leftarrow\theta-\alpha_{t}*\frac{1}{n}\sum_{i\in[n]}[Y_{i}-Q_{\theta}(s_{i},a_{i})]*\triangledown_{\theta}Q_{\theta}(s_{i},a_{i})$$
+    \State Update the target network: Update $\theta^{*}\leftarrow\theta$ every $T_{\text{target}}$ steps.
+\EndFor
+Define policy $\bar{\pi}$ as the greedy policy with respect to $Q_{\theta}$\\
+\textbf{Output} Action-value function $Q_{\theta}$ and policy $\bar{\pi}$
+\end{algorithmic}
+\end{algorithm}
 
 \section{Conclusion}
 To summarize this chapter, we illustrated the process of converting queries into a physical query plan for DBMS. This included various steps such as, 

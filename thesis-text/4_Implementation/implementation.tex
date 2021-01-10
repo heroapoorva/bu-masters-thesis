@@ -6,10 +6,15 @@
 % also want to be ../Figures/2_Body/ or something. make sure that
 % it has a trailing directory separator (i.e., '/')!
 \graphicspath{}
-This chapter explores the steup required to conduct the experiments. The chapter is divided into data generation, query execution and lastly deep reinforcement learning for move prediction.
+This chapter explores the setup required to conduct the experiments. The chapter is divided into 
+\begin{itemize}
+\item Data Generation:- We generate the data stream for the Linear road benchmark.
+\item Query Execution:- We have written a C++ code to execute the query and extract information while executing.
+\item Deep Reinforcement Learning:- Written a Deep reinforcement learning agent to help optimize the order of operations.
+\end{itemize}
 
 \section{Data Generation}
-The data is generated using the walmart linear road found \cite{walmart_linearoad}
+The data is generated using the walmart linear road code \cite{walmart_linearoad} without mitsim.\\
 
 \begin{lstlisting}[language=bash]
 java com.walmart.linearroad.generator.LinearGen [-o <output file>] [-x <number of xways>] [-m <dummy value to activate multi-threading>]
@@ -66,23 +71,15 @@ To start, a window size was fixed which determined the size/ number of entries t
 \begin{lstlisting}[language=C++]
 FILE *pFile;
 pFile = fopen (argv[1],"r");
-
 int database[window_size][4];
-
 std::vector<int> vect;
 vect.clear();
 std::vector<std::vector<int>> output;
-
 auto start = std::chrono::high_resolution_clock::now();
 while(!feof(pFile))
 {
-    //Take input everytime
     input_database(pFile, database, window_size);
-    
-    //executing the query
     format(database, output, vect, window_size);
-    // 
-    
     output.clear();
     vect.clear();
 }
