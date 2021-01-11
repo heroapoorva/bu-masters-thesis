@@ -6,7 +6,18 @@
 % also want to be ../Figures/2_Body/ or something. make sure that
 % it has a trailing directory separator (i.e., '/')!
 \graphicspath{}
-
+\section{Optimality checking}
+Now we have learnt a model $Q_{\theta}$, we also have our test cases $\{(x_{i},y_{i})\}_{i\in[n]}$.\\
+Each data window corresponds to $24$ data entries. The $t^{th}$ window corresponds to 
+$$\{x_{24t}, x_{24t+1}, ..., x_{24t+23}|t\in\mathbb{I}\}$$
+Each data window has $24$ data points as we have tried all possible($24$ of them) combinations of ordering of operations. For each data window we need to find the ordering of operations which requires the minimum moves according to our predictions.\\
+To do this for the $t^{th}$ window of data, find the index of the minimum of $$Q_{\theta}(x_{24t}),Q_{\theta}(x_{24t+1}),...,Q_{\theta}(x_{24t+23})$$, say $k$.\\
+To check if the move this corresponds to is the actual optimal move, find the index of the minimum of $y_{24t}, y_{24t+1}, ..., y_{24t+23}$, say $l$. If $k=l$ then the move we predicted as optimal is indeed optimal.\\ 
+\par We train the model multiple times on the training data and measure its performance on the test data each time.\\
+To measure the performance we use the predicted optimal move vs the actual optimal move.\\
+\section{Results}
+\subsection{Training Data}
+\subsection{Test Data}
 After the data is created and queried, the output is then used for reinforcement learning. In reinforcement learning, the data is divided randomly into $70\%,30\%$ for training and testing. In the $30\%$ the frequency of the fastest moves are
 \begin{lstlisting}
 [    0.     0.     0.     0.     0.     0.     0.     0.     0.     0.
