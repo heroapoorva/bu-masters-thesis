@@ -14,13 +14,13 @@ This chapter explores the setup required to conduct the experiments. The chapter
 \end{itemize}
 
 \section{Data Generation}
-The data is generated using the walmart linear road code generator without mistim\cite{walmart_linearoad}.\\
+The data is generated using the walmart linear road code generator without \\ mistim\cite{walmart_linearoad}.\\
 Linear Road tests Stream Data Management Systems (SDMS) by measuring how many expressways a SDMS can support by giving accurate and timely results to four types of queries that fit two categories: continuous and historical.\cite{linearroad_website}
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash, caption= generate linear road data, label={lst:linear road data generation}]
 java com.walmart.linearroad.generator.LinearGen [-o <output file>] [-x <number of xways>] [-m <dummy value to activate multi-threading>]
 \end{lstlisting}
 Example output of this code
-\begin{lstlisting}
+\begin{lstlisting}[caption= linear road data example output]
 0,0,13,10,8,0,0,89,469920,-1,-1,-1,-1,-1,-1
 0,0,17,10,8,0,1,65,348479,-1,-1,-1,-1,-1,-1
 0,0,22,10,8,0,0,12,63360,-1,-1,-1,-1,-1,-1
@@ -78,326 +78,89 @@ After the data is prepared, we need to execute the queries listed and explained 
 As suggested, a SDMS can take in multiple data stream as input but we were going to treat it as a single input. Below is the implementation of the $2$ queries in $C++$.
 \subsection{Simpler Query}
 The simpler query
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL,caption=simple query]
     SELECT exp_way, dir, seg, AVG(speed) as speed,
     FROM CarSegStr [RANGE 5 MINUTES]
     WHERE car_id = target
     GROUP BY exp_way, dir, seg;
 \end{lstlisting}
 The goal of implementing this query is to get a sense of time required for executing queries, the time for taking input and time for providing an output.\\
-\begin{lstlisting}[language=C++]
-FILE *pFile;
-int window_size=20000;
-pFile = fopen (argv[1],"r");
-int database[window_size][4];
-std::vector<int> vect;
-vect.clear();
-std::vector<std::vector<int>> output;
-auto start = std::chrono::high_resolution_clock::now();
-while(!feof(pFile))
-{
-    input_database(pFile, database, window_size);
-    execute(database, output, vect, window_size);
-    output.clear();
-    vect.clear();
-}
-auto stop = std::chrono::high_resolution_clock::now(); 
-auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-std::cout << duration.count() << std::endl;
-fclose(pFile);
-\end{lstlisting}
-To start, the input file is specified, the window size is specified and the start time of the clock is initialized.\\
-The input file is treated as a stream, while many things are to be considered while taking input, as the focus of this thesis was in other area, we simply read from the file part by part.\\
+The code can be broken into $3$ parts:-
+\begin{itemize}
+    \item Intialization, code overview
+    \item Reading input
+    \item executing the query
+\end{itemize}
+\ref{lst:simple_query_overview}
+\par To start, the input file is specified, the window size is specified and the start time of the clock is initialized. The input file is treated as a stream. While many things are to be considered while taking input, as the focus of this thesis was in other area, we simply read from the file part by part.\\
 We continue to read the file until we reach the end of it, everytime we have read the window size amount of data points, we execute the query.\\
-A window size was fixed which determined the number of entries to read at once and executing the query, the window size was interpretted in two ways,
+A window size was fixed which determined the number of entries to read at once, the window size was interpretted in two ways,
 \begin{itemize}
 \item The number of entries to read 
 \item The time interval for which to read the entries
 \end{itemize}
-This information along with the value was passed to the read function everytime.\\
-\begin{lstlisting}[language=C++]
-void input_database(FILE * pFile, int d[][4],int window_size)
-{
-    int i,j;
-    for(i=0;i<window_size;i++)
-    {
-        fscanf (pFile, "%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i,%i", &j,
-        &j,&j,&d[i][0],&d[i][1],&j,&d[i][2],&d[i][3],&j,&j,&j,&j,&j,&j,&j);
-    }
-}
-\end{lstlisting}
-This input function treats the window size as specifying the number of entries to read.\\
-The input was taken by simply reading a file and storing the attribute values important to the query. We only store the information necessary for our queries. This was done due to limited RAM and for expediting the process.
-\begin{lstlisting}[language=C++]
-for(i=0;i<window_size;i++)
-{
-    if(d[i][2]==0)
-    {
-        vect.push_back(d[i][1]);
-        vect.push_back(d[i][2]);
-        vect.push_back(d[i][3]);
-        vect.push_back(d[i][0]);
-        output.push_back(vect);
-    }
-    vect.clear();
-}
-std::sort(output.begin(),output.end(), my_sort);
-\end{lstlisting}
-This part prepares the data for aggreation functions. The data is first inserted into a vector. It then essentially groups the rows together depending on the order provided by the means of the sort function(my\_sort in this case). The sort function helps group up entries with same express way ID, segment ID and which are going in the same direction.
-\begin{lstlisting}[language=C++]
-int count = 1;
-std::sort(output.begin(),output.end(), my_sort);
-
-std::vector<std::vector<int>> op;
-op.push_back(output[0]);
-for(i=1;i<output.size();i++)
-{
-    if((output[i][0]==output[i-count][0]))
-    {
-        if(output[i][1]==output[i-count][1])
-        {
-            if((output[i][2]==output[i-count][2]))
-            {    
-                op.back()[3]=op.back()[3]+output[i][3];
-                count++;
-            }
-        }
-    }
-    else
-    {
-        op.back()[3]=op.back()[3]/(count);
-        op.push_back(output[i]);
-        count = 1;
-    }
-}
-op.back()[3]=op.back()[3]/count;
-output.clear();
-output=op;
-op.clear();
-\end{lstlisting}
-Finally do the aggregation, simply check for the continuity of the group and update the measures of the group as you iterate. When you arrive the the end of the group simply insert the answer for the aggregate function along with the rest of required attributes into an output and return the table.
+\ref{lst:simple_query_input}\\
+This information along with the value was passed to the read function \ref{lst:simple_query_input} everytime.
+\par This input function treats the window size as specifying the number of entries to read.\\
+The input was taken by simply reading a file and storing the attribute values important to the query. We only store the information necessary for our queries. This was done due to limited RAM and for expediting the process.\\
+\ref{lst:simple_query_groupby}
+\par This part prepares the data for aggreation functions. The data is first inserted into a vector. It then essentially groups the rows together depending on the order provided by the means of the sort function(my\_sort in this case). The sort function helps group up entries with same express way ID, segment ID and which are going in the same direction.\\
+\ref{lst:simple_query_aggregation}
+\par Finally do the aggregation, simply check for the continuity of the group and update the measures of the group as you iterate. When you arrive the the end of the group simply insert the answer for the aggregate function along with the rest of required attributes into an output and return the table.
 \subsection{Complex Query}
 The complex query\cite{linearroad_queries}
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption=CarSegStr]
 SELECT car_id, speed, exp_way, lane, dir, (x-pos/52800) as seg
 FROM CarLocStr;
 \end{lstlisting}
 
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption=CurCarSeg]
 SELECT car_id, exp_way, dir, seg
 FROM CarSegStr [PARTITION BY car_id ROWS 1], CurActiveCars
 WHERE CarSegStr.car_id = CurActiveCars.car_id;
 \end{lstlisting}
 
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption=SegAvgSpeed]
 SELECT exp_way, dir, seg, AVG(speed) as speed,
 FROM CarSegStr [RANGE 5 MINUTES]
 GROUP BY exp_way, dir, seg;
 \end{lstlisting}
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption=SegVol]
 SELECT exp_way, dir, seg, COUNT(*) as volume
 FROM CurCarSeg
 GROUP BY exp_way, dir, seg;
 \end{lstlisting}
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption=SegToll]
 SELECT S.exp_way, S.dir, S.seg, basetoll*(V.volume-150)*(V.volume-150)
 FROM SegAvgSpeed as S, SegVol as V
 WHERE S.exp_way = V.exp_way and S.dir = V.dir and S.seg = V.seg
       and S.speed <= 40;
 \end{lstlisting}
+
 The goal of implementing this query is to obtain data to train a deep reinforcement learning model and to be able to test the model. We start by giving the general outline of the code. \\
-\begin{lstlisting}[language=C++]
-int window_size=10000;
-FILE *pFile;
-pFile = fopen (argv[1],"r");
-
-std::ofstream op_file;
-op_file.open("q3out.txt");
-
-std::vector<std::vector<int>> database, curCarSeg, segAvgSpeed, segVol;
-
-int temp;
-while(!feof(pFile))
-{
-    
-    input_database(pFile, database, window_size);
-    read_times++;
-    printf("read times is, %d\n", read_times);
-    curcarseg(database, curCarSeg);
-    temp=curCarSeg.size();
-    printf("    CurCarSeg size is, %d\n", temp);
-    segavgspeed(database,segAvgSpeed);
-    temp=segAvgSpeed.size();
-    printf("    SegAvgSpeed size is, %d\n", temp);
-    segvol(curCarSeg,segVol);
-    temp=segVol.size();
-    printf("    SegVol size is, %d\n", temp);
-    segtoll(segAvgSpeed,segVol,op_file);
-    
-    curCarSeg.clear();
-    segAvgSpeed.clear();
-    segVol.clear();
-    database.clear();
-}
-fclose(pFile);
-op_file.close();
-\end{lstlisting}
-Similar to the simple query, we fix a window size, the data file and we start the loop\\
+\ref{lst:complex_query_overview}
+\par Similar to the simple query, we fix a window size, the data file and we start the loop\\
 In the loop, each time we read "window size" number of data entries, calculate $3$ vectors, \textbf{curcarseg}, \textbf{segavgspeed}, \textbf{segvol}. After calculating these for the the data in the data window, we execute the final query of \textbf{segtoll}\\
-For $CurCarSeg$, simply filter the cars for the last $5$ mins.
-\begin{lstlisting}[language=C++]
-    std::vector<std::vector<int>> temp;
-    int cur_time=0;
-    int i,j;
-    std::vector<int> vect;
-    vect.resize(4);
-    for(i=0;i<d.size();i++)
-    {
-        if(cur_time<d[i][0])
-        {
-            cur_time=d[i][0];
-        }
-    }
-    for(i=0;i<d.size();i++)
-    {
-        if(d[i][0]>cur_time-300)
-        {
-            vect[0]=d[i][2];
-            vect[1]=d[i][3];
-            vect[2]=d[i][4];
-            vect[3]=d[i][6];
-            temp.push_back(vect);
-        }
-    }
-    //temp=()
-    std::sort(temp.begin(),temp.end(), my_sort);
-    //(express,dir,seg, average speed)
-    int count = 1;
-    s.push_back(temp[0]);
-    for(i=1;i<temp.size();i++)
-    {
-        if(temp[i][0]==temp[i-1][0] and temp[i][1]==temp[i-1][1] and temp[i][2]==temp[i-1][2])
-        {
-            s.back()[3]=s.back()[3]+temp[i][3];
-            count++;
-        }
-        else
-        {
-            s.back()[3]=s.back()[3]/(count);
-            s.push_back(temp[i]);
-            count = 1;
-        }
-    }
-    s.back()[3]=s.back()[3]/count;
-    temp.clear();
-\end{lstlisting}
-For $SegAvgSpeed$, we first filter the cars which were active in the last $5$ mins.\\
+For $CurCarSeg$, simply filter the cars for the last $5$ mins.\\
+\ref{lst:SegAvgSpeed}
+\par For $SegAvgSpeed$, we first filter the cars which were active in the last $5$ mins.\\
 Then sort to group data entries. Then lastly apply aggregate function.\\ 
-\begin{lstlisting}[language=C++]
-//d=(carid,exp,dir,seg)
-std::sort(d.begin(),d.end(), my_sort2);
-int i,j;
-s.push_back(d[0]);
-s.back()[0]=1;
-for(i=1;i<d.size();i++)
-{
-    if(d[i][3]==d[i-1][3] and d[i][1]==d[i-1][1] and d[i][2]==d[i-1][2])
-    {
-        s.back()[0]++;
-    }
-    else
-    {
-        s.push_back(d[i]);
-        s.back()[0]=1;
-    }
-}
-\end{lstlisting}
-Next, calculate $SegVol$, first sort the vector by the attributes in the group by statement. Then apply the aggregation operation.
-\begin{lstlisting}[language=C++]
-int c1,r1,i,j,k,operation;
-std::vector<float> entropy;
-entropy=entropy_calc(s,v);
-for(i=0;i<entropy.size();i++)
-{
-    op_file<<entropy[i]<<" ";
-}
-op_file<<std::endl;
-op_file<<s.size()<<" "<<v.size()<<std::endl;
-entropy.clear();
-//v=(count of cars,exp,dir,seg)
-//s=(express,dir,seg, average speed)
-int times;
-std::vector<int> order;
-order.push_back(0);
-order.push_back(1);
-order.push_back(2);
-order.push_back(3);
-
-int max_times=24;
-int num_op;
-bool b;
-for(times=0;times<max_times;times++)
-{
-    num_op=0;
-    auto start = std::chrono::high_resolution_clock::now();
-    for(i=0;i<s.size();i++)
-    {
-        for(j=0;j<v.size();j++)
-        {
-            b=false;
-            for(k=0;k<4;k++)
-            {
-                operation=order[k];
-                num_op++;
-                switch(operation)
-                {
-                    case 0:
-                        if(s[i][0]!=v[j][1])
-                        {
-                            b=true;
-                        }
-                    case 1:
-                        if(s[i][1]!=v[j][2])
-                        {
-                            b=true;
-                        }
-                    case 2:
-                        if(s[i][2]!=v[j][3])
-                        {
-                            b=true;
-                        }
-                    case 3:
-                        if(s[i][3]>=40)
-                        {
-                            b=true;
-                        }
-                }
-                if(b)
-                {
-                    break;
-                }
-            }
-        }
-    }
-    auto stop = std::chrono::high_resolution_clock::now(); 
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    
-    for(i=0;i<4;i++)
-    {
-        op_file<<order[i]<<" ";
-    }
-    op_file<<std::endl<<duration.count()<<" "<<num_op<<std::endl;
-    next_perm(order);
-}
-\end{lstlisting}
+\ref{lst:SegVol}
+\par Next, calculate $SegVol$, first sort the vector by the attributes in the group by statement. Then apply the aggregation operation.
 After obtaining both $SegVol$ and $SegAvgSpeed$, finally proceed to calculate $SegToll$ and obtain data for reinforcement learning.\\
-Given $SegVol$ and $SegAvgSpeed$, first calculate column wise entropy for DRL and also store their sizes for DRL.\\
-Now for the part where we will try to optimizate. There are $4$ operations to be executed, all are associative, so there are $4!=24$ orders in which these operations can be executed in. We execute all of these and store the number of operations required to run them as well as the time taken.\\
+\ref{lst:SegToll}
+\par Given $SegVol$ and $SegAvgSpeed$,  need to do the following steps:-
+\begin{itemize}
+    \item Calculate column wise entropy and store it.
+    \item Store size of $SegVol$ and $SegAvgSpeed$.
+    \item For all $4!=24$ orderings of operations(due to them being associative) execute the $SegToll$ query.
+    \item Store the time require for execution and the number of operations required for each order.
+\end{itemize}
 Here is a part of output generated by the code\\
 The first line represents the entropy of the $8$ columns,\\
 The next line represents the size of $SegAvgSpeed$ and $SegVol$ respectively.\\
 Then for the next 48 lines, it alternates between the order of operations executed and then the time required in microseconds and the number of operations required.\\
-\begin{lstlisting}
+\begin{lstlisting}[caption=Data for DQN]
 3.32187 0.99998 6.63484 3.29218 2.92342 3.32185 0.99998 6.63482 
 1916 1914
 0 1 2 3 
@@ -410,13 +173,47 @@ Then for the next 48 lines, it alternates between the order of operations execut
 175096 3672963
 \end{lstlisting}
 The example above can be interpretted as\\
-The entropy of columns are $3.32187,0.99998,6.63484,3.29218,2.92342,3.32185,0.99998,6.63482$\\
+The entropy of columns are $3.32187,$ $0.99998,$ $6.63484,$ $3.29218,$ $2.92342,$ $3.32185,$ $0.99998,$ $6.63482$\\
 The size of $SegAvgSpeed$ is 1916, the size of $SegVol$ is 1914.\\
-The order line can be interpretted as the first operation executed is the $0^{th}(\text{S.exp\_way = V.exp\_way})$, second operation executed is $1^{st}(\text{S.dir = V.dir})$, third operation executed is $2^{nd}(\text{S.seg = V.seg})$ and the last operation executed is $3^{rd}(\text{S.speed} <= 40)$, When this order is executed, the time taken is $171487$ mircoseconds and the number of operations required is $3672963$\\
-Next 2 lines can be interpretted as the first operation executed is the $0^{th}($$\text{S.exp\_way = V.exp\_way})$, second operation executed is $1^{st}(\text{S.dir = V.dir})$, third operation executed is $3^{rd}(\text{S.speed} <= 40)$ and the last operation executed is $2^{nd}(\text{S.seg = V.seg})$ , When this order is executed, the time taken is $175067$ mircoseconds and the number of operations required is $3672963$. 
+The order line can be interpretted as
+\begin{itemize} 
+    \item The first operation executed is the $0^{th}(\text{S.exp\_way = V.exp\_way})$.
+    \item The second operation executed is $1^{st}(\text{S.dir = V.dir})$.
+    \item The third operation executed is $2^{nd}(\text{S.seg = V.seg})$.
+    \item The last operation executed is $3^{rd}(\text{S.speed} <= 40)$
+\end{itemize} 
+When this order is executed, the time taken is $171487$ mircoseconds and the number of operations required is $3672963$\\
+Next 2 lines can be interpretted as 
+\begin{itemize}
+    \item The first operation executed is the $0^{th}($$\text{S.exp\_way = V.exp\_way})$.
+    \item The second operation executed is $1^{st}(\text{S.dir = V.dir})$.
+    \item The third operation executed is $3^{rd}(\text{S.speed} <= 40)$.
+    \item The last operation executed is $2^{nd}(\text{S.seg = V.seg})$
+\end{itemize} 
+When this order is executed, the time taken is $175067$ mircoseconds and the number of operations required is $3672963$. 
 \par The fact that the number of operations remains same but the time required changes is due to the internal scheduling by the kernel.
+
 \section{Deep Reinforcement Learning}
-Now the data for Deep reinforcement learning is stored and ready to be used. For our reinforcement learning it is important to note, any $1$ move will lead us into the final state. So a simple implementation of Deep Neural Networks to estimate the reward function works.\\
+Now the data for Deep reinforcement learning is stored and ready to be used.
+
+\subsection{MDP input}
+Note after selecting an order and executing the query with the selected order, we finish the "game".\\
+Remember the input for $MDP$ is of the format $(S,A,S^{*},R)$. But as this game is $1$ move game, all tuples will have $S^{*}=s_{f}$
+
+\subsection{States}
+The input for a DQN is of the format 
+$$(X_{i},Y_{i})_{i\in[n]}, \text{where} X_{i}\in \mathbb{R}^{m}, Y_{i}\in \mathbb{R}$$
+For $Y_{i}$ we use the number of operations required.\\
+For $X_{i}$ we use a concatenation of entropy vector, size vector and the $1-$hot encoding of the move.
+
+\subsection{1-hot encoding}
+Consider the set of permutations of $\{0,1,2,3\}$, we can order them lexicgraphically.\\
+Given a permutation $\mathbb{P}$, it will have a rank $r$ in the ordering.\\
+To convert the permutation into a $1$hot encoding, start with a $24$ element vector $v$ with all $0$s.Then update 
+$$v[r]=1$$
+\ref{lst:DQN}
+
+\subsection{Assumption}
 Note the amount of information, features extracted from the querying do not fully represent the data set our Neural network can't perform very well. To tackle this, we look at whether the shift in the predicted rewards is similar cross all the moves.\\
 Then given data points $(x_{i},y_{i}),(x_{j},y_{j})$ and the DQN $Q_{\theta}$ the condition to check becomes:-
 $$y_{i}\leq y_{j}\Rightarrow Q_{\theta}(x_{i})\leq Q_{\theta}(x_{j})$$
@@ -425,66 +222,22 @@ As optimal move implies
 $$y_{\text{optimal}}\leq y_{i} \forall i \in [24]$$
 This with the previous condition will imply
 $$Q_{\theta}(x_{\text{optimal}})\leq Q_{\theta}(x_{i})\forall i \in [24]$$ 
+We train a Deep neural network with $70\%$, use the rest of the $30\%$ data for testing and record the results.
 
-\begin{lstlisting}[language=Python]
-def reinforcement_learning(fin_train,save_loc,epoch_number):
-    model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Dense(34,activation='relu'))
-    model.add(tf.keras.layers.Dense(68,activation='relu'))
-    model.add(tf.keras.layers.Dense(136,activation='relu'))
-    model.add(tf.keras.layers.Dense(68,activation='relu'))
-    model.add(tf.keras.layers.Dense(34,activation='relu'))
-    model.add(tf.keras.layers.Dense(1))
-    model.compile(optimizer='adam', loss='mse')
-
-
-    times = int(epoch_number)
-    for i in range(times):    
-        cm=np.zeros(576).reshape(24,24)
-        history=model.fit(x_tr, y2_tr, batch_size=100, epochs=1, callbacks=[cp_callback])
-        ans=model.predict(x_te)
-        seen=0
-        correct=0
-        for j in range(len(ans)):
-            if(seen==0):
-                m1=j
-                m2=j
-            if(ans[j]<ans[m1]):
-                m1=j
-            if(y2_te[j]<y2_te[m2]):
-                m2=j
-            #m1 is the prediction
-            #m2 is the actual
-            if(seen==23):
-                seen=0
-                cm[m1%24,m2%24]+=1
-                if(m1==m2):
-                    correct+=1
-            else:
-                seen+=1
-        total=cm.sum()
-        tp = np.asarray([cm[i,i] for i in range(24)])
-        fp = cm.sum(axis=1) - tp
-        fn = cm.sum(axis=0) - tp
-        tn = np.asarray([total-(tp[i]+fp[i]+fn[i]) for i in range(24)]
-        for i in range(24):
-            try:
-                a=(tp[i]+tn[i])/(tp[i]+tn[i]+fn[i]+fp[i])
-                p=(tp[i])/(tp[i]+fp[i])
-                r=(tp[i])/(tp[i]+fn[i])
-                f=(2*p*r)/(p+r)
-                print(a,p,r,f)
-            except:
-                print(i)   
-        
-        print(len(ans)/24,correct)
-        del cm
-\end{lstlisting}\par We consider the sequence/order of moves as an action for our reinforcement learning model, and convert it into a $1$hot encoding.\\
-Consider the set of permutations of $\{0,1,2,3\}$, we can order them lexicgraphically.\\
-Given a permutation $\mathbb{P}$, it will have a rank $r$ in the ordering.\\
-To convert the permutation into a $1$hot encoding, start with a $24$ element vector $v$ with all $0$s.Then update 
-$$v[r]=1$$
-Call this resulting vector $\mathbb{V}$.\\
-Our DNN will have the training $X$ points as a concatenation of the entropy, the size of $SegVol$ and $SegAvgSpeed$ and the $1$ hot encoding of the move.\\
-In all $X$ will be vector of length $34$. And the $Y$ coordinate is the number of moves required.\\
-We train a Deep neural network with $70\%,30\%$ data for training and testing. And record the results. The method to compute the results are given in the next chapter.
+\section{Conclusion}
+In this chapter we saw :- 
+\begin{itemize}
+    \item The method use to generate data for the linear road benchmark test cases.
+    \item The method implemented to take input, converted $SQL$ queries to $C++$ and extracted features during execution and stored them
+    \item Showcased how the extracted features can help with deep reinforcement learning
+    \item Showcased the method used to evaluate the performance of DQN. 
+\end{itemize}
+In the next chapter, we
+\begin{itemize}
+    \item Formalize the assumptions we made in our evaulation.
+    \item Present the categorize/ classification of the data set. Divided into training and testing data.
+    \item Visualize the confusion matrix.
+    \item Give the true positive, true negative, false positive false negative as well the analysis of the confusion matrix for all $24$ orderings.
+    \item Lastly we compare how our predictions fared against the optimal and worst orderings. 
+\end{itemize} present the results of our experiments, visualize them
+ The method to compute the results are given in the next chapter.

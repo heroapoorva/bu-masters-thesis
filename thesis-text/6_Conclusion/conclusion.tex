@@ -9,8 +9,15 @@
 
 \section{Conclusion}
 The goal of this thesis is to act as a proof of concept for the application of Deep Reinforcement Learning for optimization of query processing on streams.\\
-Say, for a particular window of data the size of SegVol $=x$ and size of SegAvgSpeed $=y$, due to the query used in the experiments, the number of operations required to execute the query lie between $[x*y,4*x*y]$. The worst and best possible cases can both arise in the same window depending on the order used and the data in the query.\\
-Of the $24$ possible operation orders, we were able to predict the optimal order of operations around $48\%$ cases, reducing the number of operations to around $38\%$ of the worst observed(which is better than the actual worst).
+Say, for a particular window of data 
+\begin{itemize}
+    \item The size of SegVol $=x$.
+    \item The size of SegAvgSpeed $=y$.
+\end{itemize}
+Due to the query used in the experiments, the number of operations required to execute the query lie between 
+$$[x*y,4*x*y]$$ 
+The worst and best possible cases can both arise in the same window depending on the order used and the data in the query.\\
+Of the $24$ possible operation orders, we were able to predict the optimal order of operations around $48\%$ cases, reducing the number of operations to around $39\%$ of the worst observed(which is better than the actual worst).
 \begin{center}
 $x*y \leq$ optimal $\leq$ predicted $\leq$ worst observed $\leq 4*x*y$
 \end{center}
