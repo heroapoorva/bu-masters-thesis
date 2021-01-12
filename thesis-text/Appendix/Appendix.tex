@@ -2,31 +2,73 @@
 \label{appendix}
 \thispagestyle{myheadings}
 
-\begin{lstlisting}[language=C++, caption= code overview, label={lst:simple_query_overview}]
-FILE *pFile;
-int window_size=20000;
-pFile = fopen (argv[1],"r");
-int database[window_size][4];
-std::vector<int> vect;
-vect.clear();
-std::vector<std::vector<int>> output;
-auto start = std::chrono::high_resolution_clock::now();
-while(!feof(pFile))
+\begin{lstlisting}[language=C++, caption= code overview for simple query, label={lst:simple_query_overview}]
+
+int main(int argc, char** argv)
 {
-    input_database(pFile, database, window_size);
-    execute(database, output, vect, window_size);
-    output.clear();
+    /*
+    Tells the query execution time in microseconds for each window of data.
+    
+    Arguments
+    ---------
+    The path to location of data file.
+    
+    */
+    //The size of window we consider.
+    int window_size=20000;
+    
+    FILE *pFile;
+    // The first arguement is the location of the stream.
+    pFile = fopen (argv[1],"r");
+    
+    //We will store data in this array.
+    int database[window_size][4];
+    
+    //Passing an empty vector to functions to help with memory
+    std::vector<int> vect;
     vect.clear();
+    std::vector<std::vector<int>> output;
+    
+    //Read till the end of input file
+    while(!feof(pFile))
+    {
+        //Start timer of current data set
+        auto start = std::chrono::high_resolution_clock::now();
+        
+        //Take input of window size number of entries
+        input_database(pFile, database, window_size);
+        
+        //Extract information, features
+        segAvgSpeed(database, output, vect, window_size);
+        
+        //clear memory
+        output.clear();
+        vect.clear();
+        
+        //get the end time 
+        auto stop = std::chrono::high_resolution_clock::now(); 
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+        
+        //print the time required
+        std::cout << duration.count() << std::endl;
+    }
+    fclose(pFile);
+    return 0;
 }
-auto stop = std::chrono::high_resolution_clock::now(); 
-auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-std::cout << duration.count() << std::endl;
-fclose(pFile);
 \end{lstlisting}
 
-\begin{lstlisting}[language=C++, caption= input function, label={lst:simple_query_input}]
+\begin{lstlisting}[language=C++, caption= File reading function for simple query, label={lst:simple_query_input}]
 void input_database(FILE * pFile, int d[][4],int window_size)
 {
+    /*
+    Read the file and stores the information extracted into the array d.
+    
+    Arguments
+    ---------
+    The location of the file
+    Array to store information in
+    The amount of data entries to read
+    */
     int i,j;
     for(i=0;i<window_size;i++)
     {
@@ -36,7 +78,9 @@ void input_database(FILE * pFile, int d[][4],int window_size)
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=C++, caption= groupby, label={lst:simple_query_groupby}]
+\begin{lstlisting}[language=C++, caption= groupby statement for the simple query, label={lst:simple_query_groupby}]
+// Adds elements of the the array d into a 2d vector "output"
+// Then sorts the vector to mimic a groupby statement
 for(i=0;i<window_size;i++)
 {
     if(d[i][2]==0)
@@ -52,20 +96,27 @@ for(i=0;i<window_size;i++)
 std::sort(output.begin(),output.end(), my_sort);
 \end{lstlisting}
 
-\begin{lstlisting}[language=C++, caption= aggregation, label={lst:simple_query_aggregation}]
+\begin{lstlisting}[language=C++, caption= applying aggregation function for simple query
+, label={lst:simple_query_aggregation}]
+/*
+function return a 2d vector with an aggregation function applied after a groupby function is used
+*/
 int count = 1;
-std::sort(output.begin(),output.end(), my_sort);
 
+//OP is the output 2d vector obtained after aggregation.
 std::vector<std::vector<int>> op;
+
 op.push_back(output[0]);
 for(i=1;i<output.size();i++)
 {
+    //This is condition to check if we are in the same group
     if((output[i][0]==output[i-count][0]))
     {
         if(output[i][1]==output[i-count][1])
         {
             if((output[i][2]==output[i-count][2]))
             {    
+                // incase of same group make adjustments in preparation for aggregation function
                 op.back()[3]=op.back()[3]+output[i][3];
                 count++;
             }
@@ -73,6 +124,7 @@ for(i=1;i<output.size();i++)
     }
     else
     {
+        // if new group has started apply the aggregation to the last group
         op.back()[3]=op.back()[3]/(count);
         op.push_back(output[i]);
         count = 1;
@@ -84,49 +136,95 @@ output=op;
 op.clear();
 \end{lstlisting}
 
-\begin{lstlisting}[language=C++, caption=complex query overview, label={lst:complex_query_overview}]
-int window_size=10000;
-FILE *pFile;
-pFile = fopen (argv[1],"r");
+\begin{lstlisting}[language=C++, caption=Code plan overview for complex query, label={lst:complex_query_overview}]
 
-std::ofstream op_file;
-op_file.open("q3out.txt");
 
-std::vector<std::vector<int>> database, curCarSeg, segAvgSpeed, segVol;
-
-int temp;
-while(!feof(pFile))
+int main(int argc, char** argv)
 {
+    /*
+    Function outputs the data required to perform deep reinforcement learning for query optimization
     
-    input_database(pFile, database, window_size);
-    read_times++;
-    printf("read times is, %d\n", read_times);
-    curcarseg(database, curCarSeg);
-    temp=curCarSeg.size();
-    printf("    CurCarSeg size is, %d\n", temp);
-    segavgspeed(database,segAvgSpeed);
-    temp=segAvgSpeed.size();
-    printf("    SegAvgSpeed size is, %d\n", temp);
-    segvol(curCarSeg,segVol);
-    temp=segVol.size();
-    printf("    SegVol size is, %d\n", temp);
-    segtoll(segAvgSpeed,segVol,op_file);
+    Arguments
+    ---------
+    The path to location of data file.
     
-    curCarSeg.clear();
-    segAvgSpeed.clear();
-    segVol.clear();
-    database.clear();
+    */
+    int window_size=10000;
+    
+    //Location of the data file    
+    FILE *pFile;
+    pFile = fopen (argv[1],"r");
+    
+    //Output file
+    std::ofstream op_file;
+    op_file.open("q3out.txt");
+    
+    std::vector<std::vector<int>> database, curCarSeg, segAvgSpeed, segVol;
+    
+    int read_times=0;
+    int temp;
+    
+    //Read the file till end
+    while(!feof(pFile))
+    {
+        //Take window size number of inputs
+        input_database(pFile, database, window_size);
+        read_times++;
+        printf("read times is, %d\n", read_times);
+        
+        //Calculate the cucarseg relation
+        curcarseg(database, curCarSeg);
+        temp=curCarSeg.size();
+        printf("    CurCarSeg size is, %d\n", temp);
+        
+        //Calculate the segavgspeed relation
+        segavgspeed(database,segAvgSpeed);
+        temp=segAvgSpeed.size();
+        printf("    SegAvgSpeed size is, %d\n", temp);
+        
+        //calculate the segvol relation
+        segvol(curCarSeg,segVol);
+        temp=segVol.size();
+        printf("    SegVol size is, %d\n", temp);
+        
+        // Execute the segtoll query.
+        segtoll(segAvgSpeed,segVol,op_file);
+        
+        //clear memory
+        curCarSeg.clear();
+        segAvgSpeed.clear();
+        segVol.clear();
+        database.clear();
+        
+    }
+    fclose(pFile);
+    op_file.close();
+    return 0;
 }
-fclose(pFile);
-op_file.close();
 \end{lstlisting}
 
-\begin{lstlisting}[language=C++, caption= SegAvgSpeed, label={lst:SegAvgSpeed}]
+\begin{lstlisting}[language=C++, caption= Calculating the SegAvgSpeed relation, label={lst:SegAvgSpeed}]
+void segavgspeed(std::vector<std::vector<int>> &d, std::vector<std::vector<int>> &s)
+{
+    /*
+    Function outputs the segavgspeed relation
+    
+    Arguments
+    ---------
+    The database
+    The output vector variable
+    
+    */
+    
+    //d=(Time, carID, expressway, Dir, Seg, Position,speed)
+    
     std::vector<std::vector<int>> temp;
     int cur_time=0;
     int i,j;
     std::vector<int> vect;
     vect.resize(4);
+    
+    //Figure the latest time in the database
     for(i=0;i<d.size();i++)
     {
         if(cur_time<d[i][0])
@@ -134,6 +232,8 @@ op_file.close();
             cur_time=d[i][0];
         }
     }
+    
+    //Filter out the entries in the last 5 mins
     for(i=0;i<d.size();i++)
     {
         if(d[i][0]>cur_time-300)
@@ -145,11 +245,15 @@ op_file.close();
             temp.push_back(vect);
         }
     }
-    //temp=()
+    
+    //sort to mimic applying a groupby function
     std::sort(temp.begin(),temp.end(), my_sort);
+    
     //(express,dir,seg, average speed)
     int count = 1;
     s.push_back(temp[0]);
+    
+    //Apply the aggregation function
     for(i=1;i<temp.size();i++)
     {
         if(temp[i][0]==temp[i-1][0] and temp[i][1]==temp[i-1][1] and temp[i][2]==temp[i-1][2])
@@ -165,158 +269,317 @@ op_file.close();
         }
     }
     s.back()[3]=s.back()[3]/count;
-    temp.clear();
-\end{lstlisting}
-\begin{lstlisting}[language=C++, caption=SegVol, label={lst:SegVol}]
-//d=(carid,exp,dir,seg)
-std::sort(d.begin(),d.end(), my_sort2);
-int i,j;
-s.push_back(d[0]);
-s.back()[0]=1;
-for(i=1;i<d.size();i++)
-{
-    if(d[i][3]==d[i-1][3] and d[i][1]==d[i-1][1] and d[i][2]==d[i-1][2])
+    /*for(i=0;i<s.size();i++)
     {
-        s.back()[0]++;
-    }
-    else
-    {
-        s.push_back(d[i]);
-        s.back()[0]=1;
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=C++, caption=SegToll, label={lst:SegToll}]
-int c1,r1,i,j,k,operation;
-std::vector<float> entropy;
-entropy=entropy_calc(s,v);
-for(i=0;i<entropy.size();i++)
-{
-    op_file<<entropy[i]<<" ";
-}
-op_file<<std::endl;
-op_file<<s.size()<<" "<<v.size()<<std::endl;
-entropy.clear();
-//v=(count of cars,exp,dir,seg)
-//s=(express,dir,seg, average speed)
-int times;
-std::vector<int> order;
-order.push_back(0);
-order.push_back(1);
-order.push_back(2);
-order.push_back(3);
-
-int max_times=24;
-int num_op;
-bool b;
-for(times=0;times<max_times;times++)
-{
-    num_op=0;
-    auto start = std::chrono::high_resolution_clock::now();
-    for(i=0;i<s.size();i++)
-    {
-        for(j=0;j<v.size();j++)
+        for(j=0;j<s[i].size();j++)
         {
-            b=false;
-            for(k=0;k<4;k++)
+            printf("%d ",s[i][j]);
+        }
+        printf("\n");
+    }*/
+    temp.clear();
+}
+\end{lstlisting}
+\begin{lstlisting}[language=C++, caption=Calculating the SegVol relation, label={lst:SegVol}]
+void segvol(std::vector<std::vector<int>> &d, std::vector<std::vector<int>> &s)
+{   
+    /*
+    Function outputs the segvol relation
+    
+    Arguments
+    ---------
+    The database
+    The output vector variable
+    
+    */
+    
+    //d=(carid,exp,dir,seg)
+    //sort the vector inorder to mimic the application of groupby
+    std::sort(d.begin(),d.end(), my_sort2);
+    
+    int i,j;
+    s.push_back(d[0]);
+    s.back()[0]=1;
+    
+    //Apply the aggregation function
+    for(i=1;i<d.size();i++)
+    {
+        if(d[i][3]==d[i-1][3] and d[i][1]==d[i-1][1] and d[i][2]==d[i-1][2])
+        {
+            s.back()[0]++;
+        }
+        else
+        {
+            s.push_back(d[i]);
+            s.back()[0]=1;
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++, caption=The SegToll query which will generate data for DQNs, label={lst:SegToll}]
+void segtoll(std::vector<std::vector<int>> &s, std::vector<std::vector<int>> &v, std::ofstream &op_file)
+{   
+    /*
+    Function mimics the execution of the segtoll query which will generate the data required for training and evaluating the DQN
+    
+    
+    Arguments
+    ---------
+    The segVol relation
+    The SegAvgSpeed relation
+    The file to generated data
+    
+    */    
+    
+    int c1,r1,i,j,k,operation;
+    
+    //Caluclate the entropy of the two relations column wise
+    std::vector<float> entropy;
+    entropy=entropy_calc(s,v);
+    
+    //Store the columnwise entropy in the file
+    for(i=0;i<entropy.size();i++)
+    {
+       // fprintf(op_file, "%f ", entropy[i]);
+        op_file<<entropy[i]<<" ";
+    }
+    
+    
+    op_file<<std::endl;
+    //Store the size of the 2 relations
+    op_file<<s.size()<<" "<<v.size()<<std::endl;
+    entropy.clear();
+    
+    //v=(count of cars,exp,dir,seg)
+    //s=(express,dir,seg, average speed)
+    int times;
+    std::vector<int> order;
+    order.push_back(0);
+    order.push_back(1);
+    order.push_back(2);
+    order.push_back(3);
+
+    int max_times=24;
+    int num_op;
+    bool b;
+    
+    //Fix the order of operations to execute and start the loop
+    for(times=0;times<max_times;times++)
+    {
+        num_op=0;
+        //start the timer
+        auto start = std::chrono::high_resolution_clock::now();
+        for(i=0;i<s.size();i++)
+        {
+            for(j=0;j<v.size();j++)
             {
-                operation=order[k];
-                num_op++;
-                switch(operation)
+                b=false;
+                for(k=0;k<4;k++)
                 {
-                    case 0:
-                        if(s[i][0]!=v[j][1])
-                        {
-                            b=true;
-                        }
-                    case 1:
-                        if(s[i][1]!=v[j][2])
-                        {
-                            b=true;
-                        }
-                    case 2:
-                        if(s[i][2]!=v[j][3])
-                        {
-                            b=true;
-                        }
-                    case 3:
-                        if(s[i][3]>=40)
-                        {
-                            b=true;
-                        }
-                }
-                if(b)
-                {
-                    break;
+                    operation=order[k];
+                    num_op++;
+                    
+                    //Look at the operation to execute and do the needful
+                    switch(operation)
+                    {
+                        case 0:
+                            if(s[i][0]!=v[j][1])
+                            {
+                                b=true;
+                            }
+                        case 1:
+                            if(s[i][1]!=v[j][2])
+                            {
+                                b=true;
+                            }
+                        case 2:
+                            if(s[i][2]!=v[j][3])
+                            {
+                                b=true;
+                            }
+                        case 3:
+                            if(s[i][3]>=40)
+                            {
+                                b=true;
+                            }
+                    }
+                    // if any of the cases above give true, stop.  
+                    if(b)
+                    {
+                        break;
+                    }
                 }
             }
         }
+        
+        // get the end time and calculate the time required.
+        auto stop = std::chrono::high_resolution_clock::now(); 
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+        
+        //Store the order of operations
+        for(i=0;i<4;i++)
+        {
+            op_file<<order[i]<<" ";
+        }
+        
+        //Store the amount of time taken to execute the query and the number of operations required.
+        op_file<<std::endl<<duration.count()<<" "<<num_op<<std::endl;
+        
+        //Generate the next permutation which is the next order of operations to try.
+        next_perm(order);
     }
-    auto stop = std::chrono::high_resolution_clock::now(); 
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    
-    for(i=0;i<4;i++)
-    {
-        op_file<<order[i]<<" ";
-    }
-    op_file<<std::endl<<duration.count()<<" "<<num_op<<std::endl;
-    next_perm(order);
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python, caption=DQN, label={lst:DQN}]
+\begin{lstlisting}[language=Python, caption=The code to train a DQN for the complex query, label={lst:DQN}]
+def categorize(a):
+    '''
+    Returns the frequencies of the best moves/ordering
+    
+    Arguments
+    ---------
+    The data to categorize
+    '''
+    category=[0]*24
+    seen=0
+    m=0
+    for j in range(len(a)):
+        if(seen == 0):
+            m=j
+        if(a[j]<a[m]):
+            m=j
+        if(seen==23):
+            seen=-1
+            category[m%24]+=1
+        seen+=1
+    return(category)
+
+def analysis(p,y):
+    '''
+    The function returns an analysis of the based on the predictions p and the actual values y
+    
+    Arguments
+    ---------
+    predictions p
+    actual values y
+    '''
+    #Start with a confusion matrix
+    mat=np.zeros((24,24))
+    
+    seen=0
+    correct=0
+    best=0
+    pred=0
+    wors=0
+    act=[]
+    pre=[]
+    
+    #need to track the total of best moves, total of worst moves, total of predicted moves
+    #need to record the predicted best move vs the actual best move for confusion matrix
+    
+    for j in range(len(p)):
+        if(seen==0):
+            mi1=j
+            mi2=j
+            ma=j
+        if(p[j]<p[mi1]):
+            mi1=j
+        if(y[j]<y[mi2]):
+            mi2=j
+        if(y[j]>y[ma]):
+            ma=j
+        if(seen==23):
+            seen=-1
+            best+=y[mi2]
+            pred+=y[mi1]
+            wors+=y[ma]
+            act.append(mi2%24)
+            pre.append(mi1%24)
+            mat[mi1%24,mi2%24]+=1
+            if(mi1==mi2):
+                correct+=1
+        seen+=1
+    
+    #print out the times our prediction was correct
+    print(correct, len(p)/24)
+    
+    #the sum of moves for best, predicted, worst and their ratios.
+    print(best, pred, wors, pred/best, pred/wors)
+    
+    #print the confusion matrix
+    print(metrics.confusion_matrix(act,pre))
+    
+    #print the analysis of the confusion matrix
+    print(metrics.classification_report(act, pre, digits=3))
+    
+    #Calculate the true positives
+    tp = np.asarray([mat[i,i] for i in range(24)])
+    
+    #calculate the false positives
+    fp = np.sum(mat, axis=1)-tp
+    
+    #calculate the False negatives
+    fn = np.sum(mat, axis=0)-tp
+    
+    #calculate the true negatives
+    tn = np.sum(mat)-(tp+fp+fn)
+    
+    #print them out
+    for i in range(24):
+        print(tp[i],fp[i],fn[i],tn[i])
+    
+    #plot the confusion matrix
+    plt.imshow(mat)
+    plt.colorbar()
+    plt.show()
+
 def reinforcement_learning(fin_train,save_loc,epoch_number):
+    '''
+    This function trains a DQN and tests its predictions on another set of data and returns the results found
+    
+    Arguments
+    ---------
+    The total data
+    location to save the model
+    number of times to train
+    
+    '''
+    data_points = len(fin_train)/24
+    bp = int(data_points*0.7)
+
+    bp = bp*24
+
+    x_tr=fin_train[:bp,:-2]
+    #time
+    y1_tr=fin_train[:bp,-1]
+    #operations
+    y2_tr=fin_train[:bp,-2]
+    
+    x_te=fin_train[bp:,:-2]
+    y1_te=fin_train[bp:,-1]
+    y2_te=fin_train[bp:,-2]
+    
+    #modeling our DNN
     model = tf.keras.Sequential()
     model.add(tf.keras.layers.Dense(34,activation='relu'))
     model.add(tf.keras.layers.Dense(68,activation='relu'))
-    model.add(tf.keras.layers.Dense(136,activation='relu'))
     model.add(tf.keras.layers.Dense(68,activation='relu'))
     model.add(tf.keras.layers.Dense(34,activation='relu'))
     model.add(tf.keras.layers.Dense(1))
     model.compile(optimizer='adam', loss='mse')
-
-
+    
+    #Training data classification
+    cat1=categorize(y2_tr)
+    print(cat1)
+    #Testing data classification
+    cat2=categorize(y2_te)
+    print(cat2)
+    
     times = int(epoch_number)
-    for i in range(times):    
-        cm=np.zeros(576).reshape(24,24)
-        history=model.fit(x_tr, y2_tr, batch_size=100, epochs=1, callbacks=[cp_callback])
+    for i in range(times):
+        history=model.fit(x_tr, y2_tr, batch_size=100, epochs=1)
         ans=model.predict(x_te)
-        seen=0
-        correct=0
-        for j in range(len(ans)):
-            if(seen==0):
-                m1=j
-                m2=j
-            if(ans[j]<ans[m1]):
-                m1=j
-            if(y2_te[j]<y2_te[m2]):
-                m2=j
-            #m1 is the prediction
-            #m2 is the actual
-            if(seen==23):
-                seen=0
-                cm[m1%24,m2%24]+=1
-                if(m1==m2):
-                    correct+=1
-            else:
-                seen+=1
-        total=cm.sum()
-        tp = np.asarray([cm[i,i] for i in range(24)])
-        fp = cm.sum(axis=1) - tp
-        fn = cm.sum(axis=0) - tp
-        tn = np.asarray([total-(tp[i]+fp[i]+fn[i]) for i in range(24)]
-        for i in range(24):
-            try:
-                a=(tp[i]+tn[i])/(tp[i]+tn[i]+fn[i]+fp[i])
-                p=(tp[i])/(tp[i]+fp[i])
-                r=(tp[i])/(tp[i]+fn[i])
-                f=(2*p*r)/(p+r)
-                print(a,p,r,f)
-            except:
-                print(i)   
-        
-        print(len(ans)/24,correct)
-        del cm
+        analysis(ans,y2_te)
 \end{lstlisting}
 

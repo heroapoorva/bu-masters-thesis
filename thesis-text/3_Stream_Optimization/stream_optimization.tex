@@ -108,7 +108,7 @@ Now to convert the query statement to actual syntax/ query and showcase few diff
 
 \subsection{Segment Average Speed}
 First we convert the simpler query.
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption=SegAvgSpeed]
     SELECT exp_way, dir, seg, AVG(speed) as speed,
     FROM CarSegStr [RANGE 5 MINUTES]
     WHERE car_id = target
@@ -178,49 +178,6 @@ $$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_3}(\sigma
 
 The goal is to try to figure out the best possible method of rearranging these associative operations, in this thesis we try out using deep reinforcement learning to try to predict the best possible move.
 
-\begin{comment}
 
-$$(\text{E.exp\_way=A.exp\_way}\land \text{E.dir=East}\land \text{A.dir=EAST}\land \text{E.seg<A.seg} \land \text{E.seg>A.seg-5})}$$
-
-
-
-
-\section{Optimization Specifications}
-A first attempt at making a DQN we might narrow down to the fact that DQN will be query specific, we do not know the exact state we will be in nor do we know the exact reward we get until we do the action. 
-\par The interesting part of this problem only arises due to complex queries, hence we need to remember that when choosing a query to solve, operations like join, Aggregation, duplication elemination and more result in complex queries generally.
-\par Window size kept for training can change and a good window size needs to be figured out.
-\par The underlying algorithms for joins, memory access and message passing should be fixed so results aren't affected by multiple attributes.
-\par Need to encode the query and convert it into features for the DQN.
-\par To determine what all should the features should capture, we need to look at the operations we will be performing, we also need an encoding for the query itself as well as the notations used in the previous chapter to calculate complexity.
-\begin{itemize}
-\item $B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of relation $R$.
-\item $T(R) \coloneqq$ is the number of tuples of relation $R$.
-\item $V(R,a) \coloneqq$ is the value count for attribute a of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.
-\item $V(R, [ a_1 , a_2,..., a_n]) \coloneqq$ is the number of distinct values $R$ has when all of attributes $a_1, a_2,..., a_n$ are considered together, that is, the number of tuples in $\delta(\pi_{a_1,a_2,...,a_n}(R))$
-\end{itemize}
-
-\par The DQN should tell according to it's estimates what is the best action to take, what is the best ordering, which operation to perform.
-\end{comment}
-
-
-% 1. What is the stream query optimization? 
-% We can have complex queries. Conctinous queries because it runs on top of the data stream. 
-% They include join, selection, projection, user-defined functions, etc. 
-% 
-% 2. If we machine learning what is for us the training data. 
-% We need to know about history of different runs of queries. 
-% Query-1 can have different execution plans. {(P1, Cost1), (P2, Cost2), ... (Pn, Const_n)}. There is a min cost. 
-% Our query does not match one-to-one to the past queries. How we can use parts of the past? 
-% Query-1 comes with features of {f1, f2, ..., fn}, we have an optimized plan for this query. Things like graphs structures. 
-% Query-future , you can extract features from it {f1, f2, ..., fn}
-
-% Problem is almost a similarity matching problem. 
-
-
-% 3. What are my inputs to the Machine learning Algorithms? What are my labesl? Are these coinous or labels (1/0), multi-lables. 
-
-% Assumptions: Can stream change over time? Can the Sliding window change? 
-% Why you can not do exact similarity match? Because we have never run that query before. 
-% Why I can not do simple kNN? 
 
 

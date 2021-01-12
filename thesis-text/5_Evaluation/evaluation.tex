@@ -17,19 +17,19 @@ To check if the move this corresponds to is the actual optimal move, find the in
 To measure the performance we use the predicted optimal move vs the actual optimal move.\\
 \section{Results}
 First, for each ordering of the operations we present the frequencies with which they are optimal in the dataset.
-\begin{lstlisting}
+\begin{lstlisting}[caption=Frequencies of optimal moves in total data]
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 110, 83, 84, 79, 80, 63, 307, 165, 2209, 1367, 43849, 43872]
 \end{lstlisting} 
 As visible the data is higly biased towards the last $2$ orderings.\\
 We split this data into $70\%,30\%$ for the purpose of training and testing of our reinforcement learning agent.The random seed used resulted in the following split.
-\begin{lstlisting}[language=C++]
-#Training
+\begin{lstlisting}[caption= Frequencies of optimal move in training data]
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 60, 59, 54, 57, 45, 227, 119, 1526, 966, 30811, 30583]
-#Testing
+\end{lstlisting}
+\begin{lstlisting}[caption= Frequencies of optimal move in testing data]
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 29, 23, 25, 25, 23, 18, 80, 46, 683, 401, 13038, 13289]
 \end{lstlisting}
 The predictions of our model resulted in the following $24$ true positive, False Positive, False negative and True negative results\\
-\begin{lstlisting}
+\begin{lstlisting}[caption= True positives False positives False negatives True negatives]
 (TP,FP,FN,TN)
 (0.0, 0.0, 0.0, 27681.0)
 (0.0, 0.0, 0.0, 27681.0)
@@ -62,13 +62,16 @@ Below are 2 confusion matrices we obtained from two different runs of the predic
 \includegraphics{cm3.png}\\
 \includegraphics{cm4.png}\\
 \includegraphics{cm5.png}\\
-We haave the actual optimal ordering, the actual worst ordering, the predicted best ordering from the model.\\
+We have the actual optimal ordering, the actual worst ordering, the predicted best ordering from the model.\\
 We add the number of operations required by following each of the above $3$ and look at the sum of them.\\
-The sum of operations required by the optimal ordering $890640075.0$\\
-The sum of operations required by the predicted ordering $900361559.0$\\
-The sum of operations required by the optimal ordering $2310227856.0$\\
-That is our predicted orderings are approx $39\%$ of the worst ordering and $102\%$ of the best ordering\\
-A by class analysis is obtained by using $\text{metrics.classification\_report}$ from scikit-learn\cite{scikit-learn}.\\
+\begin{itemize}
+    \item The sum of operations required by the optimal ordering $890640075.0$
+    \item The sum of operations required by the predicted ordering $900361559.0$
+    \item The sum of operations required by the optimal ordering $2310227856.0$
+\end{itemize}
+This tells us that our predicted orderings are approx $39\%$ of the worst ordering and $102\%$ of the best ordering.\\
+A label based analysis is obtained by using $"\text{metrics.classification\_report}"$ from \\
+ scikit-learn\cite{scikit-learn}.\\
 \begin{lstlisting}
               precision    recall  f1-score   support
 
