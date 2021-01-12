@@ -145,8 +145,13 @@ A label based analysis is obtained by using $"\text{metrics.classification\_repo
    macro avg      0.084     0.089     0.084     27681
 weighted avg      0.461     0.462     0.461     27681
 \end{lstlisting}
-
-\section{Discussion}
+\section{Limitations}
+The work presented in this thesis has a number of limitations.
+\begin{itemize}
+    \item The neural network is unable to achieve low loss for the test data, this perhaps speak the the lack of features extracted during the querying time.
+    \item The data sample we have is highly biased, leading to rather baised DQNs.
+    \item The DQN used is simulating a single move game rather than a multi move game.
+\end{itemize}
 
 \section{Conclusion}
 In this chapter we saw :-
@@ -163,6 +168,4 @@ In the next chapter we:-
     \item Present the ways of improving upon this work.
 \end{itemize}
 %1.2 change to research problem. Most important, 1.4
-%Explain and justify reinforcement learning
-%What we have seen in thsi chapter, what we will see in next chapter
 %Typing error, grammar

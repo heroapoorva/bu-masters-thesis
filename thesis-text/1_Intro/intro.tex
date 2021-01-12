@@ -14,9 +14,13 @@ In recent years, the ability to gather data has increased tremendously due to va
 For these examples it is clear that there exists a need to continously keep processing data stream and reporting back various statistics and any abnormality. But this continuous monitoring and reporting is difficult to do on tradiational Data Base Management Systems(DBMS). A different approach has to be adapted to meet the demands in various industries.
 \par Stream optimization in a certain sense is modification of the stream data to make the quering process faster. Few motivations for this include, to be able to make use of opportunities presented by faster calculation, mitiage risks before it is late, keeping the latest information readily available in understandable format.
 
-\section{Problem at hand}
+\section{Research problem}
 \label{sec:Problem at hand}
-\par The increase in data gathering capabilities and speed need to be accompanied with increase in speed at which data can be analysed. There are various challenged that come up when addressing this, such as High frequency of the updates and reporting, buffer overflows, overheads, context-switches during processing and many more. The motivation for our approach is, most of the query optimization methods do not look at the data itself and rather try to come up with a very general optimization which can be applied to any query. Many times an indepth look at the data might prove to be rather expensive. In this paper we try to detect trends in the data and help optimize quering using those and test our model on benchmark cases.
+\par The increase in data gathering capabilities and speed need to be accompanied with increase in speed at which data can be analysed. There are various challenged that come up when addressing this, such as High frequency of the updates and reporting, buffer overflows, overheads, context-switches during processing and many more.\\
+In tradiational database systems, queries are expanded and simplified using predetermined heuristics most of the query optimization methods do not look at the data itself and rather try to come up with a very general optimization which can be applied to any query.\\
+Finding the optimal method to execute a query is a difficult problem, it can be shown that finding optimal query execution plan is $NP-hard$. \\
+Our motivation to solve this problem is the use of static heuristics, we want to adapt a data driven approach. In this paper we try to detect trends in the data and help optimize quering using those and test our model on benchmark cases.\\
+This is not without it's own problems as many times an indepth look at the data might prove to be rather expensive. 
 
 \section{Structure of thesis}
 \label{sec:Structure of thesis}
