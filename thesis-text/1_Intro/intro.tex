@@ -1,31 +1,104 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
 \thispagestyle{myheadings}
-
-\section{Motivation}
-\label{sec:Motivation}
-In recent years, the ability to gather data has increased tremendously due to various sensory devices and the cheap cost of data storeage. Some examples of data gathering and generating sources are,
+In recent years, the ability to gather data has increased tremendously due to various sensory devices and the cheap cost of data storage. Some examples of data gathering and generating sources are:-
 \begin{itemize}
-\item \textbf{Finance}, Stock market, the continuous flow includes the price of any given stock at any time. 
-\item \textbf{Network Management}, Network administrators need to continuously monitor the traffic flow on their network as they need to help maintain a level of Quality of Service for their clients.
-\item \textbf{Healthcare}, Monitoring the vitals of the patients is an important and continuous process. 
-\item \textbf{National Security} Monitoring airspace, getting continuous information from various sources and inferring results form them.
+    \item \textbf{Finance}, Stock market, the continuous flow includes the price of any given stock at any time. 
+    \item \textbf{Network Management}, Network administrators need to continuously monitor the traffic flow on their network as they need to help maintain a level of Quality of Service for their clients.
+    \item \textbf{Healthcare}, Monitoring the vitals of the patients is an important and continuous process. 
+    \item \textbf{National Security} Monitoring airspace, getting continuous information from various sources and inferring results form them.
 \end{itemize} 
-For these examples it is clear that there exists a need to continously keep processing data stream and reporting back various statistics and any abnormality. But this continuous monitoring and reporting is difficult to do on tradiational Data Base Management Systems(DBMS). A different approach has to be adapted to meet the demands in various industries.
-\par Stream optimization in a certain sense is modification of the stream data to make the quering process faster. Few motivations for this include, to be able to make use of opportunities presented by faster calculation, mitiage risks before it is late, keeping the latest information readily available in understandable format.
+For these examples it is clear that there exists a need to continously keep processing data stream and reporting back various statistics and any changes.
+\par The increasingly complex nature of queries, high rate of data generation and the need to have answers quickly pose a challenge for many businesses. The global growth in traffic makes finding an appropriate approach to optimize query execution prohibitively difficult. This increased traffic puts tremendous amount of strain on network equipments and can often lead to developers having to make choice as to whether reduce the accuracy of the results or to reduce the number of times an answer is returned to the user.  
 
-\section{Research problem}
+
+\section{Deep reinforcement learning}
+Deep reinforcement learning is a mathematical model which is the combination of neural networks and reinforcement learning. Deep reinforcement learning can be thought of as a better version of traditional reinforcement learning, this better performance is achieved with the use of neural networks.
+\par Reinforcement learning can be thought of as playing a game $1$ move at a time and at each turn the player is required to make a move, the reinforcement learning model can tell the probability with which each move will lead to the optimal outcome based on the game.
+\par The simplicity and flexibility of reinforcement learning make it a very powerful too to tackle problems with. 
+\subsection{Applications}
+In recent time there are many applications of Deep reinforcement learning agents, few of which are:-
+\begin{itemize}
+    \item Self driving cars.
+    \item Training bots to play games.
+    \item Protien folding.
+    \item Online recommendation systems, e.g. youtube videos recommendation.
+\end{itemize}
+\subsection{Properties}
+It is clear that deep reinforcement learning has wide variety of appliations. There is tremendous amount of research being done in the area of deep reinforcement learning, hence we believe it to be a power tool to use. The most important aspect of deep reinforcement learning comes from the fact that they use deep neural networks. The following is the theorem which states the possibly accuracy neural networks can achieve if given enough examples.
+
+\par \textbf{Universal Approximation Theorem} ($L1$ distance, ReLU activation, arbitrary depth, minimal width). For any Bochner-Lebesgue $p-$integrable function $\mathbb{f}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ and andy $\epsilon>0$ there exists a fully-connected ReLU network $F$ width exactly $d_{m}=\text{max}\{n+1,m\}$ satisfying 
+$$\int_{\mathbb{r}^{m}}||\mathbb{f}(x)-F(x)||^{p}dx<\epsilon$$
+
+
+\subsection{Advantages}
+The approximation theorem essential means if given enough examples and time for training, the neural network can minimize the loss function to any degree near $0$. 
+
+
+\section{Research Problem}
 \label{sec:Problem at hand}
-\par The increase in data gathering capabilities and speed need to be accompanied with increase in speed at which data can be analysed. There are various challenged that come up when addressing this, such as High frequency of the updates and reporting, buffer overflows, overheads, context-switches during processing and many more.\\
-In tradiational database systems, queries are expanded and simplified using predetermined heuristics most of the query optimization methods do not look at the data itself and rather try to come up with a very general optimization which can be applied to any query.\\
-Finding the optimal method to execute a query is a difficult problem, it can be shown that finding optimal query execution plan is $NP-hard$. \\
-Our motivation to solve this problem is the use of static heuristics, we want to adapt a data driven approach. In this paper we try to detect trends in the data and help optimize quering using those and test our model on benchmark cases.\\
-This is not without it's own problems as many times an indepth look at the data might prove to be rather expensive. 
+Tradiational database management systems are designed to be efficient for solving queries on static data. They are unable to handle updates, deletion and change in the data very well, which is a rather common occurance in Data streams. The static dataset can be exploited to create various optimizations, these rules look at the schema of the data and the query being executed.\\
+DBMS also try to opitmize the query execution by calculating various statistics about the data and make heuristic decisions based on them.    
+\par Optimizing the query execution plan is a difficult problem and can be proven to be $NP-$hard, i.e. there is an exponentially large search space and there is no known way to navigate efficiently.\\
+Data stream management systems on the other hand, do not have all the data available at once, they only have a chunk of data available to work with, which is specificed using the window function. Data stream management systems are more complex by design as they have extra constraints. They often have multiple service quality metrics to meet, which puts additonal constrains on them such as\cite{stream_optimization} :-
+\begin{itemize}
+    \item Achieve the maximal performance using bounded amount of resources.
+    \item Be aware of the unexpected overload situations.
+    \item Guarantee user or application-specified QoS requirements for a query.
+    \item Be implemented easily, and run efficiently with a low overhead.
+\end{itemize}
+\par A large number of systems around the world are generating continuous streams of data. Additional hardware is not enough to scale for the needs for the high throughputs. The methods used by traditional database management systems are not scalable for data stream either. Whereas deep reinforcement learning is proven to be a powerful tool to help model and optimize various problems.
+\par Some of the problem which Data streams face compared to traditional static data are:-
+\begin{itemize}
+    \item The continuous nature of data streams. In many cases the data first needs to be preprocessed and only then can an optimizer use it.
+    \item Low latency is difficult to achieve. This is due to optimizer needing preprocessed data.
+    \item Gathering training data is difficult, training itself can be expensive.
+\end{itemize}
+
+\section{Proposed Solution}
+We propose a method to gather enough training data use it for training inorder to achieve low latency on queries.\\
+When enough data, as defined by the windowing function, is taken as input we execute the query with multiple query plans and records the time taken, the number of operations required to complete the execution and few statistics about the data which does not require to go over the data more than once.
+\par We use this gathered data for training a Deep reinforcement learning model, in order to predict the optimal query plan and help improve our latency for executing the query.  
+
+
+\section{Research Objective}
+The objective of this thesis is to act as a proof of concept for the application of Deep reinforcement learning for optimizing query plans for data streams. The proposed method should be general enough for its application to any other use case which can perhaps benefit from the use of deep reinforcement learning. In order to asses whether this method is useful, we will explore a query on linear road benchmark data set.
+\par  This can be captured in the following research question:-
+\begin{center}
+    \textbf{Is it possible to apply deep reinforcement learning to speed up query processing times.}
+\end{center}
 
 \section{Structure of thesis}
 \label{sec:Structure of thesis}
-The next chapter gives an in-depth view of the pipeline used by the current state of art technology for query optimization in traditional data bases including the mathematical knowledge for simplification and the overall framework. The next chapter also introduces the reader to data stream and how data bases are used for them called DSMS and showcases an approach to optimize queries on data streams for the problem discusses above. The following chapter list out the details of implementation, challenges face, evaulation methods used, benchmark test case timings, followed by a summary of the paper.
+The overall structure of the thesis chapter wise is as follows:-
+\begin{itemize}
+    \item $2^{nd}$:- Gives an in-depth view of the pipeline used by the current state of art technology for query optimization in traditional data bases including the mathematical knowledge for simplification and the overall framework.
+    \item $2^{nd}$:- Introduces the reader to data stream and how data management systems are used for them (called DSMS). We also explain few challenges DSMS face.
+    \item $2^{nd}$:- Introduced the reader to the mathematics required for Deep reinforcement learning and over the algorithm for DQN.
+    \item $3^{rd}$:- Introduce the reader to stream optimization.
+    \item $3^{rd}$:- Look at linear road, $2$ of its queries and few query plans for them.
+    \item $4^{th}$:- Show how linear road data is generated and explain the schema for it.
+    \item $4^{th}$:- Present our implementation to mimic execution of SQL queries.
+    \item $4^{th}$:- Present the code our code for deep reinforcement learning.
+    \item $5^{th}$:- Present the assumption we made for our deep reinforcement learning and justification.
+    \item $5^{th}$:- Present our results and limitations.
+    \item $6^{th}$:- Present the summary of the thesis and provide ideas for further work.
+\end{itemize}
 
 \section{Conclusion}
 \label{sec:Conclusion}
-With the help of this thesis, we hope to understand how query processing works in Data base management systems, the challenges they face, the way Data Stream Management Systems work, their challenges. We also propose a method for query optimization which will look at windows of data(defined later in the paper). The optimizations for the quering process will be tested against various test cases and compared with existing algorithms.
+In this chapter we introduced the reader to:-
+\begin{itemize}
+    \item Challenges of inner workinngs of SQL. 
+    \item How Data streams are managed.
+    \item General idea of a Deep reinforcement learning agent, its properties and advantages.
+    \item The outline of this thesis.
+\end{itemize}
+In the next chapter we:-
+\begin{itemize}
+    \item Present how SQL works in DBMS.
+    \item We introduce the reader to stream processing.
+    \item Give an outline of how Deep learning works.
+    \item Give an outline of how Reinforcement learning works.
+    \item Show how Deep learning and Reinforcement learning combines to give rise to DQNs.
+\end{itemize}
