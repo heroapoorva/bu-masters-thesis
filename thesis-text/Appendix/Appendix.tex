@@ -583,3 +583,93 @@ def reinforcement_learning(fin_train,save_loc,epoch_number):
         analysis(ans,y2_te)
 \end{lstlisting}
 
+\begin{lstlisting}[language=SQL, caption= Inline function template, label={lst:inlineFunctionSyntax}]
+SET QUOTED_IDENTIFIER ON
+SET ANSI_NULLS ON
+GO
+
+CREATE FUNCTION dbo.<inline_function_name, sysname, udf_> (
+<@parm1, sysname, @p1> <parm1_data_type, , int> -- <parm1_description, ,>
+, <@parm2, sysname, @p2> <parm2_data_type, , int> -- <parm2_description, ,>
+, <@parm3, sysname, @p3> <parm3_data_type, , int> -- <parm3_description, ,>
+)   RETURNS TABLE
+    WITH SCHEMABINDING -- Or relevant comment.
+/*
+* description goes here
+* Related Functions:
+* Attribution: Based on xxx by yyy found in zzzzzzzzzzzzz
+* Maintenance Notes:
+* Example:    
+
+select * FROM dbo.<inline_function_name, sysname, udf_>
+    (<parm1_test_value, , 1>, <parm2_test_value, , 2>, <parm3_test_value, , 3>)
+* Test:
+* Test Script: TEST_<inline_function_name, sysname, udf_>
+* History
+* When         Who     Description
+* ------------- ------- -----------------------------------------
+* <date created,smalldatetime, YYYY-MM-DD>             <your initials,char(8), XXX>
+Initial Coding
+****************************************************************/
+AS RETURN
+
+SELECT
+    FROM
+    WHERE
+    GROUP BY
+    HAVING
+    ORDER BY
+GO
+
+GRANT SELECT ON [dbo].[<inline_function_name, sysname, udf_>]
+    TO [PUBLIC]
+-- GRANT INSERT, UPDATE, DELETE ON
+--        [dbo].[<inline_function_name, sysname, udf_>]  TO [PUBLIC]
+GO
+\end{lstlisting}
+
+
+\begin{lstlisting}[language = SQL, caption = Multistatement UDF template, label={lst:multistatementudf}]
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE FUNCTION dbo.<table_function_name, sysname, udf_> (
+    <parm1, sysname, @p1> <parm1_data_type, , int> -- <parm1_description, ,>
+  , <parm2, sysname, @p2> <parm2_data_type, , int> -- <parm2_description, ,>
+  , <parm3, sysname, @p3> <parm3_data_type, , int> -- <parm3_description, ,> 
+)   RETURNS TABLE (
+    <col1_Name, , [ID]>   <col1_Type, ,int>-- <col1_description, ,>
+    , <col2_Name, , [Desc]> <col2_Type, ,int>-- <col2_description, ,>
+    , <col3_Name, , [xxxx]> <col3_Type, ,int>-- <col3_description, ,>
+    , PRIMARY KEY (<col1_Name, , [ID]>)
+        )
+WITH SCHEMABINDING -- Or comment about why not
+/*
+* description goes here
+* Related Functions:
+* Attribution: Based on xxx by yyy found in zzzzzzzzzzzzz
+* Maintenance Notes:
+* Example:
+    SELECT * FROM dbo.<table_function_name, sysname, udf_>(<value_for_@param1, , 1>,
+    <value_for_@param2, , 2>, <value_for_@param3, , 3>)
+    * Test Script: TEST_<table_function_name, sysname, udf_>
+    * History:
+    * When         Who     Description
+    * ------------- ------- -----------------------------------------
+    * <date created,smalldatetime, mm/dd/yy>             <your initials,char(8), XXX>
+    Initial Coding
+    ****************************************************************/
+    AS BEGIN
+    
+    DECLARE
+    
+    RETURN
+    END
+    GO
+    
+    GRANT SELECT ON [dbo].[<table_function_name, sysname, udf_>]
+        TO [PUBLIC]
+    GO
+\end{lstlisting}

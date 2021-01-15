@@ -17,20 +17,6 @@ A database can be thought of as a list of tables, where in each table itself can
 \end{lstlisting}
 This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer.
 
-\section{User defined function}
-User defined functions can be used to write SQL queries. Like any function in object oriented programming, UDF in SQL accept parameters of certain types as input and returns an output. These can help write queries quickly. UDFs can be modified independently of any other code.\\
-SQL has the following types of UDFs:-
-\begin{itemize}
-    \item \textbf{Scalar functions}:- As the name suggests, the output is scalar, in the sense it is $1D$, only a single value is output. These functions always have a return clause in them. These functions traditionally do not provide high performance.
-    \item \textbf{Multi-statement table-valued functions}:- The syntax for these functions is similar to scalar fucntions, but these do allow for multiple outputs. The functions also do not provide high performance due to inner implementation.
-    \item \textbf{Inline table-valued functions}:-
-\end{itemize}
-  
-\subsection{Scalar}
-\subsection{Multi Statement}
-\subsection{Inline}
-
-
 \section{Converting SQL queries to parse trees}
 The exact grammar for the convertion to parse tree is not listed below. But this step isn't simply conversion to a parse tree, the preprocessor which does the conversion also has several more functions.
 \par For example, if the SQL query uses a "view" in the query as a relation, then each instance has to be replaced by the parse tree.
@@ -374,6 +360,53 @@ Our final topic regarding physical query plans is the matter of order of oper­a
     \item Order the execution of the subtrees in a bottom-up, left-to-right manner. To be precise, perform a preorder traversal of the entire tree. Order the subtrees in the order in which the preorder traversal exits from the subtrees.
     \item Execute all nodes of each subtree using a network of iterators. Thus, all the nodes in one subtree are executed simultaneously, with GetNext calls among their operators determining the exact order of events.
 \end{itemize}
+
+\section{User defined function}
+User defined functions can be used to write SQL queries. Like any function in object oriented programming, UDF in SQL accept parameters of certain types as input and returns an output. These can help write queries quickly. UDFs can be modified independently of any other code.\\
+SQL has the following types of UDFs:-
+\begin{itemize}
+    \item \textbf{Scalar functions}:- As the name suggests, the output is scalar, in the sense it is $1D$, only a single value is output. These functions always have a return clause in them. These functions traditionally do not provide high performance. 
+    \item \textbf{Inline table-valued functions}:- These functions are optimized for performance.
+    \item \textbf{Multi-statement table-valued functions}:- The syntax for these functions is similar to scalar fucntions, but these do allow for multiple outputs. The functions also do not provide high performance due to inner implementation.
+   
+\end{itemize}
+In either of the above mentioned $3$ types, no changes to the data base can be made, e.g. no new tables can be created and only a certain amounts of manipulating syntax is allowed.
+
+\subsection{Scalar}
+Scalar functions are created using the syntax \textbf{CREATE FUNCTION}. They are deleted using the syntax \textbf{DELETE FUNCTION}. Functions can be modified using the syntax \textbf{ALTER FUNCTION}. Note, a restriction on Scalar functions is that they can not modify databases. An oversimplified way of looking at working of Scalar functions is:-
+\begin{itemize}
+    \item Take 0 or more arguments as input.
+    \item Do computations based on the program written.
+    \item Return as output a single scalar value.
+\end{itemize}
+The general syntax for a UDF is as follows:-
+\begin{lstlisting}[language=SQL, caption= Scalar function syntax]
+CREATE  FUNCTION [owner_name.]function_nam
+    ([{@parameter_name[AS]scalar_parameter_data_type[=default]}[ ,...n ])
+RETURNS scalar_return_data_type
+[ WITH < function_option> [ [,] ...n] ]
+[ AS ] BEGIN
+    function_body
+    RETURN scalar_expression
+END
+\end{lstlisting} 
+Function body normally contain control-of-flow statements and cursors, these are detrimental to the performance of the query and slow the execution down a lot.
+\par When a Scalar UDF is used, the optimizer does not account for the cost of this function and treats it like a black box whereas it actually has some cost, there is a memory and time requirement. This not accounting for the costs of scalar functions lead to bad plans.
+\par The Scalar UDF is treated as multiple different queries, so the queries written inside as executed one after another, so each statement has an independent execution plan which does not account for previous or next statement.
+\par Scalar UDF also makes the system unable to run things in parallel.
+
+\subsection{Inline}
+\cite{tsql} Inline UDFs are a form of SQL view that accepts parameters. The param-eters are usually used in theWHEREclause to restrict the rows returned,but they can also be used in other parts of the UDF’sSELECTstatement.Inline UDFs can be convenient, but they don’t have all the features avail-able to views.
+\par \cite{tsql} The essential fact of inline UDFs is that they are a type of view, one that allows for parameters that can be used in the single SELECT statement that makes up the body of the inline UDF. Note, a inline UDF is very similar to view.\\
+The general syntax for a UDF is as given in \ref{lst:inlineFunctionSyntax}
+
+\subsection{Multi Statement}
+Multi statement UDFs are a useful hybrid of a scalar and inline UDF. They return a table that is constructed by the T-SQL script in the body of the function. Multistatement UDFs can’t execute stored procedures norcan they create or reference temporary tables or generate any messages. Their communication options are limited by design\cite{tsql}.\\
+The lack of side effects is one of the features of multistatement UDFsthat distinguish them from stored procedures. In many ways, they are similar to a stored procedure that returns a single result set. If you can live with the restrictions, including the restriction on calling stored procedures, a multistatement UDF is a good substitute for a procedure.The lack of side effects improves the maintainability of the code. The primary reason for using a multistatement UDF instead of aninline UDF is the need for the program logic in the function body\cite{tsql}. The general syntax for Multistatement UDFs is given there\ref{lst:multistatementudf}
+
+\subsection{Effects on Optimization}
+Overall these functions can be treated as black box operations as they have various restrictions on them which normal SQL operators don't. There is no internal optimization for them, but rather consider them as a separate operator and decide when to execute them.
+\par There is a lot of research currently being done on UDF \cite{froid}, \cite{ramachandra2019blackmagic}, \cite{gupta2020aggify}, these have improved the runtimes of Scalar UDF by huge amounts.
 
 \section{Introduction to Data Streams}
 A \textbf{Data Stream} can be thought of as a continuously generated never ending sequence of data. For example, network logistics, healthcare monitoring information, security cameras, all of these continuously produce data, these data sequences/ streams are crucial to their respective users/ organisations, realtime detection of anomally, pattern or changes thereof, or any other type of analytics is in need currently.
