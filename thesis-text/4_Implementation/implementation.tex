@@ -5,7 +5,7 @@
 % set this to the location of the figures for this chapter. it may
 % also want to be ../Figures/2_Body/ or something. make sure that
 % it has a trailing directory separator (i.e., '/')!
-\graphicspath{}
+\graphicspath{{./4_Implementation/}}
 This chapter explores the setup required to conduct the experiments. The chapter is divided into 
 \begin{itemize}
 \item Data Generation:- We generate the data stream for the Linear road benchmark.
@@ -194,26 +194,47 @@ When this order is executed, the time taken is $175067$ mircoseconds and the num
 \par The fact that the number of operations remains same but the time required changes is due to the internal scheduling by the kernel.
 
 \section{Deep Reinforcement Learning}
-Now the data for Deep reinforcement learning is stored and ready to be used.
+The input for $MDP$ is of the format $(S,A,S^{*},R)$. But as this game is $1$ move game, all tuples will have $S^{*}=s_{f}$. When trying to understand a Deep reinforcement learning model, the things one needs to understand about the model are:-
+\begin{itemize}
+    \item Actions allowed
+    \item State space
+    \item Transition function
+    \item The reward system
+    \item The assumptions made along the way
+\end{itemize}
 
-\subsection{MDP input}
-Note after selecting an order and executing the query with the selected order, we finish the "game".\\
-Remember the input for $MDP$ is of the format $(S,A,S^{*},R)$. But as this game is $1$ move game, all tuples will have $S^{*}=s_{f}$
+The following diagram helps visualize a DQN framework \ref{fig:dqn}. The code for the DQN is given here \ref{lst:DQN}\\
+\begin{figure}
+\caption{Deep Reinforcement learning framework}
+\label{fig:dqn}
+\centering
+\includegraphics[scale=0.3]{DQN.png}\\
+\end{figure}
 
-\subsection{States}
-The input for a DQN is of the format 
-$$(X_{i},Y_{i})_{i\in[n]}, \text{where} X_{i}\in \mathbb{R}^{m}, Y_{i}\in \mathbb{R}$$
-For $Y_{i}$ we use the number of operations required.\\
-For $X_{i}$ we use a concatenation of entropy vector, size vector and the $1-$hot encoding of the move.
-
-\subsection{1-hot encoding}
-Consider the set of permutations of $\{0,1,2,3\}$, we can order them lexicgraphically.\\
+\subsection{Actions Allowed}
+The actions in this scenario, that is the DQN model, is the ordering of the operations we choose to execute. That is, we have $4 = 24$ possible actions on any given input. These are constructed using all possible permutations of $\{0,1,2,3\}$. We then transform this information into 1 hot encoding for ease of use.
+\par Consider the set of permutations of $\{0,1,2,3\}$, we can order them lexicgraphically.\\
 Given a permutation $\mathbb{P}$, it will have a rank $r$ in the ordering.\\
 To convert the permutation into a $1$hot encoding, start with a $24$ element vector $v$ with all $0$s.Then update 
 $$v[r]=1$$
-\ref{lst:DQN}
 
-\subsection{Assumption}
+\subsection{State Space}
+We want the information extracted, i.e. the column wise entropy and the size of the relations, to represent the current state of the environment. Hence, any state is going to be represented as a vector of length $10$, the first $8$ are the column wise entropy and the $9^{th},10^{th}$ are the sizes of the two relations.\\
+Note the makes the image of the state space to be a subset of $\mathbb{R}^{10}$. But as entropy is never going to be $0$ and so won't the size of the relations, we can trim it down to $(0,\infty)^{10}$ which is a continuous space.
+\par \cite{DNN_for_stream} Discretization is a process that divides numeric features into categorical  ones  using  intervals.   Depending  on  the  application and predictive model being used, discretization can bring several benefits, including faster computation time as discrete variables are usually easier to handle compared to numeric ones; and decreases the chances of overfitting since the feature space becomes less complex. Targeting feature discretization from data streams, a significant milestone was the Partition Incremental Discretization algorithm (PiD)\cite{Pinto2005PartitionID}. While we have not used PiD, it is a powerful tool. PiD discretizes numeric features in two  layers.   The  first  layer  is  responsible  for  computing  a high number of intervals given the arriving data, while the second uses the statistics calculated in the first layer to compute equal frequency partitions.
+
+\subsection{Reward System}
+The reward system being used currently is simply taking the number of operations and time required(in micro seconds) as the reward. A more complex state will be when the rewards are not readily available, then another method can be applied as shown in \cite{know_unknown_rewards}.\\
+In traditional Q-learning, there is a discount factor involved to discount the moves done later on in the sequence of the game and there is a utility function involved to calculate the utility of each move for each state. The goal of the system is to maximize the expected utility.\\
+As the game is a single move game, there is no discounting factor involved neither is a utility function required. We can use the negative of time required or the number of moves required to maximize or minimize with te current positive values. We chose to minimize the positive values.
+
+\subsection{Transition function}
+The transition function is the DQN, i.e. the reward determining system, along with the move choosing method. \\
+The DQN will output a list of reward, which corresponds to the $24$ moves. Then to choose the optimal action based on reward, we simply scan a chunk of $24$ continuous rewards and associate them to moves.\\
+As the game is a single state game, the model of DQN becomes rather simple, and makes it not necessary to choose a discount factor nor do we need to include it into the transition model.\\ 
+The method to choose the optimal move is described in the next chapter formally.
+
+\subsection{Assumptions}
 Note the amount of information, features extracted from the querying do not fully represent the data set our Neural network can't perform very well. To tackle this, we look at whether the shift in the predicted rewards is similar cross all the moves.\\
 Then given data points $(x_{i},y_{i}),(x_{j},y_{j})$ and the DQN $Q_{\theta}$ the condition to check becomes:-
 $$y_{i}\leq y_{j}\Rightarrow Q_{\theta}(x_{i})\leq Q_{\theta}(x_{j})$$

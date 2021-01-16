@@ -37,7 +37,8 @@ We hope the material in this thesis is sufficient for anyone to understand the c
 This thesis proposed a method for optimization of query execution on data stream and provided a demo implementation for experimentation. There are still many areas which can be improved and developed further.
 
 \subsection{Data Generation}
-As shown in chapter $5$, the data generated is highly biased. A source producing more diverse data and a query on that may lead to more interesting results. Real world data stream can be used to get better variety in the data and take input via different methods.
+As shown in chapter $5$, the data generated is highly biased, there are ways to try to tackle it\cite{Losing2018IncrementalOL}. \cite{DNN_for_stream} Imbalanced datasets are characterized by one class outnum-bering the instances of the other one. The later is referred to as the minority class, while the former is identified as  the  majority class. These concepts can be generalized to  multi class classification  and  other  learning  tasks,  e.g.,regression.  The  imbalance  may  be  inherent  to  the problem (intrinsic) or caused by some fault in the data acquisition (extrinsic).  Learning from imbalanced datasets is challenging as most learning algorithms are designed to optimize for generalization, and as a consequence, the minority class may be completely ignored.
+\par A source producing more diverse data and a query on that may lead to more interesting results. Real world data stream can be used to get better variety in the data and take input via different methods.
 \par Some examples of data generators are :-
 \begin{itemize}
     \item A real-estate website tracks a subset of data from consumers’ mobile devices and makes real-time property recommendations of properties to visit based on their geo-location.\cite{data_source}
