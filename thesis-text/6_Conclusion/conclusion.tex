@@ -38,16 +38,42 @@ This thesis proposed a method for optimization of query execution on data stream
 
 \subsection{Data Generation}
 As shown in chapter $5$, the data generated is highly biased. A source producing more diverse data and a query on that may lead to more interesting results. Real world data stream can be used to get better variety in the data and take input via different methods.
+\par Some examples of data generators are :-
+\begin{itemize}
+    \item A real-estate website tracks a subset of data from consumers’ mobile devices and makes real-time property recommendations of properties to visit based on their geo-location.\cite{data_source}
+    \item A solar power company has to maintain power throughput for its customers, or pay penalties. It implemented a streaming data application that monitors of all of panels in the field, and schedules service in real time, thereby minimizing the periods of low throughput from each panel and the associated penalty payouts. \cite{data_source}
+    \item A media publisher streams billions of clickstream records from its online properties, aggregates and enriches the data with demographic information about users, and optimizes content placement on its site, delivering relevancy and better experience to its audience.\cite{data_source}
+    \item An online gaming company collects streaming data about player-game interactions, and feeds the data into its gaming platform. It then analyzes the data in real-time, offers incentives and dynamic experiences to engage its players.\cite{data_source}
+\end{itemize}
 
 \subsection{Data Storage}
-Currently, for executing the query, we store data in vectors where as SQL uses B-trees, a change like this can impact the time required for query execution and then lead to a different learnd model if the time of execution is used as reward.\\
-On a further note data storage on systems like AWS S3 buckets, filesystems like Hadoop, hdfs and others can lead to changes in time of execution as well.
+As demonstrated in the implementation chapter, currently for executing the query, we store data in vectors. SQL systems use B-Trees which are cache optimized, this can reduce the runtime by huge margin. The choice of data storage, method of access and the target used for reinforcement learning can lead to a variety of learnt models.
+\par Few considerations that can lead to changes are:-
+\begin{itemize}
+    \item Use of B-trees to improve runtime and access time.
+    \item Use of filesystems such as AWS S3 bucket, Google Cloud Platform can affect memory access time.
+    \item In cloud storage, the amount of traffic can often lead to delays, so the network setup is also a factor to consider.
+    \item An experiment time requirements for query execution with various types of filesystems(HDFS, NTFS, EXT2, EXT3, EXT4, XFS, ZFS, BTRFS) can be done. 
+\end{itemize} 
 
 \subsection{Features extraction}
-The current features only include the entropy of the columns and the size of the tables. Whereas in traditional SQL with a static database(relatively) a lot more features of generally extracted. Better starting feature can perhaps lead to a better results. 
+The idea behind the feature extraction was to have a fixed sized vector for the input to the neural network. Entropy is a measure of information and using the entropy itself in the neural network results in a loss of information. So different feature extractions can lead to better results. One method that can be used is:-
+\begin{itemize}
+    \item For each column, we replace the entropy with a vector of $i+1$ numbers, which represents the normalized frequency of the $i$ most frequent elements and the last one is the entropy.
+\end{itemize}
+This method will allow for more information about the data to be passed on to the neural network and to get better training results.
+
 
 \subsection{Deep Reinforcement Learning}
-The Deep reinforcement learning model used was rather simplfied due to the less number of moves and convert the game into a single step game. Further intensive state, action and reward tuples can be constructed to get better intermediate rewards and policies. 
+The Deep Reinforcement Learning model used was simplified, in the sense that it was a $1$ move game. We start with a given state and can execute any of the $24$ possible operations orders and we end the game in the final state and report the time of execution and number of operations required.
+\par A better reinforcement learning model as created here\cite{drl_dbms} can be used, it represent the transition, the state changes and more information is passed along and helps train a better model. It is important to note the initial training time and memory requirement are not system breaking, it is the online learning part which needs to be efficient
 
-\subsection{Integration} 
-The learnt DQN can be integrated with an actual stream processing system and tested in full for scalability, reliability and more. Need to note that there is a speedup by number of operations, the runtime due to various other network constraints might have a different result. 
+\subsection{Integration}
+As mentioned, the code implemented in the thesis is meant to serve as a proof of concept. The code presented mimics the execution of a SQL query on a very high level. A system can be developed which:-
+\begin{itemize}
+    \item Parses text in the for of SQL query and convert it into actual SQL query.
+    \item Applied various optimizations used in a SQL server.
+    \item Additionally give the option to use custom optimizer at various levels to test of various implementation.
+    \item Helps scalability, improves reliability and resilience.
+    \item Gives options to input various evaluation metrics.
+\end{itemize}
