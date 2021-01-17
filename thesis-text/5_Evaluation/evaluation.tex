@@ -6,6 +6,7 @@
 % also want to be ../Figures/2_Body/ or something. make sure that
 % it has a trailing directory separator (i.e., '/')!
 \graphicspath{{./5_Evaluation/}}
+
 \section{Optimality checking}
 Now we have learnt a model $Q_{\theta}$, we also have our test cases $\{(x_{i},y_{i})\}_{i\in[n]}$.\\
 Each data window corresponds to $24$ data entries. The $t^{th}$ window corresponds to 
@@ -145,16 +146,40 @@ A label based analysis is obtained by using $"\text{metrics.classification\_repo
    macro avg      0.084     0.089     0.084     27681
 weighted avg      0.461     0.462     0.461     27681
 \end{lstlisting}
-\section{Limitations}
+
+\section{Discussion}
+\cite{DNN_for_stream} Learning from data streams is a continuous process. The learning systems that act in dynamic environments, where working conditions change and evolve, need to monitor their working conditions. They need to monitor the learning process  for change detection, emergence of novel classes, changes in the relevance of features, changes in the optimal parameters  settings, and others.\\
+We divide this section into the following parts:-
+\begin{itemize}
+    \item \textbf{Interpretations} We will interpret the above stated results and see what they mean.
+    \item \textbf{Implications} Why do these results matter and what can they lead to.
+    \item \textbf{Limitations} the limitations we experienced in the experiments carried out in this thesis.
+\end{itemize}
+
+
+\subsection{Interpretations}
+Despite the biased input data classes, the final strategy we got from the DQN gave us a performance of $101\%$ of the optimal solution, we can safely say, DQN have proved to be useful in this case. The successive epoches of DQN also can be seen to improve the results via the diagram.\\
+But contrary to the expected result, the number of data points for which we were able to predict to optimal move correctly are roughly $48\%$, the lack of accuracy across the $24$ classes is concerning which can perhaps be addressed to the lack of features used in training the DQN.\\
+Overall the improvement of optimal strategy selection is inline with the powerful nature of deep neural networks and iterative nature of reinforcement learning. The high amount of data available from data streams can definitely be a huge plus point for online training methods for DQN for query optimization.\\
+
+
+\subsection{Implications}
+The fact that the application of DQN improved performance by to such a margin, serves to prove that DQNs can be applied in at least some cases for optimizing queries on data stream. \cite{drl_dbms} Showcases method for using DQN for query optimization on  static data and we use it as an motivation to apply it on data streams.  \\
+This makes a strong case for further work in this field, application of deep reinforcement learning to optimize query processing on stream data, to explore more SQL like implementation and integration of the DQN model along with online learning feature.\\
+As we saw in this experiment, we achieved a model which tells us an strategy for ordering which requires only $1\%$ more operations than the optimal ordering. Application of DQN on other queries can similarly provide a huge speed up and perhaps reduction in resources consumed. \\
+\cite{drl_dbms}It is popular in recent AI research to try end-to-end learning, where problems that were traditionally factored into subproblems (e.g., self-driving cars involve separate modelsfor localization, obstacle detection and lane-following) are learned in a single unified model. One can imagine a similar architectural ambition for an end-to-end learning query optimizer, which simply maps subplan features to measured runtimes. Thiis would require a significant corpus of run-time data to learn from, and changes to the featurization and perhaps the deep network structure we used here. DQ is a pragmatic middle ground that exploits the structure of the join optimization problem. 
+
+\subsection{Limitations}
 The work presented in this thesis has a number of limitations.
 \begin{itemize}
     \item The neural network is unable to achieve low loss for the test data, this perhaps speak the the lack of features extracted during the querying time.
     \item The data sample we have is highly biased, leading to rather baised DQNs.
+    \item The entire method need to be parallelized and set up on a scalable infrastructure to see the actual effects of DQN.
     \item The DQN used is simulating a single move game rather than a multi move game.
+    \item Not looked at how DQNs can be trained online.
 \end{itemize}
 
-\section{Discussion}
-\cite{DNN_for_stream} Learning  from  data  streams  is  a  continuous  process.   The learning systems that act in dynamic environments, where working conditions change and evolve, need to monitor their working  conditions.    They  need  to  monitor  the  learning process  for  change  detection,  emergence  of  novel  classes, changes in the relevance of features, changes in the optimal parameters  settings,  and  others.
+
 \section{Conclusion}
 In this chapter we saw :-
 \begin{itemize}
