@@ -6,17 +6,17 @@ In recent years, the ability to gather data has increased tremendously due to va
     \item \textbf{Finance}, Stock market, the continuous flow includes the price of any given stock at any time. 
     \item \textbf{Network Management}, Network administrators need to continuously monitor the traffic flow on their network as they need to help maintain a level of Quality of Service for their clients.
     \item \textbf{Healthcare}, Monitoring the vitals of the patients is an important and continuous process. 
-    \item \textbf{National Security} Monitoring airspace, getting continuous information from various sources and inferring results form them.
+    \item \textbf{National Security} Monitoring airspace, getting continuous information from various sources and inferring results from them.
 \end{itemize} 
-For these examples it is clear that there exists a need to continously keep processing data stream and reporting back various statistics and any changes.
-\par The increasingly complex nature of queries, high rate of data generation and the need to have answers quickly pose a challenge for many businesses. The global growth in traffic makes finding an appropriate approach to optimize query execution prohibitively difficult. This increased traffic puts tremendous amount of strain on network equipments and can often lead to developers having to make choice as to whether reduce the accuracy of the results or to reduce the number of times an answer is returned to the user.  
+For these examples, it is clear that there exists a need to continuously keep processing data stream and reporting back various statistics and any changes.
+\par The increasingly complex nature of queries, high rate of data generation, and the need to have answers quickly pose a challenge for many businesses. The global growth in traffic makes finding an appropriate approach to optimize query execution prohibitively difficult. This increased traffic puts a tremendous amount of strain on network equipments and can often lead to developers having to make choice as to whether reduce the accuracy of the results or to reduce the number of times an answer is returned to the user.  
 
 \section{Deep reinforcement learning}
-Deep reinforcement learning is a mathematical model which is the combination of neural networks and reinforcement learning. Deep reinforcement learning can be thought of as a better version of traditional reinforcement learning, this better performance is achieved with the use of neural networks.
+Deep reinforcement learning is a mathematical model that is the combination of neural networks and reinforcement learning. Deep reinforcement learning can be thought of as a advanced version of traditional reinforcement learning, this better performance is achieved with the use of neural networks.
 \par Reinforcement learning can be thought of as playing a game $1$ move at a time and at each turn the player is required to make a move, the reinforcement learning model can tell the probability with which each move will lead to the optimal outcome based on the game.
-\par The simplicity and flexibility of reinforcement learning make it a very powerful too to tackle problems with. 
+\par The simplicity and flexibility of reinforcement learning make it a very powerful tool to tackle problems with. 
 \subsection{Applications}
-In recent time there are many applications of Deep reinforcement learning agents, few of which are:-
+In recent time there are many applications of Deep reinforcement learning agents, a few of which are:-
 \begin{itemize}
     \item Self driving cars.
     \item Training bots to play games.
@@ -24,7 +24,7 @@ In recent time there are many applications of Deep reinforcement learning agents
     \item Online recommendation systems, e.g. youtube videos recommendation.
 \end{itemize}
 \subsection{Properties}
-It is clear that deep reinforcement learning has wide variety of appliations. There is tremendous amount of research being done in the area of deep reinforcement learning, hence we believe it to be a power tool to use. The most important aspect of deep reinforcement learning comes from the fact that they use deep neural networks. The following is the theorem which states the possibly accuracy neural networks can achieve if given enough examples.
+It is clear that deep reinforcement learning has a wide variety of applications. There is a tremendous amount of research being done in the area of deep reinforcement learning, hence we believe it to be a powerful tool to use. An important aspect of deep reinforcement learning comes from the fact that they use deep neural networks. The following is the theorem that states the possible accuracy neural networks can achieve if given enough examples.
 
 \par \textbf{Universal Approximation Theorem} ($L1$ distance, ReLU activation, arbitrary depth, minimal width). For any Bochner-Lebesgue $p-$integrable function $\mathbb{f}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ and andy $\epsilon>0$ there exists a fully-connected ReLU network $F$ width exactly $d_{m}=\text{max}\{n+1,m\}$ satisfying 
 $$\int_{\mathbb{r}^{m}}||\mathbb{f}(x)-F(x)||^{p}dx<\epsilon$$
@@ -36,13 +36,13 @@ The approximation theorem essential means if given enough examples and time for 
 
 \section{Research Problem}
 \label{sec:Problem at hand}
-Tradiational database management systems are designed to be efficient for solving queries on static data. They are unable to handle updates, deletion and change in the data very well, which is a rather common occurance in Data streams. The static dataset can be exploited to create various optimizations, these rules look at the schema of the data and the query being executed.\\
-DBMS also try to opitmize the query execution by calculating various statistics about the data and make heuristic decisions based on them.    
+Traditional database management systems are designed to be efficient for solving queries on static data. They are unable to handle updates, deletion, and change in the data very well, which is a rather common occurrence in Data streams. The static dataset can be exploited to create various optimizations, these rules look at the schema of the data and the query being executed.\\
+DBMS also tries to optimize the query execution by calculating various statistics about the data and make heuristic decisions based on them.    
 \par Optimizing the query execution plan is a difficult problem and can be proven to be $NP-$hard, i.e. there is an exponentially large search space and there is no known way to navigate efficiently.\\
-Data stream management systems on the other hand, do not have all the data available at once, they only have a chunk of data available to work with, which is specificed using the window function. Data stream management systems are more complex by design as they have extra constraints. They often have multiple service quality metrics to meet, which puts additonal constrains on them such as\cite{stream_optimization} :-
+Datastream management systems, on the other hand, do not have all the data available at once, they only have a chunk of data available to work with, which is specified using the window function. Datastream management systems are more complex by design as they have extra constraints. They often have multiple service quality metrics to meet, which puts additional constraints on them such as \cite{stream_optimization} :-
 \begin{itemize}
     \item Achieve the maximal performance using bounded amount of resources.
-    \item Be aware of the unexpected overload situations.
+    \item Be aware of unexpected overload situations.
     \item Guarantee user or application-specified QoS requirements for a query.
     \item Be implemented easily, and run efficiently with a low overhead.
 \end{itemize}

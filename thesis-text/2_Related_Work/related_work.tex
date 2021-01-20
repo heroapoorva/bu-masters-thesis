@@ -24,7 +24,7 @@ The exact grammar for the convertion to parse tree is not listed below. But this
 
 
 \section{Relational algebra}
-As we saw above, order of operations matters, if the order of operations is not thoughtout and done blindly alot of redundant steps are executed and memory is moved around unnecessarily. There are few ways to atleast look and analyse the operations and how they can be simplied.
+As we saw above, order of operations matters, if the order of operations is not thoughtout and done blindly alot of redundant steps are executed and memory is moved around unnecessarily. There are few ways to atleast look and analyse the operations and how they can be simplied.\cite{dbms}
 \par Let \textsc{R,S} be relations. Some simple laws, associativity and commutativity can easily be verified:-
 \begin{itemize}
     \item $R\times S = S \times R$
@@ -353,7 +353,7 @@ The results of binary operations can also be pipelined. We use one buffer to pas
     \item An anticipated number of buffers the operation will require.
 \end{itemize}
 \subsection{Ordering of Physical Operations}
-Our final topic regarding physical query plans is the matter of order of oper­ations. The physical query plan is generally represented as a tree, and trees imply something about order of operations, since data must flow up the tree.However, since bushy trees may have interior nodes that are neither ancestors nor descendants of one another, the order of evaluation of interior nodes may not always be clear. Moreover, since iterators can be used to implement opera­tions in a pipelined manner, it is possible that the times of execution for various nodes overlap, and the notion of "ordering" nodes makes no sense. 
+Our final topic regarding physical query plans is the matter of order of oper­ations. The physical query plan is generally represented as a tree, and trees imply something about order of operations, since data must flow up the tree. However, since bushy trees may have interior nodes that are neither ancestors nor descendants of one another, the order of evaluation of interior nodes may not always be clear. Moreover, since iterators can be used to implement opera­tions in a pipelined manner, it is possible that the times of execution for various nodes overlap, and the notion of "ordering" nodes makes no sense. 
 \par If materialization is implemented in the obvious store-and-later-retrieve way, and pipelining is implemented by iterators, then we may establish a fixed se­quence of events whereby each operation of a physical query plan is executed.The following rules summarize the ordering of events i m pl icit in a phy sical query-plan tree:
 \begin{itemize}
     \item Break the tree into subtrees at each edge that represents materialization. The subtrees will be executed one-at-a-time.
@@ -451,8 +451,11 @@ The goal then reduces to finding parametrize $h_{\theta}$ and finding the $\thet
 \par At the end the problem is still reduced to finding parameters which minimize the loss and hence can solved using gradient descent and similar methods, but it is much more computationa intense.
 
 \section{Reinforcement Learning}
+Reinforcement learning (RL) is an area of machine learning concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward. Reinforcement learning is one of three basic machine learning paradigms, alongside supervised learning and unsupervised learning.
+\par Reinforcement learning differs from supervised learning in not needing labelled input/output pairs be presented, and in not needing sub-optimal actions to be explicitly corrected. Instead the focus is on finding a balance between exploration (of uncharted territory) and exploitation (of current knowledge).
+\par Reinforcement learning has been successful in applications as diverse asautonomous  helicopter  flight,  robot  legged  locomotion,  cell-phone  networkrouting, marketing strategy selection, factory control, and efficient web-pageindexing.  Our study of reinforcement learning will begin with a definition oftheMarkov decision processes (MDP), which provides the formalism inwhich RL problems are usually posed.\cite{solving_rl}
 \subsection{Markov decision processes}
-\cite{Reinforcement_Learning}Markov decision process(MDP) is used to formalize various types of stochastic processes. In MDPs, the goal of the agent is to make a sequence of actions to optimize/ maximize an objective function. \\
+Markov decision process(MDP) is used to formalize various types of stochastic processes. In MDPs, the goal of the agent is to make a sequence of actions to optimize/ maximize an objective function \cite{Reinforcement_Learning}. \\
 Formally a MDP is a $4-$tuple 
 \begin{center}
 $\langle S,A,P(s,a),R(s,a) \rangle $\\
@@ -473,8 +476,9 @@ This value function satisfies the Bellman Equation.
 $$V^{\pi}(s)=R(s)+\gamma\sum_{s^{'}\in S}P(s,\pi(s))(s^{'})V^{\pi}(s^{'})$$ 
 Now we need to find the optimal policy, which can be formally written as
 $$V^{*}(S)=\max_{\pi}V^{\pi}(S)$$
+
 \subsection{Finding Optima}
-\begin{lstlisting}[language=python]
+\begin{lstlisting}[language=python, caption=value iteration algorithm]
 for s in S:
     V(s)=0
 while(not converged):
@@ -482,7 +486,7 @@ while(not converged):
         V(s)=R(s)+max over all action[gamma*(sum(P(s,a,s')V(s')))]
 \end{lstlisting}
 The above algorithm is called the value iteration algorithm\cite{solving_rl}.
-\begin{lstlisting}[language=python]
+\begin{lstlisting}[language=python, caption=Policy iteration algorithm]
 initialize random pi
 while(not converged):
     V=V(pi)

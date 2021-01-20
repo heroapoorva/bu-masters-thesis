@@ -108,7 +108,7 @@ Now to convert the query statement to actual syntax/ query and showcase few diff
 
 \subsection{Segment Average Speed}
 First we convert the simpler query.
-\begin{lstlisting}[language=SQL, caption=SegAvgSpeed]
+\begin{lstlisting}[language=SQL, caption=Custom Simple query from Linear Road]
     SELECT exp_way, dir, seg, AVG(speed) as speed,
     FROM CarSegStr [RANGE 5 MINUTES]
     WHERE car_id = target
@@ -134,7 +134,7 @@ Before going to that, note the steps to perform a query on streams requires to f
 Now we look at the more complex query.
 \par \textbf{SegAvgSpeed}: The average speed of the cars in a segment over the last 5 minutes. 
 
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption= SEGAVGSPEED linear road query]
 SELECT exp_way, dir, seg, AVG(speed) as speed,
 FROM CarSegStr [RANGE 5 MINUTES]
 GROUP BY exp_way, dir, seg;
@@ -143,7 +143,7 @@ GROUP BY exp_way, dir, seg;
 
 \par \textbf{SegVol}: Relation containing the number of cars currently in a segment. The relation CurCarSeg is used to determine the cars in each segment.
 
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption= SEGVOL linear road query]
 SELECT exp_way, dir, seg, COUNT(*) as volume
 FROM CurCarSeg
 GROUP BY exp_way, dir, seg;
@@ -153,7 +153,7 @@ GROUP BY exp_way, dir, seg;
 \par \textbf{SegToll}:The toll for each segment. There are no entries in the relation for segments having no toll. A segment is tolled only if the average speed of the segment is less than $40$, and if it is not affected by an accident. If a segment is tolled, its toll is basetoll $* (\#$cars $- 150) * (\#$cars $- 150)$. We modify this query to remove the not affected by accident  condition.
 
 
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption= SEGTOLL linear road query]
 SELECT S.exp_way, S.dir, S.seg, basetoll*(V.volume-150)*(V.volume-150)
 FROM SegAvgSpeed as S, SegVol as V
 WHERE S.exp_way = V.exp_way and S.dir = V.dir and S.seg = V.seg
