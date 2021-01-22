@@ -13,7 +13,7 @@ For these examples, it is clear that there exists a need to continuously keep pr
 
 \section{Deep reinforcement learning}
 Deep reinforcement learning is a mathematical model that is the combination of neural networks and reinforcement learning. Deep reinforcement learning can be thought of as a advanced version of traditional reinforcement learning, this better performance is achieved with the use of neural networks.
-\par Reinforcement learning can be thought of as playing a game $1$ move at a time and at each turn the player is required to make a move, the reinforcement learning model can tell the probability with which each move will lead to the optimal outcome based on the game.
+\par To get and intuitive idea for reinforcement learning, one can imagine playing a game without an opponent $1$ move at a time. At each turn the player is required to make a move, the reinforcement learning model can estimate the probability with which each move will lead to the optimal outcome based on the game.
 \par The simplicity and flexibility of reinforcement learning make it a very powerful tool to tackle problems with. 
 \subsection{Applications}
 In recent time there are many applications of Deep reinforcement learning agents, a few of which are:-
@@ -47,7 +47,7 @@ Datastream management systems, on the other hand, do not have all the data avail
     \item Be implemented easily, and run efficiently with a low overhead.
 \end{itemize}
 \par A large number of systems around the world are generating continuous streams of data. Additional hardware is not enough to scale for the needs for the high throughputs. The methods used by traditional database management systems are not scalable for data stream either. Whereas deep reinforcement learning is proven to be a powerful tool to help model and optimize various problems.
-\par Some of the problem which Data streams face compared to traditional static data are:-
+\par Some of the problem which Data streams face compared to traditional static data are \cite{stream_optimization}:-
 \begin{itemize}
     \item The continuous nature of data streams. In many cases the data first needs to be preprocessed and only then can an optimizer use it.
     \item Low latency is difficult to achieve. This is due to optimizer needing preprocessed data.
@@ -64,9 +64,41 @@ When enough data, as defined by the windowing function, is taken as input we exe
 The objective of this thesis is to act as a proof of concept for the application of Deep reinforcement learning for optimizing query plans for data streams. The proposed method should be general enough for its application to any other use case which can perhaps benefit from the use of deep reinforcement learning. In order to asses whether this method is useful, we will explore a query on linear road benchmark data set.
 \par  This can be captured in the following research question:-
 \begin{center}
-    \textbf{Is it possible to apply deep reinforcement learning to speed up query processing times.}
+    \textbf{Is it possible to apply deep reinforcement learning to optimize query processing.}
 \end{center}
+To answer the above question, it is helpful to understand the areas in which a Data stream system can be optimized, so we look at each section individually and ask the question for the specific section. An optimization should be both safe and profitable. An optimization is safe if it can be applied to a stream query without changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. \cite{stream_query_optimization}
+\begin{itemize}
+    \item \textbf{Batching}, reduces over-head by processing multiple data items together. \cite{Carney}, \cite{Gordon}, \cite{Welsh}
+    
+    \item \textbf{Fusion}, combines smaller operators  into  a  larger  one,  to  avoid  the  overheadof data serialization and transport. \cite{Gordon}, \cite{Tatbul}, \cite{Khandekar}
+    
+    \item \textbf{Placement}, assigns operators  to  hosts  and  cores  to  reduce  communication  costs  or  better  utilize  available  resources. \cite{Gordon}, \cite{Pietzuch}, \cite{Wolf}
+    
+    \item \textbf{State sharing}, attempts to  avoid  unnecessary  copies  of  data. \cite{Brito}, \cite{Arasu}, \cite{Sermulins}
+    
+    \item \textbf{Operator separation}, Operator separation  splits  a  large  computation  into  smaller steps. \cite{dbms}, \cite{Yu}, \cite{Ottoni}
+    
+    \item \textbf{Operator reordering}, A  reordering optimization moves more selective operators, which reduce the data volume,  upstream. \cite{dbms}, \cite{Graefe}, \cite{Avnur}
+    
+    \item \textbf{Redundancy elimination}, eliminates superfluous computations. \cite{Forgy}, \cite{Chen}, \cite{Pietzuch}
+    
+    \item \textbf{Load Balancing}, attempts  to  distribute  workload  evenly  across resources. \cite{Gordon}, \cite{Arpaci}, \cite{Caneill}, \cite{Amini}
+    
+    \item \textbf{Algorithm selection}, uses  a  different  algorithm  to  implementan operator. \cite{dbms}, \cite{Welsh}, \cite{Wolf}, \cite{Abadi}
+    
+    \item \textbf{Load Shedding}, copes  with  high  load  by  dropping  data  itemsto   process. \cite{Tatbul}, \cite{Gedik}
+    
+    \item \textbf{Fission}, oftenreferredto   as   data   parallelism,   attempts   to   processmultiple data items in parallel by replicating an operator. \cite{Gordon}, \cite{Schneider}, \cite{Brito}
+\end{itemize} 
 
+While the above mentioned categories for optimization are not independent of each other, this thesis focuses solely on operator reordering using deep reinforcement learning.  
+
+\subsection{Operator reordering}
+A reordering optimization moves more selective operators, which reduce the data volume, upstream. This has the benefit of reducing the data flowing into downstream computation, thus eliminating unnecessary work. However, care must be taken to preserve the desired semantics, and operators should only be re-ordered if the operations are commutative and their order of execution can be changed if they are associative. \cite{stream_query_optimization}
+\par The questiont to ask in for operator reordering is
+\begin{center}
+    \textbf{Is it possible to learn a model which predicts the optimal ordering, defined by a metric of choice, of operators for a given query on data streams using deep reinforcement learning model trained on historical data?}
+\end{center}
 \section{Structure of thesis}
 \label{sec:Structure of thesis}
 The overall structure of the thesis chapter wise is as follows:-

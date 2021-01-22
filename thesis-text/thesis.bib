@@ -260,3 +260,356 @@ url = "http://ilpubs.stanford.edu:8090/563/1/2002-57.pdf"
 url = "http://hirzels.com/martin/papers/encyc18-cont-queries.pdf"
 }
 
+@inproceedings{Carney,
+author = {Carney, Don and \c{C}etintemel, U\u{g}ur and Rasin, Alex and Zdonik, Stan and Cherniack, Mitch and Stonebraker, Mike},
+title = {Operator Scheduling in a Data Stream Manager},
+year = {2003},
+isbn = {0127224424},
+publisher = {VLDB Endowment},
+booktitle = {Proceedings of the 29th International Conference on Very Large Data Bases - Volume 29},
+pages = {838–849},
+numpages = {12},
+location = {Berlin, Germany},
+series = {VLDB '03}
+}
+
+@article{Gordon,
+author = {Gordon, Michael I. and Thies, William and Amarasinghe, Saman},
+title = {Exploiting Coarse-Grained Task, Data, and Pipeline Parallelism in Stream Programs},
+year = {2006},
+issue_date = {December 2006},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {5},
+issn = {0163-5980},
+url = {https://doi.org/10.1145/1168917.1168877},
+doi = {10.1145/1168917.1168877},
+journal = {SIGOPS Oper. Syst. Rev.},
+month = oct,
+pages = {151–162},
+numpages = {12},
+keywords = {coarse-grained dataflow, Raw, multicore, streams, software pipelining, StreamIt}
+}
+
+@article{Welsh,
+author = {Welsh, Matt and Culler, David and Brewer, Eric},
+title = {SEDA: An Architecture for Well-Conditioned, Scalable Internet Services},
+year = {2001},
+issue_date = {Dec. 2001},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {35},
+number = {5},
+issn = {0163-5980},
+url = {https://doi.org/10.1145/502059.502057},
+doi = {10.1145/502059.502057},
+month = oct,
+pages = {230–243},
+numpages = {14}
+}
+
+@inproceedings{Tatbul,
+author = {Tatbul, Nesime and \c{C}etintemel, U\u{g}ur and Zdonik, Stan and Cherniack, Mitch and Stonebraker, Michael},
+title = {Load Shedding in a Data Stream Manager},
+year = {2003},
+isbn = {0127224424},
+publisher = {VLDB Endowment},
+abstract = {A Data Stream Manager accepts push-based inputs from a set of data sources, processes these inputs with respect to a set of standing queries, and produces outputs based on Quality-of-Service (QoS) specifications. When input rates exceed system capacity, the system will become overloaded and latency will deteriorate. Under these conditions, the system will shed load, thus degrading the answer, in order to improve the observed latency of the results. This paper examines a technique for dynamically inserting and removing drop operators into query plans as required by the current load. We examine two types of drops: the first drops a fraction of the tuples in a randomized fashion, and the second drops tuples based on the importance of their content. We address the problems of determining when load shedding is needed, where in the query plan to insert drops, and how much of the load should be shed at that point in the plan. We describe efficient solutions and present experimental evidence that they can bring the system back into the useful operating range with minimal degradation in answer quality.},
+booktitle = {Proceedings of the 29th International Conference on Very Large Data Bases - Volume 29},
+pages = {309–320},
+numpages = {12},
+location = {Berlin, Germany},
+series = {VLDB '03}
+}
+
+@InProceedings{Khandekar,
+author="Khandekar, Rohit
+and Hildrum, Kirsten
+and Parekh, Sujay
+and Rajan, Deepak
+and Wolf, Joel
+and Wu, Kun-Lung
+and Andrade, Henrique
+and Gedik, Bu{\u{g}}ra",
+editor="Bacon, Jean M.
+and Cooper, Brian F.",
+title="COLA: Optimizing Stream Processing Applications via Graph Partitioning",
+booktitle="Middleware 2009",
+year="2009",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="308--327",
+abstract="In this paper, we describe an optimization scheme for fusing compile-time operators into reasonably-sized run-time software units called processing elements (PEs). Such PEs are the basic deployable units in System S, a highly scalable distributed stream processing middleware system. Finding a high quality fusion significantly benefits the performance of streaming jobs. In order to maximize throughput, our solution approach attempts to minimize the processing cost associated with inter-PE stream traffic while simultaneously balancing load across the processing hosts. Our algorithm computes a hierarchical partitioning of the operator graph based on a minimum-ratio cut subroutine. We also incorporate several fusion constraints in order to support real-world System S jobs. We experimentally compare our algorithm with several other reasonable alternative schemes, highlighting the effectiveness of our approach.",
+isbn="978-3-642-10445-9"
+}
+
+@INPROCEEDINGS{Pietzuch,
+
+  author={P. {Pietzuch} and J. {Ledlie} and J. {Shneidman} and M. {Roussopoulos} and M. {Welsh} and M. {Seltzer}},
+
+  booktitle={22nd International Conference on Data Engineering (ICDE'06)}, 
+
+  title={Network-Aware Operator Placement for Stream-Processing Systems}, 
+
+  year={2006},
+
+  volume={},
+
+  number={},
+
+  pages={49-49},
+
+  doi={10.1109/ICDE.2006.105}
+}
+
+@inproceedings{Wolf,
+author = {Wolf, Joel and Bansal, Nikhil and Hildrum, Kirsten and Parekh, Sujay and Rajan, Deepak and Wagle, Rohit and Wu, Kun-Lung and Fleischer, Lisa},
+year = {2008},
+month = {12},
+pages = {306-325},
+title = {SODA: An Optimizing Scheduler for Large-Scale Stream-Based Distributed Computer Systems},
+volume = {5346},
+isbn = {978-3-540-89855-9},
+doi = {10.1007/978-3-540-89856-6_16}
+}
+
+@inproceedings{Brito,
+author = {Brito, Andrey and Fetzer, Christof and Sturzrehm, Heiko and Felber, Pascal},
+title = {Speculative Out-of-Order Event Processing with Software Transaction Memory},
+year = {2008},
+isbn = {9781605580906},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1385989.1386023},
+doi = {10.1145/1385989.1386023},
+abstract = {In event stream applications, events flow through a network of components that perform various types of operations, e.g., filtering, aggregation, transformation. When the operation only depends on the input events, one can trivially parallelize its processing by replicating the associated components. This is not possible, however, with stateful components or when there exist dependencies between the events. Parallel versions of a number of simple stream mining operators have been designed, but, in general, complex and user-defined operators are limited by single thread performance. In this paper, we propose leveraging the processing capabilities of multi-core processors to improve the efficiency of stateful components using optimistic parallelization techniques (as provided by transactional memory). We show that, even though some speculative event executions might need to be disregarded, the overall throughput increases noticeably in the general case and latency can be reduced by pre-processing out-of-order events. Moreover, we show how simple conflict predictors can boost the parallelism even more and reduce the amount of resources used for a given level of parallelism.},
+booktitle = {Proceedings of the Second International Conference on Distributed Event-Based Systems},
+pages = {265–275},
+numpages = {11},
+keywords = {software transactional memory, event stream processing},
+location = {Rome, Italy},
+series = {DEBS '08}
+}
+
+@article{Arasu,
+author = {Arasu, Arvind and Babu, Shivnath and Widom, Jennifer},
+title = {The CQL Continuous Query Language: Semantic Foundations and Query Execution},
+year = {2006},
+issue_date = {June 2006},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+volume = {15},
+number = {2},
+issn = {1066-8888},
+url = {https://doi.org/10.1007/s00778-004-0147-z},
+doi = {10.1007/s00778-004-0147-z},
+abstract = {CQL, a continuous query language, is supported by the STREAM prototype data stream management system (DSMS) at Stanford. CQL is an expressive SQL-based declarative language for registering continuous queries against streams and stored relations. We begin by presenting an abstract semantics that relies only on “black-box” mappings among streams and relations. From these mappings we define a precise and general interpretation for continuous queries. CQL is an instantiation of our abstract semantics using SQL to map from relations to relations, window specifications derived from SQL-99 to map from streams to relations, and three new operators to map from relations to streams. Most of the CQL language is operational in the STREAM system. We present the structure of CQL's query execution plans as well as details of the most important components: operators, interoperator queues, synopses, and sharing of components among multiple operators and queries. Examples throughout the paper are drawn from the Linear Road benchmark recently proposed for DSMSs. We also curate a public repository of data stream applications that includes a wide variety of queries expressed in CQL. The relative ease of capturing these applications in CQL is one indicator that the language contains an appropriate set of constructs for data stream processing.},
+journal = {The VLDB Journal},
+month = jun,
+pages = {121–142},
+numpages = {22},
+keywords = {Data streams, Continuous queries, Query language, Query processing}
+}
+
+@article{Sermulins,
+author = {Sermulins, Janis and Thies, William and Rabbah, Rodric and Amarasinghe, Saman},
+title = {Cache Aware Optimization of Stream Programs},
+year = {2005},
+issue_date = {July 2005},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {7},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/1070891.1065927},
+doi = {10.1145/1070891.1065927},
+abstract = {Effective use of the memory hierarchy is critical for achieving high performance on embedded systems. We focus on the class of streaming applications, which is increasingly prevalent in the embedded domain. We exploit the widespread parallelism and regular communication patterns in stream programs to formulate a set of cache aware optimizations that automatically improve instruction and data locality. Our work is in the context of the Synchronous Dataflow model, in which a program is described as a graph of independent actors that communicate over channels. The communication rates between actors are known at compile time, allowing the compiler to statically model the caching behavior.We present three cache aware optimizations: 1) execution scaling, which judiciously repeats actor executions to improve instruction locality, 2) cache aware fusion, which combines adjacent actors while respecting instruction cache constraints, and 3) scalar replacement, which converts certain data buffers into a sequence of scalar variables that can be register allocated. The optimizations are founded upon a simple and intuitive model that quantifies the temporal locality for a sequence of actor executions. Our implementation of cache aware optimizations in the StreamIt compiler yields a 249% average speedup (over unoptimized code) for our streaming benchmark suite on a StrongARM 1110 processor. The optimizations also yield a 154% speedup on a Pentium 3 and a 152% speedup on an Itanium 2.},
+journal = {SIGPLAN Not.},
+month = jun,
+pages = {115–126},
+numpages = {12},
+keywords = {embedded, fusion, synchronous dataflow, stream programing, StreamIt, cache, cache optimizations}
+}
+
+@inproceedings{Yu,
+author = {Yu, Yuan and Gunda, Pradeep Kumar and Isard, Michael},
+title = {Distributed Aggregation for Data-Parallel Computing: Interfaces and Implementations},
+year = {2009},
+isbn = {9781605587523},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1629575.1629600},
+doi = {10.1145/1629575.1629600},
+abstract = {Data-intensive applications are increasingly designed to execute on large computing clusters. Grouped aggregation is a core primitive of many distributed programming models, and it is often the most efficient available mechanism for computations such as matrix multiplication and graph traversal. Such algorithms typically require non-standard aggregations that are more sophisticated than traditional built-in database functions such as Sum and Max. As a result, the ease of programming user-defined aggregations, and the efficiency of their implementation, is of great current interest.This paper evaluates the interfaces and implementations for user-defined aggregation in several state of the art distributed computing systems: Hadoop, databases such as Oracle Parallel Server, and DryadLINQ. We show that: the degree of language integration between user-defined functions and the high-level query language has an impact on code legibility and simplicity; the choice of programming interface has a material effect on the performance of computations; some execution plans perform better than others on average; and that in order to get good performance on a variety of workloads a system must be able to select between execution plans depending on the computation. The interface and execution plan described in the MapReduce paper, and implemented by Hadoop, are found to be among the worst-performing choices.},
+booktitle = {Proceedings of the ACM SIGOPS 22nd Symposium on Operating Systems Principles},
+pages = {247–260},
+numpages = {14},
+keywords = {cloud computing, concurrency, distributed programming},
+location = {Big Sky, Montana, USA},
+series = {SOSP '09}
+}
+
+@inproceedings{Ottoni,
+author = {Ottoni, Guilherme and Rangan, Ram and Stoler, A. and August, D.I.},
+year = {2005},
+month = {12},
+pages = {12 pp.-},
+title = {Automatic thread extraction with decoupled software pipelining},
+isbn = {0-7695-2440-0},
+doi = {10.1109/MICRO.2005.13}
+}
+
+@article{Graefe,
+author = {Graefe, Goetz},
+title = {Encapsulation of Parallelism in the Volcano Query Processing System},
+year = {1990},
+issue_date = {Jun. 1990},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {19},
+number = {2},
+issn = {0163-5808},
+url = {https://doi.org/10.1145/93605.98720},
+doi = {10.1145/93605.98720},
+abstract = {Volcano is a new dataflow query processing system we have developed for database systems research and education. The uniform interface between operators makes Volcano extensible by new operators. All operators are designed and coded as if they were meant for a single-process system only. When attempting to parallelize Volcano, we had to choose between two models of parallelization, called here the bracket and operator models. We describe the reasons for not choosing the bracket model, introduce the novel operator model, and provide details of Volcano's exchange operator that parallelizes all other operators. It allows intra-operator parallelism on partitioned datasets and both vertical and horizontal inter-operator parallelism. The exchange operator encapsulates all parallelism issues and therefore makes implementation of parallel database algorithms significantly easier and more robust. Included in this encapsulation is the translation between demand-driven dataflow within processes and data-driven dataflow between processes. Since the interface between Volcano operators is similar to the one used in “real,” commercial systems, the techniques described here can be used to parallelize other query processing engines.},
+journal = {SIGMOD Rec.},
+month = may,
+pages = {102–111},
+numpages = {10}
+}
+
+@article{Avnur,
+author = {Avnur, Ron and Hellerstein, Joseph M.},
+title = {Eddies: Continuously Adaptive Query Processing},
+year = {2000},
+issue_date = {June 2000},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {29},
+number = {2},
+issn = {0163-5808},
+url = {https://doi.org/10.1145/335191.335420},
+doi = {10.1145/335191.335420},
+abstract = {In large federated and shared-nothing databases, resources can exhibit widely fluctuating characteristics. Assumptions made at the time a query is submitted will rarely hold throughout the duration of query processing. As a result, traditional static query optimization and execution techniques are ineffective in these environments.In this paper we introduce a query processing mechanism called an eddy, which continuously reorders operators in a query plan as it runs. We characterize the moments of symmetry during which pipelined joins can be easily reordered, and the synchronization barriers that require inputs from different sources to be coordinated. By combining eddies with appropriate join algorithms, we merge the optimization and execution phases of query processing, allowing each tuple to have a flexible ordering of the query operators. This flexibility is controlled by a combination of fluid dynamics and a simple learning algorithm. Our initial implementation demonstrates promising results, with eddies performing nearly as well as a static optimizer/executor in static scenarios, and providing dramatic improvements in dynamic execution environments.},
+journal = {SIGMOD Rec.},
+month = may,
+pages = {261–272},
+numpages = {12}
+}
+
+@article{Forgy,
+  title={Rete: a fast algorithm for the many pattern/many object pattern match problem},
+  author={C. Forgy},
+  journal={Expert Systems},
+  year={1991},
+  pages={324-341}
+}
+
+@inproceedings{Chen,
+author = {Chen, Jianjun and DeWitt, David J. and Tian, Feng and Wang, Yuan},
+title = {NiagaraCQ: A Scalable Continuous Query System for Internet Databases},
+year = {2000},
+isbn = {1581132174},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/342009.335432},
+doi = {10.1145/342009.335432},
+abstract = {Continuous queries are persistent queries that allow users to receive new results when they become available. While continuous query systems can transform a passive web into an active environment, they need to be able to support millions of queries due to the scale of the Internet. No existing systems have achieved this level of scalability. NiagaraCQ addresses this problem by grouping continuous queries based on the observation that many web queries share similar structures. Grouped queries can share the common computation, tend to fit in memory and can reduce the I/O cost significantly. Furthermore, grouping on selection predicates can eliminate a large number of unnecessary query invocations. Our grouping technique is distinguished from previous group optimization approaches in the following ways. First, we use an incremental group optimization strategy with dynamic re-grouping. New queries are added to existing query groups, without having to regroup already installed queries. Second, we use a query-split scheme that requires minimal changes to a general-purpose query engine. Third, NiagaraCQ groups both change-based and timer-based queries in a uniform way. To insure that NiagaraCQ is scalable, we have also employed other techniques including incremental evaluation of continuous queries, use of both pull and push models for detecting heterogeneous data source changes, and memory caching. This paper presents the design of NiagaraCQ system and gives some experimental results on the system's performance and scalability.},
+booktitle = {Proceedings of the 2000 ACM SIGMOD International Conference on Management of Data},
+pages = {379–390},
+numpages = {12},
+location = {Dallas, Texas, USA},
+series = {SIGMOD '00}
+}
+
+@inproceedings{Arpaci,
+author = {Arpaci-Dusseau, Remzi H. and Anderson, Eric and Treuhaft, Noah and Culler, David E. and Hellerstein, Joseph M. and Patterson, David and Yelick, Kathy},
+title = {Cluster I/O with River: Making the Fast Case Common},
+year = {1999},
+isbn = {1581131232},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/301816.301823},
+doi = {10.1145/301816.301823},
+booktitle = {Proceedings of the Sixth Workshop on I/O in Parallel and Distributed Systems},
+pages = {10–22},
+numpages = {13},
+location = {Atlanta, Georgia, USA},
+series = {IOPADS '99}
+}
+
+@inproceedings{Caneill,
+author = {Caneill, Matthieu and El Rheddane, Ahmed and Leroy, Vincent and De Palma, No\"{e}l},
+title = {Locality-Aware Routing in Stateful Streaming Applications},
+year = {2016},
+isbn = {9781450343008},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2988336.2988340},
+doi = {10.1145/2988336.2988340},
+abstract = {Distributed stream processing engines continuously execute series of operators on data streams. Horizontal scaling is achieved by deploying multiple instances of each operator in order to process data tuples in parallel. As the application is distributed on an increasingly high number of servers, the likelihood that the stream is sent to a different server for each operator increases. This is particularly important in the case of stateful applications that rely on keys to deterministically route messages to a specific instance of an operator. Since network is a bottleneck for many stream applications, this behavior significantly degrades their performance.Our objective is to improve stream locality for stateful stream processing applications. We propose to analyse traces of the application to uncover correlations between the keys used in successive routing operations. By assigning correlated keys to instances hosted on the same server, we significantly reduce network consumption and increase performance while preserving load balance. Furthermore, this approach is executed online, so that the assignment can automatically adapt to changes in the characteristics of the data. Data migration is handled seamlessly with each routing configuration update.We implemented and evaluated our protocol using Apache Storm, with a real workload consisting of geo-tagged Flickr pictures as well as Twitter publications. Our results show a significant improvement in throughput.},
+booktitle = {Proceedings of the 17th International Middleware Conference},
+articleno = {4},
+numpages = {13},
+keywords = {stream processing, optimization, network locality, routing},
+location = {Trento, Italy},
+series = {Middleware '16}
+}
+
+@INPROCEEDINGS{Amini,
+
+  author={L. {Amini} and N. {Jain} and A. {Sehgal} and J. {Silber} and O. {Verscheure}},
+
+  booktitle={26th IEEE International Conference on Distributed Computing Systems (ICDCS'06)}, 
+
+  title={Adaptive Control of Extreme-scale Stream Processing Systems}, 
+
+  year={2006},
+
+  volume={},
+
+  number={},
+
+  pages={71-71},
+
+  doi={10.1109/ICDCS.2006.13}
+}
+
+@inproceedings{Abadi,
+  title={The Design of the Borealis Stream Processing Engine},
+  author={D. Abadi and Y. Ahmad and M. Balazinska and U. Çetintemel and M. Cherniack and J. Hwang and W. Lindner and Anurag Maskey and A. Rasin and Esther Ryvkina and Nesime Tatbul and Y. Xing and S. Zdonik},
+  booktitle={CIDR},
+  year={2005}
+}
+
+@article{Gedik,
+  title={Efficient Construction of Compact Shedding Filters for Data Stream Processing},
+  author={B. Gedik and K. Wu and Philip S. Yu},
+  journal={2008 IEEE 24th International Conference on Data Engineering},
+  year={2008},
+  pages={396-405}
+}
+
+@ARTICLE{Schneider,
+
+  author={S. {Schneider} and M. {Hirzel} and B. {Gedik} and K. {Wu}},
+
+  journal={IEEE Transactions on Computers}, 
+
+  title={Safe Data Parallelism for General Streaming}, 
+
+  year={2015},
+
+  volume={64},
+
+  number={2},
+
+  pages={504-517},
+
+  doi={10.1109/TC.2013.221}}
+
+
+
+
+
