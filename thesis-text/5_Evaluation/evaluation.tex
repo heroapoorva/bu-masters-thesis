@@ -51,15 +51,6 @@ As visible from the below diagram \ref{fig:totalb1} the disparity in the frequen
 \label{fig:totalb1}
 \end{figure}
 
-\par For the reader a zoomed in version for the smaller classes is also presented \ref{fig:totalb2}
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.75]{totalb2.png}\\
-\caption{This figure shows the frequency distribution of the number of cases where each move is optimal}
-\label{fig:totalb2}
-\end{figure}
-
 The actual values of the above distribution are presented here\ref{lst:total_data}.
 
 \begin{lstlisting}[caption=Frequencies of optimal moves in total data, label={lst:total_data}]
@@ -202,6 +193,22 @@ weighted avg      0.461     0.462     0.461     27681
 
 \subsection{Performance}
 From the confusion matrix, we calculate the sum of true positives across all the classes. We see that $12978$ data points had predictions correct out of $27681$ data points, that is around $47\%$. While the total accuracy isn't very high, looking solely at the number of correct predictions isn't enough, as we are more interested in the improvement in performance offered by this model.
+\par Below we have few examples of our predictions. The bar chart shows the number of operations required by each ordering, the predicted optimal ordering is in red. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{operations1.png}\\
+\caption{The figure shows the number of operations required to execute the query depending on the ordering of the selection operators chosen. The predicted optimal ordering is shown in red.}
+\label{fig:operations1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{operations2.png}\\
+\caption{The figure shows the number of operations required to execute the query depending on the ordering of the selection operators chosen. The predicted optimal ordering is shown in red.}
+\label{fig:operations1}
+\end{figure}
+
 \par Given that we have the numbr of operations required to be executed by each ordering, we can look at the sum of number of operations of the orders predicted by our model.\\ 
 We have the actual optimal ordering, the actual worst ordering, the predicted best ordering from the model.\\
 We add the number of operations required by following each of the above $3$ and look at the sum of them.\\
@@ -211,7 +218,7 @@ We add the number of operations required by following each of the above $3$ and 
     \item The sum of operations required by the optimal ordering $2310227856.0$
 \end{itemize}
 This tells us that our predicted orderings required approximately $39\%$ operations of the number of operations required by the worst ordering executed always and $102\%$ operations of the number operations required by the best ordering executed always.\\
-
+\par Below we have few examples of our predictions
 
 \section{Discussion}
 Learning from data streams is a continuous process. The learning systems that act in dynamic environments, where working conditions change and evolve, need to monitor their working conditions. They need to monitor the learning process  for change detection, emergence of novel classes, changes in the relevance of features, changes in the optimal parameters  settings, and others \cite{DNN_for_stream}.\\
