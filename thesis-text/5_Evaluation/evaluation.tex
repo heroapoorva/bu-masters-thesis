@@ -175,22 +175,16 @@ weighted avg      0.461     0.462     0.461     27681
     \item For ordering $21$, of all the data points which had ordering $21$ as their optimal ordering, we predicted $17.2\%$ to have ordering $21$ as the optimal ordering.
 \end{itemize} 
 
-\textbf{F1-score}, for any classification system, it is desirable to have high precision and recall while not overfitting. \textbf{F1-score}  for a class, is the harmonic mean of precision and recall. It aims to give preference to neither precision nor recall. All the various metrics aim to capture various information from the confusion matrix. F1 score is better measure when False negatives and False positives are important and if there is a class imbalance.\\
-
+\textbf{F1-score}, for any classification system, it is desirable to have high precision and recall while not overfitting. \textbf{F1-score}  for a class, is the harmonic mean of precision and recall. It aims to give preference to neither precision nor recall. All the various metrics aim to capture various information from the confusion matrix. F1 score is better measure when False negatives and False positives are important and if there is a class imbalance.
 \par \textbf{Micro F1} is calculated by calculating \textbf{micro precision} and \textbf{micro recall} and taking their harmonic mean.\\
 \textbf{Micro Precision} is calculated by adding True positive values across all the classes and adding False positives across all classes and treating them as new true positive and false positives to calculate precision.\\
 \textbf{Micro Recall} is calculated by adding True positive values across all the classes and adding False negatives across all classes and treating them as new true positive and false negatives to calculate precision.
-
 \par \textbf{Macro F1} is a simple arithmetic mean of f1 scores of all the classes.\\
 \textbf{Macro Precision} is a simple arithmetic mean of precisions of all the classes.\\
-\textbf{Macro Recall} is a simple arithmetic mean of recalls of all the classes.\\
-
+\textbf{Macro Recall} is a simple arithmetic mean of recalls of all the classes.
 \par \textbf{Weighted F1} is weighted arithmetic mean of f1 scores across all classes, with the class strength as weight.\\
 \textbf{Weighted Precision} is weighted arithmetic mean of precisions across all classes, with the class strength as weight.\\
-\textbf{Weighted Recall} is weighted arithmetic mean of f1 recalls across all classes, with the class strength as weight.\\
-
-
-
+\textbf{Weighted Recall} is weighted arithmetic mean of f1 recalls across all classes, with the class strength as weight.
 \subsection{Performance}
 From the confusion matrix, we calculate the sum of true positives across all the classes. We see that $12978$ data points had predictions correct out of $27681$ data points, that is around $47\%$. While the total accuracy isn't very high, looking solely at the number of correct predictions isn't enough, as we are more interested in the improvement in performance offered by this model.
 \par Below we have few examples of our predictions. The bar chart shows the number of operations required by each ordering, the predicted optimal ordering is in red. \ref{fig:operations1} and \ref{fig:operations2}
@@ -211,7 +205,7 @@ From the confusion matrix, we calculate the sum of true positives across all the
 
 \par Given that we have the numbr of operations required to be executed by each ordering, we can look at the sum of number of operations of the orders predicted by our model.\\ 
 We have the actual optimal ordering, the actual worst ordering, the predicted best ordering from the model.\\
-We add the number of operations required by following each of the above $3$ and look at the sum of them.\\
+We add the number of operations required by following each of the above $3$ and look at the sum of them.
 \begin{itemize}
     \item The sum of operations required by the optimal ordering $890640075.0$
     \item The sum of operations required by the predicted ordering $900269878.0$
