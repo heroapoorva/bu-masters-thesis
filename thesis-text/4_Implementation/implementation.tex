@@ -106,7 +106,7 @@ The input was taken by simply reading a file and storing the attribute values im
 \ref{lst:simple_query_groupby}
 \par This part prepares the data for aggreation functions. The data is first inserted into a vector. It then essentially groups the rows together depending on the order provided by the means of the sort function(my\_sort in this case). The sort function helps group up entries with same express way ID, segment ID and which are going in the same direction.\\
 \ref{lst:simple_query_aggregation}
-\par Finally do the aggregation, simply check for the continuity of the group and update the measures of the group as you iterate. When you arrive the the end of the group simply insert the answer for the aggregate function along with the rest of required attributes into an output and return the table.
+\par Finally do the aggregation, simply check for the continuity of the group and update the measures of the group as you iterate. When you arrive the end of the group simply insert the answer for the aggregate function along with the rest of required attributes into an output and return the table.
 \subsection{Complex Query}
 The complex query\cite{linearroad_queries}
 \begin{lstlisting}[language=SQL, caption=CarSegStr]
@@ -140,7 +140,7 @@ WHERE S.exp_way = V.exp_way and S.dir = V.dir and S.seg = V.seg
 The goal of implementing this query is to obtain data to train a deep reinforcement learning model and to be able to test the model. We start by giving the general outline of the code. \\
 \ref{lst:complex_query_overview}
 \par Similar to the simple query, we fix a window size, the data file and we start the loop\\
-In the loop, each time we read "window size" number of data entries, calculate $3$ vectors, \textbf{curcarseg}, \textbf{segavgspeed}, \textbf{segvol}. After calculating these for the the data in the data window, we execute the final query of \textbf{segtoll}\\
+In the loop, each time we read "window size" number of data entries, calculate $3$ vectors, \textbf{curcarseg}, \textbf{segavgspeed}, \textbf{segvol}. After calculating these for the data in the data window, we execute the final query of \textbf{segtoll}\\
 For $CurCarSeg$, simply filter the cars for the last $5$ mins.\\
 \ref{lst:SegAvgSpeed}
 \par For $SegAvgSpeed$, we first filter the cars which were active in the last $5$ mins.\\

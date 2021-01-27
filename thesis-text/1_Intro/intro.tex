@@ -14,19 +14,19 @@ For these examples, it is clear that there exists a need to continuously keep pr
 \section{Deep reinforcement learning}
 Deep reinforcement learning is a mathematical model that is the combination of neural networks and reinforcement learning. Deep reinforcement learning can be thought of as a advanced version of traditional reinforcement learning, this better performance is achieved with the use of neural networks.
 \par To get and intuitive idea for reinforcement learning, one can imagine playing a game without an opponent $1$ move at a time. At each turn the player is required to make a move, the reinforcement learning model can estimate the probability with which each move will lead to the optimal outcome based on the game.
-\par The simplicity and flexibility of reinforcement learning make it a very powerful tool to tackle problems with. 
+\par Simplicity and flexibility of reinforcement learning make it a very powerful tool to tackle problems with. 
 \subsection{Applications}
 In recent time there are many applications of Deep reinforcement learning agents, a few of which are:-
 \begin{itemize}
     \item Self driving cars.
     \item Training bots to play games.
-    \item Protien folding.
-    \item Online recommendation systems, e.g. youtube videos recommendation.
+    \item Protein folding.
+    \item Online recommendation systems, e.g. YouTube videos recommendation.
 \end{itemize}
 \subsection{Properties}
 It is clear that deep reinforcement learning has a wide variety of applications. There is a tremendous amount of research being done in the area of deep reinforcement learning, hence we believe it to be a powerful tool to use. An important aspect of deep reinforcement learning comes from the fact that they use deep neural networks. The following is the theorem that states the possible accuracy neural networks can achieve if given enough examples.
 
-\par \textbf{Universal Approximation Theorem} ($L1$ distance, ReLU activation, arbitrary depth, minimal width). For any Bochner-Lebesgue $p-$integrable function $\mathbb{f}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ and andy $\epsilon>0$ there exists a fully-connected ReLU network $F$ width exactly $d_{m}=\text{max}\{n+1,m\}$ satisfying 
+\par \textbf{Universal Approximation Theorem} ($L1$ distance, ReLU activation, arbitrary depth, minimal width). For any Bochner-Lebesgue $p-$integrable function $\mathbb{f}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ and $\epsilon>0$ there exists a fully-connected ReLU network $F$ width exactly $d_{m}=\text{max}\{n+1,m\}$ satisfying 
 $$\int_{\mathbb{r}^{m}}||\mathbb{f}(x)-F(x)||^{p}dx<\epsilon$$
 
 
@@ -39,34 +39,34 @@ The approximation theorem essential means if given enough examples and time for 
 Traditional database management systems are designed to be efficient for solving queries on static data. They are unable to handle updates, deletion, and change in the data very well, which is a rather common occurrence in Data streams. The static dataset can be exploited to create various optimizations, these rules look at the schema of the data and the query being executed.\\
 DBMS also tries to optimize the query execution by calculating various statistics about the data and make heuristic decisions based on them.    
 \par Optimizing the query execution plan is a difficult problem and can be proven to be $NP-$hard, i.e. there is an exponentially large search space and there is no known way to navigate efficiently.\\
-Datastream management systems, on the other hand, do not have all the data available at once, they only have a chunk of data available to work with, which is specified using the window function. Datastream management systems are more complex by design as they have extra constraints. They often have multiple service quality metrics to meet, which puts additional constraints on them such as \cite{stream_optimization} :-
+Datastream management systems, on the other hand, do not have all the data available at once. They only have a chunk of data available to work with, which is specified using the window function. Datastream management systems are more complex by design as they have extra constraints. They often have multiple service quality metrics to meet, which puts additional constraints on them such as \cite{stream_optimization} :-
 \begin{itemize}
     \item Achieve the maximal performance using bounded amount of resources.
     \item Be aware of unexpected overload situations.
     \item Guarantee user or application-specified QoS requirements for a query.
     \item Be implemented easily, and run efficiently with a low overhead.
 \end{itemize}
-\par A large number of systems around the world are generating continuous streams of data. Additional hardware is not enough to scale for the needs for the high throughputs. The methods used by traditional database management systems are not scalable for data stream either. Whereas deep reinforcement learning is proven to be a powerful tool to help model and optimize various problems.
-\par Some of the problem which Data streams face compared to traditional static data are \cite{stream_optimization}:-
+\par A large number of systems around the world are generating continuous streams of data. Additional hardware is not enough to scale for the needs for the high throughput. The methods used by traditional database management systems are not scalable for datastreams. Whereas deep reinforcement learning is proven to be a powerful tool to help model and optimize various problems.
+\par Some of the problems which Data streams face compared to traditional static data are \cite{stream_optimization}:-
 \begin{itemize}
     \item The continuous nature of data streams. In many cases the data first needs to be preprocessed and only then can an optimizer use it.
-    \item Low latency is difficult to achieve. This is due to optimizer needing preprocessed data.
+    \item Low latency is difficult to achieve. This is due to the optimizer needing preprocessed data.
     \item Gathering training data is difficult, training itself can be expensive.
 \end{itemize}
 
 \section{Proposed Solution}
-We propose a method to gather enough training data use it for training inorder to achieve low latency on queries.\\
-When enough data, as defined by the windowing function, is taken as input we execute the query with multiple query plans and records the time taken, the number of operations required to complete the execution and few statistics about the data which does not require to go over the data more than once.
-\par We use this gathered data for training a Deep reinforcement learning model, in order to predict the optimal query plan and help improve our latency for executing the query.  
+We propose a method to gather enough training data use it for training to achieve low latency on queries.\\
+When enough data, as defined by the windowing function, is taken as input we execute the query with multiple query plans. For each query plan records the time taken, the number of operations required to complete the execution, and few statistics about the data. Need to be careful of the statistics chosen and experiment with ones that do not require us to go over the data more than once.
+\par We use this gathered data for training a Deep reinforcement learning model, to predict the optimal query plan and help improve our latency for executing the query.  
 
 
 \section{Research Objective}
-The objective of this thesis is to act as a proof of concept for the application of Deep reinforcement learning for optimizing query plans for data streams. The proposed method should be general enough for its application to any other use case which can perhaps benefit from the use of deep reinforcement learning. In order to asses whether this method is useful, we will explore a query on linear road benchmark data set.
+The objective of this thesis is to act as a proof of concept for the application of Deep reinforcement learning for optimizing query plans for data streams. The proposed method should be general enough for its application to any other use case which can perhaps benefit from the use of deep reinforcement learning. To assess whether this method is useful, we will explore a query on the linear road benchmark data set.
 \par  This can be captured in the following research question:-
 \begin{center}
-    \textbf{Is it possible to apply deep reinforcement learning to optimize query processing.}
+    \textbf{Is it possible to apply deep reinforcement learning to optimize query processing?}
 \end{center}
-To answer the above question, it is helpful to understand the areas in which a Data stream system can be optimized, so we look at each section individually and ask the question for the specific section. An optimization should be both safe and profitable. An optimization is safe if it can be applied to a stream query without changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. \cite{stream_query_optimization}
+To answer the above question, it is helpful to understand the areas in which a Data stream system can be optimized. We look at each section individually and ask the question for the specific section. Optimization should be both safe and profitable. Optimization is safe if it can be applied to a stream query without changing what it computes, as determined by the user’s requirements. An optimization is profitable if it makes the stream query faster, as measured by metrics that matter to the user, such as throughput, latency, or resource efficiency. \cite{stream_query_optimization}
 \begin{itemize}
     \item \textbf{Batching}, reduces over-head by processing multiple data items together. \cite{Carney}, \cite{Gordon}, \cite{Welsh}
     
@@ -84,20 +84,20 @@ To answer the above question, it is helpful to understand the areas in which a D
     
     \item \textbf{Load Balancing}, attempts  to  distribute  workload  evenly  across resources. \cite{Gordon}, \cite{Arpaci}, \cite{Caneill}, \cite{Amini}
     
-    \item \textbf{Algorithm selection}, uses  a  different  algorithm  to  implementan operator. \cite{dbms}, \cite{Welsh}, \cite{Wolf}, \cite{Abadi}
+    \item \textbf{Algorithm selection}, uses  a  different  algorithm  to  implement operator. \cite{dbms}, \cite{Welsh}, \cite{Wolf}, \cite{Abadi}
     
     \item \textbf{Load Shedding}, copes  with  high  load  by  dropping  data  itemsto   process. \cite{Tatbul}, \cite{Gedik}
     
-    \item \textbf{Fission}, oftenreferredto   as   data   parallelism,   attempts   to   processmultiple data items in parallel by replicating an operator. \cite{Gordon}, \cite{Schneider}, \cite{Brito}
+    \item \textbf{Fission}, often referred to   as   data   parallelism,   attempts   to   process multiple data items in parallel by replicating an operator. \cite{Gordon}, \cite{Schneider}, \cite{Brito}
 \end{itemize} 
 
-While the above mentioned categories for optimization are not independent of each other, this thesis focuses solely on operator reordering using deep reinforcement learning.  
+While the above-mentioned categories for optimization are not independent, this thesis focuses solely on operator reordering using deep reinforcement learning. 
 
 \subsection{Operator reordering}
-A reordering optimization moves more selective operators, which reduce the data volume, upstream. This has the benefit of reducing the data flowing into downstream computation, thus eliminating unnecessary work. However, care must be taken to preserve the desired semantics, and operators should only be re-ordered if the operations are commutative and their order of execution can be changed if they are associative. \cite{stream_query_optimization}
-\par The questiont to ask in for operator reordering is
+A reordering optimization moves selective operators, which reduces the data volume, upstream. This has the benefit of reducing the data flowing into downstream computation, thus eliminating unnecessary work. However, care must be taken to preserve the desired semantics, and operators should only be re-ordered if the operations are commutative and their order of execution can be changed if they are associative. \cite{stream_query_optimization}
+\par The question to ask for operator reordering is
 \begin{center}
-    \textbf{Is it possible to learn a model which predicts the optimal ordering, defined by a metric of choice, of operators for a given query on data streams using deep reinforcement learning model trained on historical data?}
+    \textbf{Is it possible to learn a model that predicts the optimal ordering, defined by a metric of choice, of operators for a given query on data streams using a deep reinforcement learning model trained on historical data?}
 \end{center}
 \section{Structure of thesis}
 \label{sec:Structure of thesis}
@@ -105,12 +105,12 @@ The overall structure of the thesis chapter wise is as follows:-
 \begin{itemize}
     \item $2^{nd}$:- Gives an in-depth view of the pipeline used by the current state of art technology for query optimization in traditional data bases including the mathematical knowledge for simplification and the overall framework.
     \item $2^{nd}$:- Introduces the reader to data stream and how data management systems are used for them (called DSMS). We also explain few challenges DSMS face.
-    \item $2^{nd}$:- Introduced the reader to the mathematics required for Deep reinforcement learning and over the algorithm for DQN.
+    \item $2^{nd}$:- Introduced the reader to the mathematics required for Deep reinforcement learning and the algorithm for DQN.
     \item $3^{rd}$:- Introduce the reader to stream optimization.
-    \item $3^{rd}$:- Look at linear road, $2$ of its queries and few query plans for them.
+    \item $3^{rd}$:- Look at the linear road, $2$ of its queries, and few query plans for them.
     \item $4^{th}$:- Show how linear road data is generated and explain the schema for it.
-    \item $4^{th}$:- Present our implementation to mimic execution of SQL queries.
-    \item $4^{th}$:- Present the code our code for deep reinforcement learning.
+    \item $4^{th}$:- Present our implementation to mimic the execution of SQL queries.
+    \item $4^{th}$:- Present our code for deep reinforcement learning.
     \item $5^{th}$:- Present the assumption we made for our deep reinforcement learning and justification.
     \item $5^{th}$:- Present our results and limitations.
     \item $6^{th}$:- Present the summary of the thesis and provide ideas for further work.
@@ -120,7 +120,7 @@ The overall structure of the thesis chapter wise is as follows:-
 \label{sec:Conclusion}
 In this chapter we introduced the reader to:-
 \begin{itemize}
-    \item Challenges of inner workinngs of SQL. 
+    \item Challenges of inner workings of SQL. 
     \item How Data streams are managed.
     \item General idea of a Deep reinforcement learning agent, its properties and advantages.
     \item The outline of this thesis.
