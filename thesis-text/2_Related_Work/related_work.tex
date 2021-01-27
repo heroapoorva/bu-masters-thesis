@@ -8,23 +8,23 @@
 \graphicspath{{2_Body/Figures/}}
 
 \section{Introduction, Query optimization}
-A database can be thought of as a list of tables, where in each table itself can be considered as a list of data points ordered initially in the sequence they are entered.
-\par There are various tools which can be used to connect to a database, here we focus on structured query languages(SQL). A simple SQL query looks like this
-\begin{lstlisting}[language=SQL]
-    SELECT column_name_1, column_name_2
-    FROM table_name
-    WHERE condition
+A database can be thought of as a list of tables, wherein each table itself can be considered as a list of data points ordered initially in the sequence they are entered.
+\par Various tools can be used to connect to a database, here we focus on structured query languages(SQL). A simple SQL query looks like this
+\begin{lstlisting}[language=SQL, caption=Example of SFW query for SQL]
+    SELECT name, address
+    FROM customer_details
+    WHERE name="Tim"
 \end{lstlisting}
-This query is essentially asking to display the 2 columns from the table where the condition given is satisfied. This to particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer.
+This query is essentially asking to display the 2 columns from the table where the condition is given is satisfied. This particular query might be looking simple, but if the condition introduced is a complex one or if the table from which we need to return the output is complex, the question of how to execute the query optimally becomes difficult to answer.
 
 \section{Converting SQL queries to parse trees}
-The exact grammar for the convertion to parse tree is not listed below. But this step isn't simply conversion to a parse tree, the preprocessor which does the conversion also has several more functions.
+The exact grammar for the conversion to parse tree is not listed below. But this step isn't simply conversion to a parse tree, the preprocessor which does the conversion also has several more functions.
 \par For example, if the SQL query uses a "view" in the query as a relation, then each instance has to be replaced by the parse tree.
-\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking. If a parse tree passes the preprocessing then it is said to be \textbf{valid}.  In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic category has unique expansion into atoms and further syntactic categories.
+\par The preprocessor also has to conduct semantic checking, that is, check if relations used exist, check for ambiguity, and type checking. If a parse tree passes the preprocessing then it is said to be \textbf{valid}.  In these parse trees, there are 2 types of nodes, one the atoms, which are essentially keywords in SQL, operators, constants, and attributes. The second is Syntactic categories, these are names for families of subqueries in triangular brackets. Each of the syntactic categories has a unique expansion into atoms and further syntactic categories.
 
 
 \section{Relational algebra}
-As we saw above, order of operations matters, if the order of operations is not thoughtout and done blindly alot of redundant steps are executed and memory is moved around unnecessarily. There are few ways to atleast look and analyse the operations and how they can be simplied.\cite{dbms}
+As we saw above, the order of operations matters, if the order of operations is not thought out and done blindly, a lot of redundant steps are executed and memory is moved around unnecessarily. There are few ways to at least look and analyze the operations and how they can be simplified.\cite{dbms}
 \par Let \textsc{R,S} be relations. Some simple laws, associativity and commutativity can easily be verified:-
 \begin{itemize}
     \item $R\times S = S \times R$
@@ -36,16 +36,16 @@ As we saw above, order of operations matters, if the order of operations is not 
     \item $R \cap S = S \cap R$
     \item $(R \cap S) \cap T = R \cap (S \cap T)$
 \end{itemize}
-When applying associative law on relations, need to be careful whether the conditions actually makes sense after the order is changed.
-\par While the above identities work on both sets and bags(bags allow for repeatition). To show that laws for sets and bags do differ an easy way is to consider the distributive property.
+When applying associative law on relations, one needs to be careful whether the conditions make sense after the order is changed.
+\par While the above identities work on both sets and bags(bags allow for repetition). To show that laws for sets and bags do differ an easy way is to consider the distributive property.
 \begin{center}
 $A\cap _S(B\cup_S C) = (A\cap_S B)\cup_S(A\cap_S C)$\\
 $A\cap _B(B\cup_B C) \neq (A\cap_B B)\cup_B(A\cap_B C)$
 \end{center}
-We can simply show it with an example. Let $A=\{t\},B=\{t\},C=\{t\}$. The LHS comes to be $\{t\}$, whereas RHS is $\{t,t\}$
+We can show it with an example. Let $A=\{t\},B=\{t\},C=\{t\}$. The LHS comes to be $\{t\}$, whereas RHS is $\{t,t\}$
 
 \subsection{Select operator $\sigma$}
-First we start with simple properties of the $\sigma$ operator. Need to be careful about the attributes used in the select operator condition when pushing it down.
+First, we start with the simple properties of the $\sigma$ operator. Need to be careful about the attributes used in the select operator condition when pushing it down.
 \begin{itemize}
     \item $\sigma_{C_1 \land C_2}(R) = \sigma_{C_1}(\sigma_{C_2}(R)) $
     \item $\sigma_{C_1 \lor C_2}(R) = (\sigma_{C_1}(R)) \cup_S (\sigma_{C_2}(R))$
@@ -58,7 +58,7 @@ First we start with simple properties of the $\sigma$ operator. Need to be caref
 \end{itemize}
 
 \subsection{Projection operator $\pi$}
-While for the Select operator($\sigma$) the identities were quite straight forward with not many things to consider, the identities for Projection operator ($\pi$) are bit more involved.
+While for the Select operator($\sigma$) the identities were quite straightforward with not many things to consider, the identities for the Projection operator ($\pi$) are a bit more involved.
 \begin{itemize}
     \item $\pi_{L}(R \bowtie S) = \pi_{L}(\pi_{M}(R) \bowtie \pi_{N}(S))$, where $M,N$ are attributes required for the join or they are inputs to the projection.
     \item $\pi_{L}(R \underset{D}{\bowtie} S) = \pi_{L}(\pi_{M}(R) \underset{D}{\bowtie} \pi_{N}(S))$, similar to above identity/ law.
@@ -79,7 +79,7 @@ The $\delta$ operator eliminates duplicates from bags.
 \end{itemize}
 
 \subsection{Aggregation operator $\gamma$}
-It is difficult to give identities for the aggregation operator, like done for the above operators. This is mostly due to how the details of how the aggregation operator is used.
+It is difficult to give identities for the aggregation operator like done for the above operators. This is mostly due to how the details of how the aggregation operator is used.
 \begin{itemize}
     \item $\sigma(\gamma_{L}(R)) = \gamma_{L}(R)$
     \item $\gamma_{L}(R) = \gamma_{L}(\pi_{M}(R)),$ where $M$ must at least contain the attributed used in $L$.
@@ -87,25 +87,25 @@ It is difficult to give identities for the aggregation operator, like done for t
 
 
 \section{Converting Parse trees into logical expression}
-Till now, the only SQL related information presented is how to convert a Query into the parse tree, which is grammar dependent. Given the parse tree, need to substitute nodes by operators seen above, later this expression is optimized to be later converted to a physical query plan.
-\par Now to convert the parse tree into the logical expression. First, look at the transformation of select-from-where statement.
+Till now, the only SQL related information presented is how to convert a Query into the parse tree, which is grammar dependent. Given the parse tree, need to substitute nodes by operators seen above, this expression is optimized to be later converted to a physical query plan.
+\par Now to convert the parse tree into the logical expression. First, look at the transformation of the select-from-where statement.
 \begin{itemize}
     \item $<Query> \rightarrow <SFW>.$
     \item $<SFW> \rightarrow SELECT <SelList> FROM <FromList> WHERE <Condition>.$
     \item $<SelList> \rightarrow \pi_{L}$, where $L$ is the list of attributes in $<SelList>.$
     \item $<Condition> \rightarrow \sigma_{C},$ where $C$ is the equivalent of $<Condition>$ 
 \end{itemize}
-While there is nothign inherently wrong about the last statement, need to consider the case where $<Condition>$ involves subqueries. A simple explanation about why it isn't allowed is a convention normally the subscript has to be a boolean condition, and if it was allowed otherwise, it would be a very expensive operation, as the subscript in the select operator has to evaluted at every element of the argument relation. This shows the redundance of it. While if this is allowed, it can be simplified and made efficient, but has to be done on a case by case basis with the use of $\bowtie, \times$ functions.
-\par Overall it is a good idea to not use subquerying and rather using joins.
-\par At this point, by making the substitutions mentioned above and using the algebraic identities, we obtain a starting logical query plan. The query has to be transformed into a query which the compiler believes to be the cheapest or the optimal. But, a thing which further complicates the process is the join order.
+While there is nothing inherently wrong with the last statement, need to consider the case where $<Condition>$ involves subqueries. A simple explanation about why it isn't allowed is a convention normally the subscript has to be a boolean condition, and if it was allowed otherwise, it would be a very expensive operation, as the subscript in the select operator has to evaluated at every element of the argument relation. This shows the redundancy of it. While if this is allowed, it can be simplified and made efficient but has to be done on a case by case basis with the use of $\bowtie, \times$ functions.
+\par Overall it is a good idea to not use subquery and rather using joins.
+\par At this point, by making the substitutions mentioned above and using the algebraic identities, we obtain a starting logical query plan. The query has to be transformed into a query that the compiler believes to be the cheapest or optimal. But, a thing that further complicates the process is the join order.
 \par With the current knowledge, few optimizing rules are evident.
 \begin{itemize}
-    \item \textbf{Selection repositioning}, Selections should be pushed down as much as possbile, but sometimes, might need to take the selection operator a level up first.
+    \item \textbf{Selection repositioning}, Selections should be pushed down as much as possible, but sometimes, might need to take the selection operator a level up first.
     \item Pushing projections down the parse tree, being careful with the new projections made in the process.
     \item Duplicate removal needs to be repositioned.
     \item $\sigma$ combined with $\times$ below can result in equijoin, which is much more efficient. 
 \end{itemize}
-\par Normally, parsers only have nodes with $0, 1, 2$ children, which corresponds to uniary and binary operators. But many of the operators(natural join, union, and intersection) are commutative and associative, so it helps combine them on a single level to provide the opportunity to prioritize which ones are done first. To do this step, the following guidelines are sufficient.
+\par Normally, parsers only have nodes with $0, 1, 2$ children, which corresponds to unary and binary operators. But many of the operators(natural join, union, and intersection) are commutative and associative, so it helps combine them on a single level to provide the opportunity to prioritize which ones are done first. To do this step, the following guidelines are sufficient.
 \begin{itemize}
     \item We must replace the natural joins with theta-joins that equate the at­ tributes of the same name.
     \item We must add a projection to eliminate duplicate copies of attributes in­volved in a natural join that has become a theta-join
@@ -121,20 +121,20 @@ Currently, we have taken a query as an input and converted it into a logical pla
     \item Need to consider additional operators like scanning, sorting, and so on that are needed for the physical plan but that were not present explicitly in the logical plan.
     \item A method for passing information/ variable values fromt the output of one operator to the next, for instance, by storing the intermediate result on disk or by using iterators and passing an argument one tuple or one main-memory buffer at a time.
 \end{itemize}
-Finally after selecting all these methods need to actually check the time required to excute the plan, one obivious way to calculate the time is actually executing the plan to see the cost. But if we try to find the optimal plan by this method then we are essentially executing every plan. That is expensive and redundant. The next few section presents few methods which can help in this task.
+Finally after selecting all these methods need to check the time required to execute the plan, one obvious way to calculate the time is executing the plan to see the cost. But if we try to find the optimal plan by this method then we are essentially executing every plan. That is expensive and redundant. The next section presents few methods which can help in this task.
 
 \subsection{Estimating size and cost}
-$B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of relation $R$.\\
-$T(R) \coloneqq$ is the number of tuples of relation $R$.\\
-$V(R,a) \coloneqq$ is the value count for attribute a of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.\\
+$B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of a relation $R$.\\
+$T(R) \coloneqq$ is the number of tuples of a relation $R$.\\
+$V(R,a) \coloneqq$ is the value count for an attribute $a$ of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.\\
 $V(R, [ a_1 , a_2,..., a_n]) \coloneqq$ is the number of distinct values $R$ has when all of attributes $a_1, a_2,..., a_n$ are considered together, that is, the number of tuples in $\delta(\pi_{a_1,a_2,...,a_n}(R))$
-\par Compared to algorithms learnt in an introductory algorithms class, here the memory usage is huge and need to remember that intermidate/ temporary relations calculated will also incur a cost on the system. So need to take them into account as well because the physical plan is selected to minimize the estimated cost of evaluating the query. Over all the estimation method should pass the following sanity check:-
+\par Compared to algorithms learned in an introductory algorithms class, here the memory usage is huge, and need to remember that intermediate/ temporary relations calculated will also incur a cost on the system. So need to take them into account as well because the physical plan is selected to minimize the estimated cost of evaluating the query. Overall the estimation method should pass the following sanity check:-
 \begin{itemize}
     \item Give accurate estimates. No matter what method is used for executing query plans.
     \item Are easy to compute.
     \item Are logically consistent; that is, the size estimate for an intermediate re­lation should not depend on how that relation is computed. For instance, the size estimate for a join of several relations should not depend on the order in which we join the relations.
 \end{itemize}
-Even though there is no agreed upon method to do this, it does not matter because the goal is to help select a query plan and not to find the exact minimum cost. So even if the estimated cost is wrong, but if it is wrong similarly then we will still have the least costing plan.
+Even though there is no agreed-upon method to do this, it does not matter because the goal is to help select a query plan and not to find the exact minimum cost. So even if the estimated cost is wrong, but if it is wrong similarly then we will still have the least costing plan.
 
 \subsection{Estimation of Projection}
 The projection operator is a bag operation, so it does not reduce the number of tuples, only reduces the size of each tuple.\\
@@ -143,14 +143,14 @@ $B(R) \leq B(\pi(R))$
 
 \subsection{Estimation of Selection}
 Let $S = \sigma_{A=c}(R)$, here $A$ is an attribute of $R$ and $c$ is a constant\\
-$T(S)=\frac{T(R)}{V(R,A)}$, is it important to note that this is an estimate and not the actual value, this will be the actual value if all the attributes in $A$ have equal occurance. An even better estimate can be obtained if the DBMS stores a statistic know as histogram. 
-\par The above calculate was easy because of the equality. if $S=\sigma_{A < c}(R)$, we simply estimate $T(S)=\frac{T(R)}{3}$
+$T(S)=\frac{T(R)}{V(R,A)}$, it is important to note that this is an estimate and not the actual value, this will be the actual value if all the attributes in $A$ have equal occurrence. An even better estimate can be obtained if the DBMS stores a statistic known as histogram. 
+\par The above calculation was easy because of the equality. If $S=\sigma_{A < c}(R)$, we estimate $T(S)=\frac{T(R)}{3}$
 \par Now if $S=\sigma_{A\neq c}(R)$, can take $T(S)=T(R)$ or $T(S)= T(R) - \frac{T(R)}{V(R,A)}$
 \par If $S=\sigma_{A = c_1 \lor c_2}$, take them to be independent conditions.
 
 \subsection{Estimation of Join, single attribute}
 For natural joins, we assume, the natural join of two relations involves only the equality of two attributes. That is, we study the
-join $R(X, Y) \bowtie S(Y, Z)$ , but initially we assume that $Y$ is a single attribute although X and Z can represent any set of attributes. But it is hard to find a good estimate as $T(R\bowtie S) \in [0, T(R)*T(S)]$, to help with this two assumptions are made.
+join $R(X, Y) \bowtie S(Y, Z)$ , but initially, we assume that $Y$ is a single attribute although X and Z can represent any set of attributes. But it is hard to find a good estimate as $T(R\bowtie S) \in [0, T(R)*T(S)]$, to help with this, two assumptions are made.
 \begin{itemize}
     \item \textbf{Containment of Value Sets} If Y is an attribute appearing in several rela­tions, then each relation chooses its values from the front of a fixed list of values $y_1, y_2, y_3,...$ and has all the values in that prefix. As a consequence, if $R$ and $S$ are two relations with an attribute $Y$, and $V(R, Y) \leq V(S, Y)$, then every $Y$-value of $R$ will be a $Y$-value of $S$. 
     \item \textbf{Preservation of Value Sets} If we join a relation $R$ with another relation, then an attribute A that is not a join attribute (i.e., not present in both relations) does not lose values from its set of possible values. More precisely, if $A$ is an attribute of $R$ but not of $S$, then $V(R \bowtie S, A) = V(R, A)$. Note that the order of joining $R$ and $S$ is not important, so we could just as well have said that $V(S \bowtie R, A) = V (R, A)$.
@@ -168,7 +168,7 @@ $T(R)$ tuples of $R$, the estimated size of $R \bowtie S$ is $\frac{T(R)*T(S)}{V
 \subsection{Estimation of Join, multiple attribute}
 Now we assume $Y$ in $R(X, Y) \bowtie S(Y, Z)$ represents multiple attributes. Say for example, $R(X, y_1, y_2) \bowtie S(y_1, y_2, Z)$. We again do a probability calculation.
 \par Let $r \in R, s \in S$ be a tuples, the probability that $r,s$ agree on $y_1$ is $\frac{1}{max(V(R,y_1), V(S,y_1))}$, similarly for $y_2$. So we get the expected value to be
-$$\frac{T(R)*T(S)}{max(V(R,y_1), V(S,y_1))*max(V(R,y_2), V(S,y_2))}$$ 
+$$\frac{T(R)*T(S)}{\text{max}(V(R,y_1), V(S,y_1))*\text{max}(V(R,y_2), V(S,y_2))}$$ 
 From this the pattern is clear, need to divide $T(R)*T(S)$ by maximum of $V(R,y), V(S,y)$ for each attribute.
 \par But this is only the calculation for $T(R\bowtie S)$, need to calculate for $B(R\bowtie S)$ as well.
 
@@ -436,7 +436,7 @@ Similar to the case of traditional DBMS, querying in DSMS involves multiple step
 It is important to note that optimizing resource allocation using any state of the art strategy does not guarantee that resources will be sufficient, as there might be some points in the data stream which overloads particular query, hence wiggle room in the performance/ accuracy, i.e. some of the data can be discarded to decrease the quality of the result and give an approximate result. This process of decreasing quality of result by not considering some tuple is called load shedding. Given that discarding tuples of the data stream is allowed, how do we decide which ones to discard? 
 
 \subsection{Complex Event and Rule Processing}
-In the first section we said we proceed with the second strategy, i.e. monitor the metrics. Can extend that idea further to monitor the output of CQs to detect anomalies. Initially, Comple Event Processing was not a part of DSMS, but now many models have been developed to integrate the two. With the integration comes many additional functionalities and helps develop a theoretical base, but also puts additional burden on the system. This along with run time optimiations makes the implementation of DSMS quite complicated.
+In the first section we said we proceed with the second strategy, i.e. monitor the metrics. Can extend that idea further to monitor the output of CQs to detect anomalies. Initially, Complex Event Processing was not a part of DSMS, but now many models have been developed to integrate the two. With the integration comes many additional functionalities and helps develop a theoretical base, but also puts additional burden on the system. This along with run time optimiations makes the implementation of DSMS quite complicated.
 
 \section{Deep Learning}
 We expand on linear regression model. Given $\{(x^{(i)},y^{(i)})\}_{i=1}^{n}$ as data points, the goal is to find a function $h_{\theta}(x)$ which is "as close as possible" to $y_i$.
