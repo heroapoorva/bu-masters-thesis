@@ -1,0 +1,75 @@
+% !TeX spellcheck = en_GB
+\documentclass[english,11pt,aspectratio=1610,xcolor=table]{beamer}
+\input{tex/setup}
+\input{tex/setup-colors}
+\input{tex/setup-settings}
+
+
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+
+
+
+
+\usetheme{JD}
+\beamertemplatenavigationsymbolsempty
+
+% header fields: usage
+% \field
+%     [short form (footline)]
+%     {long form on title page}
+%
+\title
+    [QUERY PLANNING FOR STREAM PROCESSING]
+    {Data Stream Query Optimization Using Deep Reinforcement Learning}
+
+\subtitle{Final presentation} % short version unused by this template
+\author
+    [A. Tamaskar]
+    {Apoorva Tamaskar}
+\institute
+    {Boston University\\%
+     Metropolitan College}
+\date
+    [02/2021]
+    {01 February 2021}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\input{tex/introduction}
+%\input{tex/models}
+%\input{tex/development}
+\end{document}
