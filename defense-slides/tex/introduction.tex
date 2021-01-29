@@ -153,22 +153,64 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{SQL: Cost Estimation}
-    a
+\begin{frame}{SQL: Cost}
+$B(R) \coloneqq$ is the number of blocks needed to hold all the tuples of a relation $R$.\\
+$T(R) \coloneqq$ is the number of tuples of a relation $R$.\\
+$V(R,a) \coloneqq$ is the value count for an attribute $a$ of relation $R$, that is, the number of distinct values relation $R$ has in attribute $a$.\\
+$V(R, [ a_1 , a_2,..., a_n]) \coloneqq$ is the number of distinct values $R$ has when all of attributes $a_1, a_2,..., a_n$ are considered together, that is, the number of tuples in $\delta(\pi_{a_1,a_2,...,a_n}(R))$
 \end{frame}
 
-\begin{frame}{SQL}
-    a
+\begin{frame}{SQL: Cost}
+We assume that the "cost" of evaluating an expression is approximated well by the number of disk I/O's performed. The number of disk I/O's, in turn, is influenced by:
+\begin{itemize}[<+->]
+    \item The particular logical operators chosen to implement the query.
+    \item The sizes of intermediate results, need to pass them to the next function.
+    \item The physical operators used to implement logical operators, e.g., the choice of a one-pass or two-pass join, or the choice to sort or not sort a given relation.
+    \item The ordering of similar operations, especially joins.
+    \item The method of passing arguments from one physical operator to the next.
+\end{itemize}
 \end{frame}
 
-\begin{frame}{SQL}
-    a
+
+\begin{frame}{SQL: Cost: Estimation}
+    \begin{enumerate}[<+->]
+        \item Give accurate estimates. No matter what method is used for executing query plans.
+        \item Are easy to compute.
+        \item Are logically consistent; that is, the size estimate for an intermediate re­lation should not depend on how that relation is computed. For instance, the size estimate for a join of several relations should not depend on the order in which we join the relations.
+    \end{enumerate}
 \end{frame}
 
-\begin{frame}{SQL}
-    a
+\begin{frame}{SQL: Cost: Methods}
+    \begin{enumerate}[<+->]
+        \item Histogram
+        \item Heuristics
+        \item Top-Down
+        \item Bottom-up
+        \item Dynamic Programming
+        \item Branch-and-Bound
+        \item Hill Climbing
+        \item Selinger-Style Optimization
+    \end{enumerate}
 \end{frame}
 
+\begin{frame}{SQL: Joins}
+    \begin{enumerate}[<+->]
+        \item Nested-loop join
+        \item Index join
+        \item Dynamic Programming
+        \item Greedy
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{SQL: Physical Plan}
+    \begin{enumerate}[<+->]
+        \item Selection, Index based
+        \item Selection, Table Scan
+        \item Join, One-pass join
+        \item Join, Hash join
+        \item Join, Index join
+    \end{enumerate}
+\end{frame}
 
 \begin{frame}{Data Streams}
     Stream query optimization is the process of modifying a stream processing query, often by changing  its  graph  topology  and or  operators,  with the  aim  of  achieving  better  performance  (such as  higher  throughput,  lower  latency,  or  reduced resource usage), while preserving the semantics of the original query.\\

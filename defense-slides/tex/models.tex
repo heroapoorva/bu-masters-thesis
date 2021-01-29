@@ -51,8 +51,21 @@ Linear Road is inspired by the increasing prevalence of variable tolling on high
     \end{lstlisting}
 \end{frame}
 
-\begin{frame}{Implementation}
-a
+\begin{frame}{Implementation: Data Generator}
+    Used the walmart Linear road data generator.
+\end{frame}
+
+\begin{frame}{Implementation: Query Execution}
+    Mimicked the execution of query in C++.\\
+    Given that there are 24 possible orderings, executed all of them and recorded how much time and the number of operations they took.\\
+    For each window of data extracted the entropy of columns, size of tables and stored these too.
+\end{frame}
+
+\begin{frame}{Implementation: DQN}
+    The DQN took in input the column wise entropy, the size of tables and the ordering of operations, the reward for the training is taken to be the number of operations required.\\
+    For prediction purposes\\
+    For each entropy vector, we calculate the reward for each ordering.\\
+    We check which ordering has the least numbre of operations required. and determine the category.
 \end{frame}
 
 \begin{frame}{Justification}
