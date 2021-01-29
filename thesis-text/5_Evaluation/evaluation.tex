@@ -26,7 +26,7 @@ The things considered while determining the neural network to use for training t
 \end{itemize}
 What we found was:-
 \begin{itemize}
-    \item Adding additional layers improve the prediction of the optimal moves but not by significant margin.
+    \item Adding additional layers improves the prediction of the optimal moves but not by significant margin.
     \item Adding additional layers resulted in the time spent predicting the answer overshadowing the time saved by executing the optimal move.
 \end{itemize}
 \par But note, these $2$ are only query and data specific findings.
@@ -224,7 +224,7 @@ We divide this section into the following parts:-
 
 
 \subsection{Interpretations}
-Despite the biased input data classes, the final strategy we got from the DQN gave us a performance of $101\%$ of the optimal solution, we can safely say, DQN have proved to be useful in this case. The successive epoches of DQN also can be seen to improve the results via the diagram.\\
+Despite the biased input data classes, the final strategy we got from the DQN gave us a performance of $102\%$ of the optimal solution, we can safely say, DQN have proved to be useful in this case. The successive epoches of DQN also can be seen to improve the results via the diagram.\\
 But contrary to the expected result, the number of data points for which we were able to predict to optimal move correctly are roughly $48\%$, the lack of accuracy across the $24$ classes is concerning which can perhaps be addressed to the lack of features used in training the DQN.\\
 Overall the improvement of optimal strategy selection is inline with the powerful nature of deep neural networks and iterative nature of reinforcement learning. The high amount of data available from data streams can definitely be a huge plus point for online training methods for DQN for query optimization.\\
 
@@ -240,7 +240,7 @@ The work presented in this thesis has a number of limitations.
 \begin{itemize}
     \item The neural network is unable to achieve low loss for the test data, this perhaps speak the lack of features extracted during the querying time.
     \item The data sample we have is highly biased, leading to rather baised DQNs.
-    \item The entire method need to be parallelized and set up on a scalable infrastructure to see the actual effects of DQN.
+    \item The entire method needs to be parallelized and set up on a scalable infrastructure to see the actual effects of DQN.
     \item The DQN used is simulating a single move game rather than a multi move game.
     \item Not looked at how DQNs can be trained online.
 \end{itemize}
