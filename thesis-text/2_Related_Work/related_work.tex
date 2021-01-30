@@ -254,8 +254,7 @@ Join takes in two argument, while the end result is independent of the order of 
 into main memory, creating a structure such as a hash table to facilitate matching of tuples from the other relation. It then reads the other relation, one block at a time, to join its tuples with the tuples stored in memory. 
 \par For instance, suppose that when we select a physical plan we decide to use a one-pass join. Then we shall assume the left argument of the join is the smaller relation and store it in a main-memory data structure. This relation is called the build relation. The right argument of the join, called the probe relation, is read a block at a time and its tuples are matched in main memory with those of the build relation. Other join algorithms that distinguish between their arguments include:
 \begin{itemize}
-    \item Nested-loop join, where we assume the left argument is the relation of the
-outer loop.
+    \item Nested-loop join, where we assume the left argument is the relation of the outer loop.
     \item Index-join, where we assume the right argument has the index.
 \end{itemize}
 
@@ -299,9 +298,12 @@ mentation of relational-algebra operators.
 
 \subsection{Choosing a Selection Method}
 One of the important steps in choosing a physical query plan is to pick algo­rithms for each selection operator.
-\par Assuming there are no multidimensional indexes on several of the attributes,
-then each physical plan uses some number of attributes that each have an index, and are compared to a constant in one of the terms of the selection. We then use these indexes to identify the sets of tuples that satisfy each of the
-conditions. For simplicity, we shall not consider the use of several indexes in this way. Rather, we limit our discussion to physical plans that:
+\par Assuming there are no multidimensional indexes on several of the attributes, then each physical plan uses some number of attributes that each 
+\begin{itemize}
+    \item have an index
+    \item are compared to a constant in one of the terms of the selection. 
+\end{itemize}
+We then use these indexes to identify the sets of tuples that satisfy each of the conditions. For simplicity, we shall not consider the use of several indexes in this way. Rather, we limit our discussion to physical plans that:
 \begin{itemize}
     \item Use one comparison of the form $A\theta c$, where $A$ is an attribute with an index, $c$ is a constant, and $\theta$ s a comparison operator such as $=$ or $<$.
     \item Retrieve all tuples that satisfy the comparison, using the index­ scan physical operator.
