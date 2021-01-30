@@ -1,0 +1,46 @@
+% !TeX root = ../defense.tex
+
+\section{Implementation and Justification}
+\frame{\sectionpage}
+
+
+\begin{frame}{Implementation: Query Execution}
+    \begin{enumerate}
+        \item Mimicked the execution of query in C++.
+        \item Given there are 24 possible orderings, executed all of them and recorded how much time and the number of operations they took.
+        \item For each window of data, extracted the entropy of columns, size of tables and stored these.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Implementation: DQN}
+    Training
+    \begin{enumerate}
+        \item Input the column wise entropy, the size of tables and the 1-hot encoding of ordering of operations.
+        \item The reward for the training is taken to be the number of operations required.
+    \end{enumerate}
+    Prediction
+    \begin{enumerate}
+        \item Predict the reward for each ordering, for given entropy vector+ table size.\\
+        \item The rewards represent number of operations required.
+        \item Check which ordering has least number of operations, this ordering is optimal.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Justification}
+The things considered while determining the neural network to use for training the DQN are :-
+    \begin{itemize}
+        \item Value of loss function
+        \item Time for prediction/ Complexity of model
+        \item Resources for training
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Justification}
+    What we found was:-
+    \begin{itemize}
+        \item Adding additional layers improves the prediction of the optimal moves but not by significant margin.
+        \item Adding additional layers resulted in the time spent predicting the answer overshadowing the time saved by executing the optimal move.
+    \end{itemize}
+These are only query and data specific findings.
+\end{frame}
+

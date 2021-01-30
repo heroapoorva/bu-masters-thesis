@@ -39,18 +39,8 @@
     The predictions on trained model lead to the following confusion matrix.
     \begin{figure}
         \centering
-        \includegraphics[scale=0.5]{cm1.png}\\
-        \caption{DQN Run 1 confusion matrix}
-        \label{fig:dqn_r1_1}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Confusion Matrix}
-    The predictions on trained model lead to the following confusion matrix.
-    \begin{figure}
-        \centering
         \includegraphics[scale=0.3]{cm3.png}\\
-        \caption{DQN Run 2 confusion matrix}
+        \caption{DQN predictions visualized as confusion matrix}
         \label{fig:dqn_r2_1}
     \end{figure}
 \end{frame}
@@ -75,34 +65,5 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{Overall Performance}
-    The model predicted optimal move correctly for $12978$ data points, out of $27681$, i.e. $47\%$.\\
-\end{frame}
 
-\begin{frame}{Overall Performance}
-    \begin{enumerate}[<+->]
-        \item The sum of operations required by the optimal ordering $890640075.0$
-        \item The sum of operations required by the predicted ordering $900269878.0$
-        \item The sum of operations required by the optimal ordering $2310227856.0$
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    Our model resulted in requiring $39\%$ of operations as the query execution would have required if it executed the worst ordering every time.\\
-    Our model resulted in requiring $102\%$ of operations as the query execution would have required if it executed the optimal ordering every time.\\
-\end{frame}
-
-\begin{frame}{Further Work}
-    \begin{itemize}[<+->]
-        \item The neural network is unable to achieve low loss for the test data, this perhaps speak the lack of features extracted during the querying time.
-        \item The data sample we have is highly biased, leading to rather baised DQNs.
-        \item The entire method needs to be parallelized and set up on a scalable infrastructure to see the actual effects of DQN.
-        \item The DQN used is simulating a single move game rather than a multi move game.
-        \item Not looked at how DQNs can be trained online.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{}
-    Questions?
-\end{frame}
 

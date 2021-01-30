@@ -1,0 +1,117 @@
+\section{SQL}
+\frame{\sectionpage}
+
+
+\begin{frame}[fragile]{Introduction}
+    Given a SQL query, how is it executed?
+    \begin{lstlisting}[language=SQL, caption= SQL query to execute.]
+        SELECT MovieTitle
+        FROM StarsIn
+        WHERE StarName IN(
+            SELECT name
+            FROM MovieStar
+            WHERE birthdate LIKE '%1960'
+        );
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{SQL: Pipeline}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.25]{query_processor.png}\\
+        \caption{The pipeline for query processing}
+        \label{fig:query_processor}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{SQL: Parser}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.25]{parse_tree.png}\\
+        \caption{An example of parse tree}
+        \label{fig:prase_tree}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{SQL: Preprocessing}
+    Sanity checking
+    \begin{enumerate}
+        \item Check relation uses
+        \item Check and resolve attribute uses.
+        \item Check types.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{SQL: Relational Algebra}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.25]{join_pushdown1.png}\\
+        \caption{An example of join being optimized}
+        \label{fig:j_1}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{SQL: Relational Algebra}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.25]{join_pushdown2.png}\\
+        \caption{An example of Relational Algebra being used for optimization}
+        \label{fig:j_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{SQL: Rewrite}
+    Need to convert the query plan using Relational Algebra into a query plan which requires has lowest cost according to estimates.
+\end{frame}
+
+\begin{frame}{SQL: Cost: Estimation}
+    \begin{enumerate}
+        \item Give accurate estimates. No matter what method is used for executing query plans.
+        \item Are easy to compute.
+        \item Are logically consistent.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{SQL: Cost: Methods}
+    \begin{enumerate}
+        \item Histogram
+        \item Heuristics
+        \item Top-Down
+        \item Bottom-up
+        \item Dynamic Programming
+        \item Branch-and-Bound
+        \item Hill Climbing
+        \item Selinger-Style Optimization
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{SQL: Cost: Considerations}
+    \begin{enumerate}
+        \item An order and grouping for associative-and-commutative operations
+        \item An algorithm for each operator
+        \item Additional operators - scanning, sorting
+        \item The way in which arguments are passed    
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{SQL: Joins}
+    \begin{enumerate}
+        \item Algorithm Nested-loop join
+        \item Algorithm Index join
+        \item Order Dynamic Programming
+        \item Order Greedy
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{SQL: Physical Plan}
+    \begin{enumerate}
+        \item Selection, Index based
+        \item Selection, Table Scan
+        \item Join, One-pass join
+        \item Join, Hash join
+        \item Join, Index join
+    \end{enumerate}
+\end{frame}
+
+
+
