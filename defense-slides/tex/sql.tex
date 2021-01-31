@@ -1,8 +1,8 @@
-\section{SQL}
+\section{Related Work}
 \frame{\sectionpage}
 
 
-\begin{frame}[fragile]{Introduction}
+\begin{frame}[fragile]{SQL: Introduction}
     Given a SQL query, how is it executed?
     \begin{lstlisting}[language=SQL, caption= SQL query to execute.]
         SELECT MovieTitle
@@ -113,5 +113,97 @@
     \end{enumerate}
 \end{frame}
 
+\begin{frame}{Stream Query Optimization}
+    Modifying queries by changing graph topology and/ or operators to get better performance, as measured by
+    \begin{enumerate}
+        \item Throughput
+        \item Latency
+        \item Resource Usage.
+    \end{enumerate}
+    While preserving semantice of the original query.
+\end{frame}
 
+\begin{frame}{Stream Graph}
+    Queries on Data streams can be thought of as directed graphs,
+    \begin{enumerate}
+    \item Edges represent streams and nodes represent operators.
+    \item Root  and  leaf nodes are called sources and sinks, respectively.
+    \end{enumerate}
+    Whereas for traditional Databases, we have parse trees.
+\end{frame}
 
+\begin{frame}{Possible Optimizations}
+    \begin{itemize}
+        \item Batching
+        \item Placement
+        \item State sharing
+        \item Load Balancing
+        \item Algorithm selection
+        \item Load Shedding
+        \item Fusion
+        \item Operator Separation
+        \item Operator Reordering
+        \item Redundancy elimination
+        \item Fission
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Operator Reordering}
+    A reordering operator moves more selective operators, which reduce the data volume upstream. This has the benefit of reducing the amount of data flowing into downstream compuration. Thus eliminatin unnecessary work. 
+    We focus on finding the optimal method of executing associative opeators.
+\end{frame}
+
+\begin{frame}{Research Question}
+    \begin{center}
+    Is it possible to apply deep reinforcement learning to find the optimal ordering of executing associative operations?
+    \end{center}
+\end{frame}
+
+\begin{frame}{Deep Neural Networks}
+    Deep neural networks is a layer wise combinations of neurons\\
+    Building up on the neuron seen in the last slide. We have
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{dl.png}\\
+        \caption{Example of a deep neural network}
+        \label{fig:dl}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Reinforcement Learning}
+    What is reinforcement learning? How is it different from supervised and unsupervised learning?
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{rl.jpg}\\
+        \caption{Example of a framework of a reinforcement learning agent }
+        \label{fig:rl}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Optimal Policy}
+    \begin{lstlisting}[language=python, caption=value iteration algorithm]
+    for s in S:
+        V(s)=0
+    while(not converged):
+        for s in S:
+            V(s)=R(s)+max over all action[gamma*(sum(P(s,a,s')V(s')))]
+    \end{lstlisting}
+    
+    \begin{lstlisting}[language=python, caption=Policy iteration algorithm]
+    initialize random pi
+    while(not converged):
+        V=V(pi)
+        for s in S:
+            pi(s)=max over all actions[sum(P(s,a,s')V(S'))]
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Deep Reinforcement Learning}
+    Deep reinforcement learning combines Deep learning and reinforcement learning
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.25]{drl.png}\\
+        \caption{Deep Reinforcement learning(DQN) framework}
+        \label{fig:drl}
+    \end{figure}
+\end{frame}

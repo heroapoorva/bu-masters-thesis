@@ -1,35 +1,49 @@
 % !TeX root = ../defense.tex
 
-\section{Results, Conclusion and Further Work}
+\section{Evaluation}
 \frame{\sectionpage}
 
+\begin{frame}[fragile]{Linear Road Data}
+Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment, position, query ID, start segment, end segment, day of week, minute of day, day in past 10 weeks
+\begin{lstlisting}[caption= Example of Linear Road Data]
+0,0,13,10,8,0,0,89,469920,-1,-1,-1,-1,-1,-1
+0,0,17,10,8,0,1,65,348479,-1,-1,-1,-1,-1,-1
+0,0,22,10,8,0,0,12,63360,-1,-1,-1,-1,-1,-1
+0,0,33,10,8,0,1,94,501599,-1,-1,-1,-1,-1,-1
+0,0,42,10,8,0,0,14,73920,-1,-1,-1,-1,-1,-1
+0,0,4,10,7,0,0,61,322080,-1,-1,-1,-1,-1,-1
+0,0,85,10,8,0,1,30,163679,-1,-1,-1,-1,-1,-1
+0,0,11,10,6,0,1,41,221759,-1,-1,-1,-1,-1,-1
+0,0,23,10,7,0,1,81,432959,-1,-1,-1,-1,-1,-1
+0,0,15,10,6,0,0,5,26400,-1,-1,-1,-1,-1,-1
+\end{lstlisting}
+\end{frame}
+
+
 \begin{frame}{Data Distribution}
-    The data obtained by executing all the orderings for the query plan on Linear road data, resulted in the following frequencies for optimal orderings.
     \begin{figure}
         \centering
-        \includegraphics[scale=0.375]{totalb1.png}\\
-        \caption{This figure shows the frequency distribution of the number of cases where each move is optimal}
+        \includegraphics[scale=0.45]{totalb1.png}\\
+        \caption{Shows for each ordering of operations, the number of data windows for which it was optimal, the data is baised towards the last 2 orderings.}
         \label{fig:totalb1}
     \end{figure}
 \end{frame}
 
 
 \begin{frame}{Data Distribution}
-    While training and testing the DQN model, we divided the total data into a $70:30$ for training and testing purposes respectively.
     \begin{figure}
         \centering
-        \includegraphics[scale=0.375]{trainingb1.png}\\
-        \caption{This figure shows the frequency distribution of cases where each move is optimal in the training dataset}
+        \includegraphics[scale=0.45]{trainingb1.png}\\
+        \caption{Shows for each ordering, the number of data windows in trainging data for which it was optimal, the data was divided into 70\%:30\% for training and testing}
         \label{fig:trainingb1}
     \end{figure}
 \end{frame}
 
 \begin{frame}{Data Distribution}
-    While training and testing the DQN model, we divided the total data into a $70:30$ for training and testing purposes respectively.
     \begin{figure}
         \centering
-        \includegraphics[scale=0.375]{testingb1.png}\\
-        \caption{This figure shows the frequency distribution of cases where each move is optimal in the testing dataset}
+        \includegraphics[scale=0.45]{testingb1.png}\\
+        \caption{Shows for each ordering, the number of data windows in testing data for which it was optimal, the data was divided into 70\%:30\% for training and testing}
         \label{fig:testingb1}
     \end{figure}
 \end{frame}
