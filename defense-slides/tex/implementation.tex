@@ -24,15 +24,7 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Optimal Policy}
-    \begin{lstlisting}[language=python, caption=value iteration algorithm]
-    for s in S:
-        V(s)=0
-    while(not converged):
-        for s in S:
-            V(s)=R(s)+max over all action[gamma*(sum(P(s,a,s')V(s')))]
-    \end{lstlisting}
-    
+\begin{frame}[fragile]{Optimal Policy}    
     \begin{lstlisting}[language=python, caption=Policy iteration algorithm]
     initialize random pi
     while(not converged):
@@ -62,20 +54,16 @@
 \end{frame}
 
 \begin{frame}[fragile]{Linear Road: Query to execute}
-    The goal is to execute the SegToll Query.
-    \begin{lstlisting}[language=SQL, caption= SEGTOLL linear road query]
-        SELECT car_id, exp_way, dir, seg
-        FROM CarSegStr [PARTITION BY car_id ROWS 1], CurActiveCars
-        WHERE CarSegStr.car_id = CurActiveCars.car_id;
-        
+    \begin{lstlisting}[language=SQL]
+    SEGAVGSPEED
         SELECT exp_way, dir, seg, AVG(speed) as speed,
         FROM CarSegStr [RANGE 5 MINUTES]
         GROUP BY exp_way, dir, seg;
-        
+    SEGVOL
         SELECT exp_way, dir, seg, COUNT(*) as volume
         FROM CurCarSeg
         GROUP BY exp_way, dir, seg;
-
+    SEGTOLL
         SELECT S.exp_way, S.dir, S.seg, basetoll*(V.volume-150)*(V.volume-150)
         FROM SegAvgSpeed as S, SegVol as V
         WHERE S.exp_way = V.exp_way and S.dir = V.dir and S.seg = V.seg
@@ -100,7 +88,7 @@ $$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_3}(\sigma
     \begin{enumerate}
         \item Mimicked the execution of query in C++.
         \item Given there are 24 possible orderings, executed all of them and recorded how much time and the number of operations they took.
-        \item For each window of data store the column wise entropy and size of tables.
+        \item For each window of data store the column wise entropy and size of tables for SegVol and SegAvgSpeed.
     \end{enumerate}
 \end{frame}
 
@@ -122,16 +110,13 @@ $$\pi_{\text{S.exp\_way, S.dir, S.seg, S.toll}}(\sigma_{C_1}(\sigma_{C_3}(\sigma
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Justification}
-The things considered while determining the neural network to use for training the DQN are :-
+\begin{frame}{Model Design}
+The things considered while determining the neural network to use for training the DQN are
     \begin{itemize}
         \item Value of loss function
         \item Time for prediction/ Complexity of model
         \item Resources for training
     \end{itemize}
-\end{frame}
-
-\begin{frame}{Justification}
-    What we found was adding layers improves the accuracy of prediction of the optimal moves but not by significant margin.\\
+    We found was adding layers improves the accuracy of prediction of the optimal moves but not by significant margin.\\
     These are only query and data specific findings.
 \end{frame}

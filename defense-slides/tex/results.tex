@@ -24,7 +24,7 @@ Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment,
     \begin{figure}
         \centering
         \includegraphics[scale=0.45]{totalb1.png}\\
-        \caption{Shows for each ordering of operations, the number of data windows for which it was optimal, the data is baised towards the last 2 orderings.}
+        \caption{Shows for each ordering of operations, the number of data windows for which is was optimal ordering.}
         \label{fig:totalb1}
     \end{figure}
 \end{frame}
@@ -34,7 +34,7 @@ Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment,
     \begin{figure}
         \centering
         \includegraphics[scale=0.45]{trainingb1.png}\\
-        \caption{Shows for each ordering, the number of data windows in trainging data for which it was optimal, the data was divided into 70\%:30\% for training and testing}
+        \caption{Training data. Did a 70\% 30\% divide on data for training and testing respectively.}
         \label{fig:trainingb1}
     \end{figure}
 \end{frame}
@@ -43,7 +43,7 @@ Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment,
     \begin{figure}
         \centering
         \includegraphics[scale=0.45]{testingb1.png}\\
-        \caption{Shows for each ordering, the number of data windows in testing data for which it was optimal, the data was divided into 70\%:30\% for training and testing}
+        \caption{Testing data. Did a 70\% 30\% divide on data for training and testing respectively.}
         \label{fig:testingb1}
     \end{figure}
 \end{frame}
@@ -76,8 +76,8 @@ Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment,
     \end{figure}
 \end{frame}
 
-\begin{frame}{Predictions}
-    Some of the cases we were able to predict the correct answers.
+\begin{frame}{Prediction 1}
+    For first data window, we have the following number of operations required.
     \begin{figure}
         \centering
         \includegraphics[scale=0.4]{operations1.png}\\
@@ -86,8 +86,8 @@ Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment,
     \end{figure}
 \end{frame}
 
-\begin{frame}{Predictions}
-    Some of the cases we were able to predict the correct answers.
+\begin{frame}{Prediction 2}
+    For second data window, we have the following number of operations required.
     \begin{figure}
         \centering
         \includegraphics[scale=0.4]{operations2.png}\\
@@ -96,5 +96,16 @@ Query Type, Time stamp, vehicle ID, speed, expressway, lane, direction, segment,
     \end{figure}
 \end{frame}
 
+\begin{frame}{Overall accuracy}
+    The model predicted optimal move correctly for $12978$ data windows, out of $27681$ data windows, i.e. $47\%$.\\
+\end{frame}
 
+\begin{frame}{Comparison}
+    If the DSMS executed 
+    \begin{enumerate}
+        \item The TRUE optimal ordering, for each data window, on the given test data set, it will require 890M operations overall.
+        \item The PREDICTED optimal ordering, for each data window, on the given test data, it will required 900M operations overall.
+        \item The WORST ordering, for each data window, on the given test data, it will require 2310M operations overall.
+    \end{enumerate}
+\end{frame}
 

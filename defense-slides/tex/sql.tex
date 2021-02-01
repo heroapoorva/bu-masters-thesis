@@ -33,38 +33,26 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{SQL: Preprocessing}
-    Sanity checking
-    \begin{enumerate}
-        \item Check relation uses
-        \item Check and resolve attribute uses.
-        \item Check types.
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{SQL: Relational Algebra}
-    \begin{figure}
-        \centering
-        \includegraphics[scale=0.25]{join_pushdown1.png}\\
-        \caption{An example of join being optimized}
-        \label{fig:j_1}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{SQL: Relational Algebra}
-    \begin{figure}
-        \centering
-        \includegraphics[scale=0.25]{join_pushdown2.png}\\
-        \caption{An example of Relational Algebra being used for optimization}
-        \label{fig:j_2}
-    \end{figure}
-\end{frame}
-
 \begin{frame}{SQL: Rewrite}
     Need to convert the query plan using Relational Algebra into a query plan which requires has lowest cost according to estimates.
 \end{frame}
 
-\begin{frame}{SQL: Cost: Estimation}
+\begin{frame}[fragile]{SQL: Relational Algebra}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.21]{join_pushdown1.png}
+        \includegraphics[scale=0.21]{join_pushdown2.png}
+        \label{fig:j_1}
+    \end{figure}
+    \begin{lstlisting}[language=SQL]
+    SELECT movieYear, MAX(birthdate) 
+    FROM MovieStar, StarIn
+    WHERE name=starName 
+    GROUP BY movieYear;
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{SQL: Cost Estimation}
     \begin{enumerate}
         \item Give accurate estimates. No matter what method is used for executing query plans.
         \item Are easy to compute.
@@ -72,7 +60,7 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{SQL: Cost: Methods}
+\begin{frame}{SQL: Cost Calculation Methods}
     \begin{enumerate}
         \item Histogram
         \item Heuristics
@@ -85,35 +73,37 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{SQL: Cost: Considerations}
-    \begin{enumerate}
-        \item An order and grouping for associative-and-commutative operations
-        \item An algorithm for each operator
-        \item Additional operators - scanning, sorting
-        \item The way in which arguments are passed    
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{SQL: Joins}
-    \begin{enumerate}
-        \item Algorithm Nested-loop join
-        \item Algorithm Index join
-        \item Order Dynamic Programming
-        \item Order Greedy
-    \end{enumerate}
+\begin{frame}[fragile]{SQL: Branch and Bound}
+    \begin{lstlisting}[language=python]
+    cost_upper_limit= +inf
+    plan=[]
+    while(can explore):
+        if node has unexplored neighbours:
+            explore node neighbour
+            calculate cost of current plan
+            if cost of plan >=cost_upper_limit:
+                backtrack
+            else:
+                update plan
+            if(complete plan and cost of plan < cost_upper_limit):
+                optimal_plan=current_plan
+                cost_upper_limit = cost of plan
+        else:
+            mark node as explored completely
+            backtrack
+    return optimal_plan
+    \end{lstlisting}
 \end{frame}
 
 \begin{frame}{SQL: Physical Plan}
     \begin{enumerate}
-        \item Selection, Index based
-        \item Selection, Table Scan
-        \item Join, One-pass join
-        \item Join, Hash join
-        \item Join, Index join
+        \item Algorithm selection(e.g. index scan, table scan, join method)
+        \item Materialized or pipelined
+        \item How relations are accessed
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Stream Query Optimization}
+\begin{frame}{Data Stream Processing}
     Modifying queries by changing graph topology and/ or operators to get better performance, as measured by
     \begin{enumerate}
         \item Throughput
@@ -124,15 +114,14 @@
 \end{frame}
 
 \begin{frame}{Stream Graph}
-    Queries on Data streams can be thought of as directed graphs,
-    \begin{enumerate}
-    \item Edges represent streams and nodes represent operators.
-    \item Root  and  leaf nodes are called sources and sinks, respectively.
-    \end{enumerate}
-    Whereas for traditional Databases, we have parse trees.
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{dsms_dag.png}
+        \label{fig:j_1}
+    \end{figure}
 \end{frame}
 
-\begin{frame}{Possible Optimizations}
+\begin{frame}{Possible Optimization for Stream Query Processing}
     \begin{itemize}
         \item Batching
         \item Placement
@@ -158,8 +147,9 @@
 
 \begin{frame}{Research Question}
     \begin{center}
-    Is it possible to apply deep reinforcement learning to find the optimal ordering of executing associative operations?
+    Is it possible to learn a model that predicts the optimal ordering, defined by a metric of choice, of operators for a given query on data streams using a deep reinforcement learning model trained on historical data?
     \end{center}
+    
 \end{frame}
 
 
